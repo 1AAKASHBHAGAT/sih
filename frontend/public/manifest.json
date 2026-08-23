@@ -1,0 +1,22 @@
+{
+  "short_name": "Setu Jharkhand",
+  "name": "Societal Innovation & Challenge Collaboration Platform (SIH 26043)",
+  "description": "Government of Jharkhand Nodal Portal for Crowdsourcing Rural Challenges & University Innovation Routing",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    },
+    {
+      "src": "/jharkhand_emblem.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0b0f19",
+  "theme_color": "#0f172a",
+  "display": "standalone",
+  "orientation": "portrait"
+}

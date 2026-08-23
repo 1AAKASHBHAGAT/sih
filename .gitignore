@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+*.sqlite3
+*.db
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Node
+node_modules/
+dist/
+.vercel/
+
+# AI Model binary weights — too large for GitHub (regenerate by running training scripts)
+# To retrain: cd backend && python ai-service/train_domain_classifier.py
+#                           python ai-service/train_urgency_scorer.py
+backend/ai-service/models/**/*.safetensors
+backend/ai-service/models/**/*.pt
+backend/ai-service/models/**/*.bin
+backend/ai-service/models/**/optimizer.pt
+backend/ai-service/models/**/rng_state.pth
+backend/ai-service/models/**/scheduler.pt
+
+# Keep config/tokenizer files (small, needed for inference setup)
+!backend/ai-service/models/**/*.json
+
+# Pytest cache
+.pytest_cache/
+*.log
+
+# IDE
+.vscode/
+.idea/
