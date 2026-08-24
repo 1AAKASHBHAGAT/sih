@@ -157,7 +157,11 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       setCooldown(30);
       setFailedAttempts(0);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Incorrect email or password.');
+      if (!err.response) {
+        setError('Cannot connect to backend server (http://127.0.0.1:8000). Please verify the backend service is running.');
+      } else {
+        setError(err.response?.data?.detail || 'Incorrect email or password.');
+      }
     } finally {
       setLoading(false);
     }
@@ -300,7 +304,11 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       await register(regForm);
       onClose();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      if (!err.response) {
+        setError('Cannot connect to backend server (http://127.0.0.1:8000). Please verify the backend service is running.');
+      } else {
+        setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
