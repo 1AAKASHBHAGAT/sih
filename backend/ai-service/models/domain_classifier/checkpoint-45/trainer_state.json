@@ -1,0 +1,71 @@
+{
+  "best_global_step": 45,
+  "best_metric": 0.4888888888888889,
+  "best_model_checkpoint": "C:\\Users\\sk860\\sih\\backend\\ai-service\\models\\domain_classifier\\checkpoint-45",
+  "epoch": 1.0,
+  "eval_steps": 500,
+  "global_step": 45,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 0.2222222222222222,
+      "grad_norm": 3.355975389480591,
+      "learning_rate": 4.666666666666667e-05,
+      "loss": 2.1997611999511717,
+      "step": 10
+    },
+    {
+      "epoch": 0.4444444444444444,
+      "grad_norm": 3.4707682132720947,
+      "learning_rate": 4.296296296296296e-05,
+      "loss": 2.1563575744628904,
+      "step": 20
+    },
+    {
+      "epoch": 0.6666666666666666,
+      "grad_norm": 2.5360825061798096,
+      "learning_rate": 3.925925925925926e-05,
+      "loss": 2.2193431854248047,
+      "step": 30
+    },
+    {
+      "epoch": 0.8888888888888888,
+      "grad_norm": 3.711568593978882,
+      "learning_rate": 3.555555555555556e-05,
+      "loss": 2.0468584060668946,
+      "step": 40
+    },
+    {
+      "epoch": 1.0,
+      "eval_accuracy": 0.4888888888888889,
+      "eval_loss": 1.810786485671997,
+      "eval_runtime": 1.2681,
+      "eval_samples_per_second": 70.972,
+      "eval_steps_per_second": 9.463,
+      "step": 45
+    }
+  ],
+  "logging_steps": 10,
+  "max_steps": 135,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 3,
+  "save_steps": 500,
+  "stateful_callbacks": {
+    "TrainerControl": {
+      "args": {
+        "should_epoch_stop": false,
+        "should_evaluate": false,
+        "should_log": false,
+        "should_save": true,
+        "should_training_stop": false
+      },
+      "attributes": {}
+    }
+  },
+  "total_flos": 3632957911440.0,
+  "train_batch_size": 8,
+  "trial_name": null,
+  "trial_params": null
+}

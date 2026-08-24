@@ -1,181 +1,451 @@
 text,label,domain
-Drinking water from the tubewell in Chas block has turned yellowish and smells of sulphur. Children are falling sick after consumption.,0,Water Management
-The only handpump serving 200 families in Saranda forest area has broken down. No drinking water for 3 days.,0,Water Management
-Arsenic levels in groundwater at Sahibganj exceed WHO limits. Skin lesions appearing in multiple villagers.,0,Water Management
-River Damodar is heavily polluted near Dhanbad causing contamination of irrigation channels.,0,Water Management
-Village pond used for drinking water has dried up completely due to summer heat in Palamu district.,0,Water Management
-Tubewells installed under Jal Jeevan Mission are non-functional in our block. Water supply has stopped.,0,Water Management
-Fluoride contamination in borewell water in Koderma is causing dental fluorosis in children.,0,Water Management
-Our irrigation canal has not been desilted for 5 years. Water cannot reach fields during kharif season.,0,Water Management
-Rainwater harvesting tank built under MGNREGA is leaking. No rainwater stored this monsoon.,0,Water Management
-Water turbidity from river intake plant is dangerously high but treatment chemicals are out of stock.,0,Water Management
-Borewell depth in our village is inadequate. Water table has dropped and pump draws mud during summer.,0,Water Management
-Sewage from Ranchi municipality is mixing with drinking water pipelines near our colony.,0,Water Management
-Government water tank installed in Latehar has not been cleaned for 2 years. Water has algae growth.,0,Water Management
-Fifteen households in our tribal hamlet have no piped water connection despite listed as covered under scheme.,0,Water Management
-Dam constructed near Giridih is silting up rapidly. Storage capacity has reduced by half.,0,Water Management
-Open wells in our village are contaminated with pesticide runoff from nearby fields.,0,Water Management
-Water supply pipeline installed 3 months ago is already cracked and leaking at multiple joints.,0,Water Management
-Salt intrusion affecting agricultural irrigation water in low-lying areas of Sahebganj district.,0,Water Management
-Water ATM installed in our ward has been non-functional for 6 months. Residents paying 10x at private tankers.,0,Water Management
-Overhead tank built for piped water supply has developed cracks and is losing water rapidly.,0,Water Management
-Primary health centre in Khunti has been without a doctor for 7 months. Patients travel 30km for basic treatment.,1,Healthcare
-Maternal mortality is high in Palamu block. ANMs are absent and delivery cases go unattended.,1,Healthcare
-Malaria outbreak reported in 3 villages near Chaibasa. No anti-malarial drugs available at PHC.,1,Healthcare
-Cold chain equipment for vaccines at sub-centre is broken. Immunisation drive has stopped.,1,Healthcare
-Ambulance service assigned to our block has not been operational for 2 weeks due to fuel shortage.,1,Healthcare
-Dengue cases rising in Ramgarh town but fogging machine not deployed. No awareness campaign.,1,Healthcare
-Anemia prevalence among pregnant women in our village is very high. Iron supplements out of stock.,1,Healthcare
-Telemedicine kiosk installed under e-Sanjivani has poor connectivity. Video calls drop frequently.,1,Healthcare
-Community health worker has not visited our hamlet in 3 months. Postnatal care missing for new mothers.,1,Healthcare
-Tuberculosis patient in our village has stopped treatment due to distance to DOTS centre.,1,Healthcare
-Mental health support is absent in rural Jharkhand. Distressed farmers have no counselling access.,1,Healthcare
-Children with severe acute malnutrition in our block are not being referred to NRC despite being identified.,1,Healthcare
-Dialysis unit at Dhanbad district hospital is broken. Renal failure patients travel to Kolkata weekly.,1,Healthcare
-Sickle cell disease is very common among ST communities but no diagnostic test available at PHC level.,1,Healthcare
-Cataract surgery camp promised for our block was cancelled twice. Elderly losing vision without care.,1,Healthcare
-Leprosy patients in our panchayat are facing stigma and have no access to MDT medicines nearby.,1,Healthcare
-Dog bite cases increasing in Hazaribagh town but anti-rabies vaccine is not available at government hospital.,1,Healthcare
-Nutritional supplementation under POSHAN Abhiyan is not reaching lactating mothers in our tribal area.,1,Healthcare
-Health and wellness centre opened 6 months ago but essential medicines like paracetamol are consistently absent.,1,Healthcare
-Flood relief camp in Sahebganj has no medical team. Waterborne disease outbreak risk is very high.,1,Healthcare
-Paddy crops in Khunti are showing signs of blast disease. No agricultural extension officer has visited.,2,Agriculture
-Soil acidity in Kanke block is very high. Lime application subsidy promised but not disbursed.,2,Agriculture
-Farmers in Giridih have no access to certified seeds for rabi crop. Only private shops sell at 3x price.,2,Agriculture
-Elephants from Dalma sanctuary are destroying crops in border villages. No compensation paid yet.,2,Agriculture
-Cold storage facility in Dumka is not functional. Potato crop is rotting after harvest.,2,Agriculture
-Fertilizer dealer in our block is selling urea at black market rates. Official allocation diverted.,2,Agriculture
-Drip irrigation equipment sanctioned under PM Krishi Sinchai Yojana delivered but no technician to install.,2,Agriculture
-Market connectivity for tribal farmers in Simdega is poor. Middlemen taking 60% margin on tomatoes.,2,Agriculture
-Pest attack on vegetable crop in our village. Pesticide provided under scheme is expired batch.,2,Agriculture
-Soil testing laboratory in our district is non-functional. Farmers cannot get soil health card.,2,Agriculture
-Custom hiring centre for farm equipment is locked. Tractor available but no operator trained to run it.,2,Agriculture
-Drought has severely affected kharif yield in Palamau this year. No crop insurance claim processed.,2,Agriculture
-Fish pond constructed under Blue Revolution scheme is silted up. No desilting done in 3 years.,2,Agriculture
-Organic farming cluster in Lohardaga lacks market linkage. Produce sold at same price as conventional.,2,Agriculture
-Agricultural input store under cooperative is closed for 4 months. Seeds and fertilizers unavailable.,2,Agriculture
-Irrigation pump provided to farmer group is broken. No spare parts available in our district.,2,Agriculture
-Mushroom cultivation training given but no market facilitated. Products going to waste in our village.,2,Agriculture
-Jharkhand millet mission has not covered our panchayat despite official claim of coverage.,2,Agriculture
-Forest produce collectors have no market information. Minor forest produce sold at exploitative rates.,2,Agriculture
-Post-harvest losses are very high in our block. No drying yards or storage infrastructure available.,2,Agriculture
-Government school in our village has only 1 teacher for 5 classes. Multi-grade teaching failing students.,3,Education
-Computer lab sanctioned for our high school is empty. Computers delivered but no internet connection.,3,Education
-Mid-day meal not served for 2 weeks in our school. Children are dropping attendance rapidly.,3,Education
-School building in Pakur district is in dangerous condition. Roof has collapsed in two classrooms.,3,Education
-Girls dropout rate is rising in our block after class 8. No toilet facilities in upper primary school.,3,Education
-Education department tablets distributed under scheme are non-functional. Software not loaded.,3,Education
-District library has been closed for 8 months. Students preparing for competitive exams have no resource.,3,Education
-Scholarship amount for ST students has not been credited for 3 semesters. Students dropping out.,3,Education
-BPO training centre opened under skill development scheme has no trainer. Machines idle for months.,3,Education
-Vocational training being given but no certification pathway. Youth trained but have no credential.,3,Education
-Engineering college in Chaibasa has severe faculty shortage. Core subjects have no regular teacher.,3,Education
-Digital literacy programme for women in our village has not started. Equipment lying unused.,3,Education
-School sports ground is encroached upon. Children have no space to play or practice.,3,Education
-Smart classroom equipment installed in our school is broken. Interactive board non-functional since day 1.,3,Education
-Tribal language teaching sanctioned but no teacher trained in local dialect available in our block.,3,Education
-Anganwadi centre in our hamlet has no helper. Nutritional programmes are not being implemented.,3,Education
-Mobile science lab promised for rural schools has visited our block only once in 2 years.,3,Education
-Evening coaching centre for tribal students in Khunti has no books or study material.,3,Education
-Internet connectivity at school is absent. PM e-Vidya content cannot be accessed by students.,3,Education
-Secondary school in our panchayat has no mathematics teacher for 9 months. Board exam in 4 months.,3,Education
-Open defecation is still prevalent in our village. Individual toilets constructed under SBM are not used.,4,Sanitation & Waste
-Garbage collection vehicle has not come to our ward in 3 weeks. Waste is piling at street corners.,4,Sanitation & Waste
-Drain in our locality is choked and overflowing into homes during rain. No desilting for 2 years.,4,Sanitation & Waste
-Sewage treatment plant in our town is non-functional. Raw sewage discharged into river.,4,Sanitation & Waste
-Plastic waste from market area dumped near water body. Leachate contaminating pond.,4,Sanitation & Waste
-Common toilet block built by municipality is locked most of the time. No caretaker assigned.,4,Sanitation & Waste
-Slaughterhouse waste from illegal unit is dumped on public road in our area.,4,Sanitation & Waste
-Swachh Bharat toilet subsidy amount not released to beneficiaries in our gram panchayat.,4,Sanitation & Waste
-Sanitation worker has not been provided PPE for 6 months. Working with bare hands in sewage.,4,Sanitation & Waste
-Open drain construction is incomplete and now a mosquito breeding ground since monsoon.,4,Sanitation & Waste
-Medical waste from private clinic dumped with municipal garbage in our town.,4,Sanitation & Waste
-E-waste collection drive organised once but no follow-up. Electronics waste lying in public areas.,4,Sanitation & Waste
-Faecal sludge management from septic tanks absent. No suction tanker service in our municipality.,4,Sanitation & Waste
-Vermicomposting unit set up under SBM-G is not operational. No training given to SHG members.,4,Sanitation & Waste
-Public urinal near bus stand is broken and overflowing. Strong smell affecting surrounding businesses.,4,Sanitation & Waste
-Solid waste segregation bins provided are lying unused. No awareness campaign conducted.,4,Sanitation & Waste
-Garbage compactor vehicle broke down 3 months ago. Replacement not sanctioned by municipality.,4,Sanitation & Waste
-Landfill site near our village is uncovered. Birds scatter waste across surrounding land.,4,Sanitation & Waste
-Construction debris from road work dumped near our water body. Blocking natural drainage.,4,Sanitation & Waste
-Pig rearing in open area near school creating hygiene hazard. Municipality not taking action.,4,Sanitation & Waste
-Road connecting our village to block HQ is broken with large potholes. Emergency vehicles cannot pass.,5,Infrastructure
-Bridge on river near Seraikela is cracked. Heavy vehicles banned but locals have no alternative route.,5,Infrastructure
-Street lights in our town ward are non-functional for 2 months. Night crime has increased.,5,Infrastructure
-Electricity transformer supplying our cluster of villages burned. No power for 12 days.,5,Infrastructure
-Solar panel installed under PM Surya Ghar scheme in our village cluster is not generating power.,5,Infrastructure
-Bus service to our block has been cancelled. Residents walking 8km to reach transport link.,5,Infrastructure
-Mobile network tower near our village is defunct. No connectivity for emergency calls.,5,Infrastructure
-Fibre optic cable laid under BharatNet is cut. Internet service to our gram panchayat offline.,5,Infrastructure
-Government building in our block is in disrepair. Roof leaking and walls cracked.,5,Infrastructure
-High tension electric wire passing over homes in our lane is dangerously low. Safety hazard.,5,Infrastructure
-Rural road under PMGSY is flooded and washed away after monsoon. No connectivity for 6 weeks.,5,Infrastructure
-Railway level crossing near our town has no gate keeper. Accidents happening frequently.,5,Infrastructure
-Cooking gas pipeline connection promised to our village not extended despite survey done.,5,Infrastructure
-Public transport for persons with disabilities is absent in our district. No accessible buses.,5,Infrastructure
-Footpath on main road encroached by shops. Pedestrians forced to walk on road with traffic.,5,Infrastructure
-Electricity meter of our panchayat community hall is faulty. Wrong bills being generated.,5,Infrastructure
-Construction of check dam promised 2 years ago not started. Road floods every monsoon.,5,Infrastructure
-BSNL tower providing connectivity to tribal hamlet is damaged. No repairs in 4 months.,5,Infrastructure
-Water supply pipeline work has torn up road surface. Repair work not done for 3 months.,5,Infrastructure
-Government guest house in district town is not maintained. Used for official visits but in poor state.,5,Infrastructure
-Elephant corridor passing through Saranda forest is being blocked by mine expansion.,6,Environment
-Coal fly ash from thermal power plant near Bokaro is settling on farm land. Crop damage reported.,6,Environment
-Deforestation in protected forest area near Chaibasa is happening with heavy machinery at night.,6,Environment
-Wildlife poaching reported in Palamau Tiger Reserve. Snares found on forest patrol.,6,Environment
-Air quality in Dhanbad coalfield area is very poor. Dust and coal smoke causing respiratory illness.,6,Environment
-River sand mining near Sahebganj is eroding riverbank. Village on river edge is at flood risk.,6,Environment
-Jharkhand forest cover reducing every year due to unregulated stone quarrying in Hazaribagh.,6,Environment
-Toxic effluents from electroplating unit polluting river in Jamshedpur industrial zone.,6,Environment
-Tribal community's sacred grove being encroached by outside settlers. Forest department not acting.,6,Environment
-Climate change is causing unpredictable rainfall in our area. Crop planning has become impossible.,6,Environment
-Migratory bird nesting site near Bokaro steel plant disturbed during breeding season.,6,Environment
-Plastic bags dumped near forest entry points creating ingestion hazard for wildlife.,6,Environment
-Forest fire in our area burned for 3 days. No response from forest department for first 24 hours.,6,Environment
-Green cover in urban Ranchi is reducing rapidly due to construction. No replantation happening.,6,Environment
-Smokeless chulha scheme stalled in our block. Indoor air pollution causing respiratory illness in women.,6,Environment
-Tree felling along state highway without compensatory plantation as mandated.,6,Environment
-Mercury contamination from small-scale gold processing in Ramgarh stream reported by locals.,6,Environment
-Mangrove-type wetland near Chandil reservoir being drained for agriculture.,6,Environment
-Noise pollution from stone crusher near school exceeds permissible limits. Students disturbed.,6,Environment
-Dust pollution from unpaved industrial road is settling on crops in adjacent farmland.,6,Environment
-Wheelchair access ramp at district collectorate office is blocked by parked vehicles.,7,Accessibility
-Sign language interpreter not available at government hospital for hearing impaired patients.,7,Accessibility
-Persons with locomotor disability in our village cannot access any government scheme office.,7,Accessibility
-Braille materials not available at district library. Visually impaired students have no resources.,7,Accessibility
-Disability certificate issuance is very slow. Persons with disability cannot access schemes without it.,7,Accessibility
-Special school for intellectually disabled children in our town has no trained staff.,7,Accessibility
-Assistive devices like wheelchairs and crutches not available at PHC for elderly and disabled.,7,Accessibility
-Employment quota for persons with disability in state government not being fulfilled.,7,Accessibility
-Government bus service has no facility for wheelchair users. PwD passengers struggle to board.,7,Accessibility
-Pension for persons with disability not revised for 5 years. Amount insufficient for basic needs.,7,Accessibility
-Accessible toilet not available at bus stand in our district town. PwD cannot use facility.,7,Accessibility
-Election booth in our area has no ramp. PwD voters unable to exercise franchise.,7,Accessibility
-Building plan approval process does not enforce accessibility norms for new constructions.,7,Accessibility
-Social welfare scheme for destitute PwD applicants is pending for 18 months with no update.,7,Accessibility
-Hearing aids provided to students are of poor quality and break within 3 months.,7,Accessibility
-Orthopaedic surgery camp promised quarterly has not happened for 2 years in our district.,7,Accessibility
-No rehabilitation centre in our division. PwD travel very far for physiotherapy.,7,Accessibility
-Caregiver allowance for families supporting severely disabled persons is very low and not revised.,7,Accessibility
-Awareness about rights of persons with disability is absent in our block administration.,7,Accessibility
-Intellectual disability pension not reaching beneficiaries due to Aadhaar linking issues.,7,Accessibility
-Solar electrification under PM Kusum scheme installed but inverter not provided to farmer.,8,Energy
-Kerosene distribution for BPL households has stopped since 2 years but no LPG alternative given.,8,Energy
-Community solar mini-grid in our village not producing expected power due to poor installation.,8,Energy
-LPG cylinder delivery to our remote village takes 3 weeks. Families reverting to firewood.,8,Energy
-Biogas plant constructed for our SHG is not producing gas. Slurry tank leaking.,8,Energy
-Electric bill from state utility is very high due to faulty meter reading. No grievance redressal.,8,Energy
-High-tension power line passes through our village but no household connection given.,8,Energy
-PM Ujjwala Yojana LPG connection beneficiary has not received second cylinder in 8 months.,8,Energy
-Micro hydro project on seasonal stream in our area abandoned midway. Investment wasted.,8,Energy
-Biomass gasifier provided under scheme is lying idle. No training given on operation.,8,Energy
-Smart prepaid electricity meters installed but recharge kiosk not set up in our area.,8,Energy
-Wind energy feasibility study done for our district. No follow-up action for 3 years.,8,Energy
-EV charging station promised for our town under green mobility scheme not installed.,8,Energy
-Solar water heater provided to school has broken geyser. Cold water only in winter.,8,Energy
-Energy audit of government buildings recommended efficiency upgrades. No implementation done.,8,Energy
-Rural entrepreneur trained in solar panel repair but no referrals from state agency.,8,Energy
-State electricity board line loss very high in our area. Supply unreliable with daily cuts.,8,Energy
-School has no electricity connection. Evening study not possible for tribal hostel students.,8,Energy
-Cooking fuel crisis in our remote hamlet. LPG not reaching. Fuelwood collection takes 3 hours daily.,8,Energy
-Standalone solar home system batteries in our village cluster need replacement after 5 years.,8,Energy
+Issue in Dumka: Pesticides supplied are past their expiry date.,2,Agriculture
+Bus shelter collapsed during the recent storm in Lohardaga.,5,Infrastructure
+the soil testing lab is closed during working hours. this is unacceptable.,2,Agriculture
+Scholarship funds for students are delayed. This is unacceptable. bahut problem hai.,3,Education
+Complaint regarding: Scholarship funds for students are delayed in Bistupur.,3,Education
+When will the government fix this? Stone crushers are causing extreme noise and dust pollution in Hazaribagh.,6,Environment
+Speed breakers are completely unmarked and dangerous. This is unacceptable.,5,Infrastructure
+When will the government fix this? Rare bird sanctuary area is turned into a garbage dump.,6,Environment
+Complaint regarding: Teachers are forcing students to take private tuitions.,3,Education
+I want to report that The public toilet near the bus stand is overflowing in Koderma. koi sun nahi raha.,4,Sanitation & Waste
+"Sir/Madam, Safai karamcharis are demanding bribes.",4,Sanitation & Waste
+Urgent complaint: The handpump in our village is broken. turant action lijiye.,0,Water Management
+"Sir/Madam, Voltage is so low that tubelights don't turn on in Adityapur.",8,Energy
+"Sir/Madam, Wildlife habitat is being encroached upon by builders. kab tak wait karein?",6,Environment
+When will the government fix this? The disabled-friendly toilet at the hospital is always locked in Latehar.,7,Accessibility
+I want to report that The primary health centre has no doctors available.,1,Healthcare
+I want to report that Voltage is so low that tubelights don't turn on in Latehar.,8,Energy
+Tractor rental scheme is corrupted in Dhanbad. This is unacceptable in Dhanbad.,2,Agriculture
+When will the government fix this? We are getting contaminated yellow water in our taps in Gumla.,0,Water Management
+complaint regarding: solar panels installed in panchayat bhavan are stolen in godda.,8,Energy
+When will the government fix this? Electric poles are leaning dangerously over houses in Ramgarh.,8,Energy
+Urgent complaint: Road widening project left debris everywhere in Hazaribagh.,5,Infrastructure
+I want to report that High voltage fluctuations ruined our appliances in Dumka.,8,Energy
+Urgent complaint: No electricity for agricultural pumps in Hazaribagh. mera appeal hai ki isko fix karein.,2,Agriculture
+Complaint regarding: Tractor rental scheme is corrupted.,2,Agriculture
+I want to report that Railway crossing needs an overbridge urgently in Pakur.,5,Infrastructure
+Issue in Gumla: Drainage water mixing with drinking water line.,0,Water Management
+Issue in Deoghar: Teachers are forcing students to take private tuitions.,3,Education
+I want to report that Forest fires have been burning for 3 days unchecked. bahut problem hai.,6,Environment
+Complaint regarding: Manholes are left uncovered on the main road in Ranchi. kab tak wait karein?,4,Sanitation & Waste
+Complaint regarding: Streetlights on the highway are completely broken in Ramgarh.,5,Infrastructure
+"Issue in Chirkunda: Rare bird sanctuary area is turned into a garbage dump. officials are sleeping, public pareshan hai.",6,Environment
+Operation theatre lacks basic sterilization equipment in Latehar. This is unacceptable in Latehar.,1,Healthcare
+Issue in Jamshedpur: No teachers have attended the primary school this entire week.,3,Education
+"Sir/Madam, Crop insurance claims for farmers are pending for months in Chirkunda.",2,Agriculture
+Girls' toilet in high school is non-functional.,3,Education
+urgent complaint: we are getting contaminated yellow water in our taps.,0,Water Management
+urgent complaint: patients are forced to sleep on the floor in mango.,1,Healthcare
+Issue in Seraikela: Door-to-door waste collection vehicle doesn't visit our lane.,4,Sanitation & Waste
+"When will the government fix this? No cold storage facility functioning, vegetables rotting in Dhurwa.",2,Agriculture
+i want to report that plastic waste burning is causing severe air pollution in ranchi.,4,Sanitation & Waste
+"Open drains are breeding mosquitoes in Giridih. This is unacceptable in Giridih. officials are sleeping, public pareshan hai.",4,Sanitation & Waste
+urgent complaint: mid-day meal quality in school is terrible.,3,Education
+jal jeevan mission pipes laid but no water flowing in seraikela. this is unacceptable in seraikela.,0,Water Management
+"Sir/Madam, Wheelchair ramps are missing at the government office in Giridih.",7,Accessibility
+"Sir/Madam, The public toilet near the bus stand is overflowing.",4,Sanitation & Waste
+students haven't received their textbooks yet in dhurwa. this is unacceptable in dhurwa.,3,Education
+issue in seraikela: scholarship funds for students are delayed.,3,Education
+"No cold storage facility functioning, vegetables rotting. This is unacceptable.",2,Agriculture
+Issue in Pakur: Illegal brick kilns operating near residential areas.,6,Environment
+Complaint regarding: Tree felling for road widening is excessive.,6,Environment
+I want to report that Pani ki samasya is getting worse in Phusro.,0,Water Management
+"Sir/Madam, Illegal sand mining is destroying the riverbed.",6,Environment
+Crop insurance claims for farmers are pending for months. koi sun nahi raha.,2,Agriculture
+When will the government fix this? Groundwater depletion is alarming due to deep borewells in Phusro. kab tak wait karein?,6,Environment
+When will the government fix this? Rare bird sanctuary area is turned into a garbage dump.,6,Environment
+"Sir/Madam, Electric poles are leaning dangerously over houses. halat bahut kharab hai.",8,Energy
+"Complaint regarding: Ash dyke from power plant breached, flooding fields in Latehar.",6,Environment
+Plastic waste burning is causing severe air pollution. This is unacceptable.,4,Sanitation & Waste
+I want to report that Girls' toilet in high school is non-functional.,3,Education
+The lake is completely covered in water hyacinth. This is unacceptable.,6,Environment
+when will the government fix this? the public park is unmaintained and overrun with weeds in lohardaga. kab tak wait karein?,5,Infrastructure
+illegal brick kilns operating near residential areas in hazaribagh. mera appeal hai ki isko fix karein.,6,Environment
+"Sir/Madam, Tree felling for road widening is excessive.",6,Environment
+Disability pensions have been stopped without reason. This is unacceptable.,7,Accessibility
+hospital beds are completely full in godda. kab theek hoga?,1,Healthcare
+"Three-phase line is broken, affecting pumps. This is unacceptable.",8,Energy
+railway crossing needs an overbridge urgently in adityapur. bohot dikkat ho rahi hai.,5,Infrastructure
+Urgent complaint: School boundary wall collapsed in the rain.,3,Education
+garbage trucks are leaking filth onto the roads. this is unacceptable.,4,Sanitation & Waste
+Complaint regarding: Wheelchair ramps are missing at the government office.,7,Accessibility
+Voltage is so low that tubelights don't turn on.,8,Energy
+Urgent complaint: Kisan Credit Card applications are being rejected without reason in Ramgarh.,2,Agriculture
+Maternal healthcare facilities are extremely poor in Ranchi. This is unacceptable in Ranchi.,1,Healthcare
+"Sir/Madam, Sidewalks are too narrow and blocked for disabled citizens. please help.",7,Accessibility
+Complaint regarding: No water connection despite paying the fees. please help.,0,Water Management
+The primary health centre has no doctors available in Sahebganj.,1,Healthcare
+When will the government fix this? Pipeline leakage is wasting thousands of liters.,0,Water Management
+Issue in Jugsalai: The disabled-friendly toilet at the hospital is always locked.,7,Accessibility
+Underpass gets flooded after 10 minutes of rain. This is unacceptable.,5,Infrastructure
+Urgent complaint: Website for municipal corporation is not accessible in Khunti.,7,Accessibility
+Bus shelter collapsed during the recent storm. This is unacceptable.,5,Infrastructure
+PM-Kisan money not credited to bank account.,2,Agriculture
+Toxic fumes from the industrial area are making people sick. samadhan chahiye.,6,Environment
+Severe water crisis. Tankers are not arriving on time.,0,Water Management
+No drinking water available at the municipal tap. This is unacceptable. turant action lijiye.,0,Water Management
+I want to report that Air quality is terrible due to unregulated coal dust in Simdega. koi dhyan nahi de raha.,6,Environment
+Heavy deforestation happening without any checks.,6,Environment
+"Issue in Giridih: Kisan Credit Card applications are being rejected without reason. officials are sleeping, public pareshan hai.",2,Agriculture
+"Sir/Madam, Three-phase line is broken, affecting pumps. kab theek hoga?",8,Energy
+When will the government fix this? The lake is completely covered in water hyacinth in Sahebganj.,6,Environment
+When will the government fix this? No sign language interpreters available at the police station. kab tak wait karein?,7,Accessibility
+"Sir/Madam, Pipeline leakage is wasting thousands of liters.",0,Water Management
+Urgent complaint: The dumping ground is toxic and needs to be relocated in Jugsalai.,4,Sanitation & Waste
+I want to report that Railway crossing needs an overbridge urgently. samadhan chahiye.,5,Infrastructure
+Issue in Gumla: We are getting contaminated yellow water in our taps.,0,Water Management
+Toxic fumes from the industrial area are making people sick. please help.,6,Environment
+When will the government fix this? Water rationing is poorly managed in Doranda. koi dhyan nahi de raha.,0,Water Management
+Complaint regarding: Bedsheets in the ward are dirty and blood-stained.,1,Healthcare
+Issue in Palamu: Bus shelter collapsed during the recent storm. bohot dikkat ho rahi hai.,5,Infrastructure
+No electricity connection provided to the newly built houses. This is unacceptable.,8,Energy
+No water connection despite paying the fees in Koderma. please help.,0,Water Management
+When will the government fix this? PM-Kisan money not credited to bank account.,2,Agriculture
+i want to report that no water connection despite paying the fees.,0,Water Management
+I want to report that Sewage water is flooding the streets.,4,Sanitation & Waste
+When will the government fix this? The government school roof is leaking.,3,Education
+"Sir/Madam, Air quality is terrible due to unregulated coal dust in Khunti.",6,Environment
+"Sir/Madam, Para-teachers are protesting, halting all classes. kab theek hoga?",3,Education
+Crop insurance claims for farmers are pending for months in Palamu.,2,Agriculture
+Issue in Phusro: Manholes are left uncovered on the main road.,4,Sanitation & Waste
+Community health worker has not visited for 5 months. This is unacceptable.,1,Healthcare
+"Sir/Madam, Pesticides supplied are past their expiry date in Ramgarh.",2,Agriculture
+"Sir/Madam, No water connection despite paying the fees in Seraikela.",0,Water Management
+Water rationing is poorly managed in Bistupur. This is unacceptable in Bistupur. please help.,0,Water Management
+Urgent complaint: Swachh Bharat toilets are locked and unusable. kab tak wait karein?,4,Sanitation & Waste
+Hospital beds are completely full. This is unacceptable.,1,Healthcare
+Urgent complaint: Hospital beds are completely full.,1,Healthcare
+"Sir/Madam, Medical waste from clinics is dumped in the open in Phusro. turant action lijiye.",4,Sanitation & Waste
+I want to report that Stone crushers are causing extreme noise and dust pollution.,6,Environment
+"I want to report that Three-phase line is broken, affecting pumps.",8,Energy
+"sir/madam, the new community hall has cracked walls already. kab tak wait karein?",5,Infrastructure
+Issue in Seraikela: The public park is unmaintained and overrun with weeds.,5,Infrastructure
+Complaint regarding: PM-Kisan money not credited to bank account.,2,Agriculture
+Doctors are prescribing medicines from private pharmacies only. This is unacceptable.,1,Healthcare
+Complaint regarding: Braille signage missing in public buildings.,7,Accessibility
+Complaint regarding: The primary health centre has no doctors available.,1,Healthcare
+Urgent complaint: Maternal healthcare facilities are extremely poor in Ramgarh.,1,Healthcare
+Issue in Phusro: Streetlights are glowing during the day wasting energy.,8,Energy
+Complaint regarding: Elevator at the collectorate has been broken for months. kab theek hoga?,7,Accessibility
+The main road is full of huge potholes in Phusro. This is unacceptable in Phusro. turant action lijiye.,5,Infrastructure
+Elevator at the collectorate has been broken for months in Jamtara. koi sun nahi raha.,7,Accessibility
+Urgent complaint: The local pond is completely dried up and dirty.,0,Water Management
+"I want to report that No cold storage facility functioning, vegetables rotting.",2,Agriculture
+i want to report that disability certificates are being delayed by corrupt officials.,7,Accessibility
+"Sir/Madam, Taps are running dry in the entire locality.",0,Water Management
+"Sir/Madam, Electricity bills are highly inflated and incorrect.",8,Energy
+Manholes are left uncovered on the main road in Dumka. This is unacceptable in Dumka.,4,Sanitation & Waste
+"Sir/Madam, Stone crushers are causing extreme noise and dust pollution.",6,Environment
+Urgent complaint: Illegal sand mining is destroying the riverbed.,6,Environment
+Urgent complaint: Electricity bills are highly inflated and incorrect in Jugsalai. bahut problem hai.,8,Energy
+when will the government fix this? no electricity for agricultural pumps.,2,Agriculture
+Urgent complaint: No anti-venom available at the health sub-center. koi dhyan nahi de raha.,1,Healthcare
+When will the government fix this? Railway crossing needs an overbridge urgently.,5,Infrastructure
+The x-ray machine at the district hospital has been broken for weeks. This is unacceptable.,1,Healthcare
+urgent complaint: illegal sand mining is destroying the riverbed.,6,Environment
+when will the government fix this? bus terminal lacks seating and basic facilities.,5,Infrastructure
+When will the government fix this? Pedestrian crossings lack audio signals for the blind in Seraikela.,7,Accessibility
+"Sir/Madam, Power cuts last for more than 4 hours daily in Chirkunda.",8,Energy
+urgent complaint: factories are dumping untreated chemicals into the river in ramgarh.,6,Environment
+Tractor rental scheme is corrupted in Hazaribagh. This is unacceptable in Hazaribagh.,2,Agriculture
+Issue in Koderma: Groundwater depletion is alarming due to deep borewells.,6,Environment
+Complaint regarding: Bus shelter collapsed during the recent storm.,5,Infrastructure
+Urgent complaint: Hospital beds are completely full.,1,Healthcare
+Issue in Bokaro: Streetlights on the highway are completely broken.,5,Infrastructure
+When will the government fix this? Sidewalks are too narrow and blocked for disabled citizens in Chatra.,7,Accessibility
+when will the government fix this? toll plaza is charging despite terrible road conditions. koi dhyan nahi de raha.,5,Infrastructure
+Issue in Pakur: Manholes are left uncovered on the main road.,4,Sanitation & Waste
+"sir/madam, bus terminal lacks seating and basic facilities. koi sun nahi raha.",5,Infrastructure
+Issue in Chaibasa: Pani ki samasya is getting worse.,0,Water Management
+The public park is unmaintained and overrun with weeds. koi dhyan nahi de raha.,5,Infrastructure
+No designated parking spots for persons with disabilities in Deoghar.,7,Accessibility
+Complaint regarding: Electricity bills are highly inflated and incorrect.,8,Energy
+School boundary wall collapsed in the rain. This is unacceptable.,3,Education
+No teachers have attended the primary school this entire week.,3,Education
+Urgent complaint: Smart meters are showing random high readings.,8,Energy
+I want to report that The transformer blew up yesterday and hasn't been fixed.,8,Energy
+"Sir/Madam, Pani ki samasya is getting worse.",0,Water Management
+I want to report that Paving blocks in market were removed and never replaced. bohot dikkat ho rahi hai.,5,Infrastructure
+"Sir/Madam, Bus shelter collapsed during the recent storm in Deoghar.",5,Infrastructure
+Classes are overcrowded with 80+ students in Chaibasa.,3,Education
+Manholes are left uncovered on the main road in Giridih. This is unacceptable in Giridih.,4,Sanitation & Waste
+When will the government fix this? Open cast mining fires are releasing poisonous gases in Gumla.,6,Environment
+issue in jamshedpur: garbage trucks are leaking filth onto the roads.,4,Sanitation & Waste
+Water supply disrupted for 5 days in Sahebganj. kab tak wait karein?,0,Water Management
+When will the government fix this? Low water pressure means overhead tanks remain empty.,0,Water Management
+urgent complaint: no teachers have attended the primary school this entire week in chaibasa.,3,Education
+I want to report that Elevator at the collectorate has been broken for months in Dhanbad.,7,Accessibility
+When will the government fix this? Illegal sand mining is destroying the riverbed.,6,Environment
+Complaint regarding: Public buses are completely inaccessible for wheelchair users in Doranda.,7,Accessibility
+Issue in Hazaribagh: No oxygen cylinders available in the ICU. koi sunwai nahi hai yahan.,1,Healthcare
+issue in palamu: toxic fumes from the industrial area are making people sick. kab tak wait karein?,6,Environment
+i want to report that benches are broken and students sit on the floor.,3,Education
+I want to report that Forest fires have been burning for 7 days unchecked.,6,Environment
+Severe water crisis. Tankers are not arriving on time.,0,Water Management
+Solar panels installed in panchayat bhavan are stolen.,8,Energy
+Issue in Deoghar: Wheelchair ramps are missing at the government office.,7,Accessibility
+High voltage fluctuations ruined our appliances in Godda.,8,Energy
+The substation catches fire frequently. This is unacceptable.,8,Energy
+"Sir/Madam, Doctors are prescribing medicines from private pharmacies only.",1,Healthcare
+Urgent complaint: Manholes are left uncovered on the main road. bahut problem hai.,4,Sanitation & Waste
+"Issue in Deoghar: Streetlights are glowing during the day wasting energy. officials are sleeping, public pareshan hai.",8,Energy
+Complaint regarding: No electricity connection provided to the newly built houses.,8,Energy
+"Sir/Madam, Water pipeline burst near the main road, causing massive leakage in Chirkunda. turant action lijiye.",0,Water Management
+Urgent complaint: Disability certificates are being delayed by corrupt officials.,7,Accessibility
+Urgent complaint: Railway crossing needs an overbridge urgently. koi sun nahi raha.,5,Infrastructure
+When will the government fix this? Voltage is so low that tubelights don't turn on in Phusro.,8,Energy
+"When will the government fix this? No electricity connection provided to the newly built houses in Jugsalai. officials are sleeping, public pareshan hai.",8,Energy
+I want to report that Teachers are forcing students to take private tuitions in Deoghar.,3,Education
+Maternal healthcare facilities are extremely poor. This is unacceptable. please help.,1,Healthcare
+No water connection despite paying the fees in Deoghar.,0,Water Management
+Urgent complaint: Open cast mining fires are releasing poisonous gases. please help.,6,Environment
+I want to report that Coal shortage is causing unannounced load shedding.,8,Energy
+urgent complaint: bedsheets in the ward are dirty and blood-stained. koi dhyan nahi de raha.,1,Healthcare
+When will the government fix this? Voltage is so low that tubelights don't turn on.,8,Energy
+When will the government fix this? Voltage is so low that tubelights don't turn on.,8,Energy
+Urgent complaint: Water supply disrupted for 2 days in Bistupur.,0,Water Management
+Hospital beds are completely full in Ramgarh. This is unacceptable in Ramgarh.,1,Healthcare
+"Sir/Madam, Bus shelter collapsed during the recent storm. please help.",5,Infrastructure
+When will the government fix this? Crop insurance claims for farmers are pending for months.,2,Agriculture
+Issue in Seraikela: Tractor rental scheme is corrupted. kab theek hoga?,2,Agriculture
+When will the government fix this? Wildlife habitat is being encroached upon by builders in Simdega.,6,Environment
+Complaint regarding: Streetlights on the highway are completely broken. turant action lijiye.,5,Infrastructure
+When will the government fix this? Students haven't received their textbooks yet.,3,Education
+Complaint regarding: Market access is blocked due to broken rural roads in Ramgarh.,2,Agriculture
+Complaint regarding: Bedsheets in the ward are dirty and blood-stained in Simdega. kab theek hoga?,1,Healthcare
+Urgent complaint: Wheelchair ramps are missing at the government office in Chaibasa.,7,Accessibility
+I want to report that No teachers have attended the primary school this entire week.,3,Education
+Issue in Bistupur: Shortage of essential medicines at the sadar hospital.,1,Healthcare
+When will the government fix this? Community health worker has not visited for 4 months.,1,Healthcare
+Complaint regarding: Bridge construction has been stalled for years.,5,Infrastructure
+I want to report that Pedestrian crossings lack audio signals for the blind.,7,Accessibility
+When will the government fix this? Door-to-door waste collection vehicle doesn't visit our lane in Ranchi. bahut problem hai.,4,Sanitation & Waste
+Water rationing is poorly managed in Jamshedpur. koi sunwai nahi hai yahan.,0,Water Management
+Complaint regarding: Streetlights are glowing during the day wasting energy in Dumka.,8,Energy
+"Urgent complaint: Locust attack ruined the crops, need compensation in Jamshedpur.",2,Agriculture
+Urgent complaint: Tractor rental scheme is corrupted.,2,Agriculture
+Urgent complaint: Air quality is terrible due to unregulated coal dust. kab tak wait karein?,6,Environment
+When will the government fix this? Air quality is terrible due to unregulated coal dust. koi sun nahi raha.,6,Environment
+I want to report that Shortage of essential medicines at the sadar hospital in Giridih.,1,Healthcare
+"no proper footpaths, pedestrians are at risk in bistupur. mera appeal hai ki isko fix karein.",5,Infrastructure
+The playground of the school has been encroached upon. kab tak wait karein?,3,Education
+Urgent complaint: Solar panels installed in panchayat bhavan are stolen in Adityapur. bahut problem hai.,8,Energy
+The handpump in our village is broken. This is unacceptable.,0,Water Management
+"Sir/Madam, Taps are running dry in the entire locality. kab theek hoga?",0,Water Management
+Illegal sand mining is destroying the riverbed in Seraikela. This is unacceptable in Seraikela. please help.,6,Environment
+"Sir/Madam, School boundary wall collapsed in the rain in Gumla.",3,Education
+railway crossing needs an overbridge urgently in godda.,5,Infrastructure
+Issue in Chirkunda: The soil testing lab is closed during working hours.,2,Agriculture
+I want to report that Crop insurance claims for farmers are pending for months in Chatra. kab tak wait karein?,2,Agriculture
+Complaint regarding: Road widening project left debris everywhere in Sahebganj.,5,Infrastructure
+irrigation canal is completely dry. this is unacceptable.,2,Agriculture
+when will the government fix this? the soil testing lab is closed during working hours in khunti.,2,Agriculture
+"Sir/Madam, Voltage is so low that tubelights don't turn on.",8,Energy
+Urgent complaint: No anti-venom available at the health sub-center. mera appeal hai ki isko fix karein.,1,Healthcare
+"sir/madam, girls' toilet in high school is non-functional.",3,Education
+No dustbins provided in the market area. samadhan chahiye.,4,Sanitation & Waste
+Website for municipal corporation is not accessible.,7,Accessibility
+"Sir/Madam, Braille signage missing in public buildings in Jamshedpur.",7,Accessibility
+Urgent complaint: Girls' toilet in high school is non-functional.,3,Education
+"Locust attack ruined the crops, need compensation in Bistupur. This is unacceptable in Bistupur. halat bahut kharab hai.",2,Agriculture
+"Sir/Madam, Special education school lacks basic facilities in Jamtara.",7,Accessibility
+open cast mining fires are releasing poisonous gases.,6,Environment
+I want to report that Benches are broken and students sit on the floor in Koderma. bohot dikkat ho rahi hai.,3,Education
+Classes are overcrowded with 80+ students.,3,Education
+"Sir/Madam, The government school roof is leaking.",3,Education
+Issue in Latehar: Audio announcements for visually impaired are broken at the bus stand. bohot dikkat ho rahi hai.,7,Accessibility
+No dustbins provided in the market area. turant action lijiye.,4,Sanitation & Waste
+"Sir/Madam, Bedsheets in the ward are dirty and blood-stained in Ranchi.",1,Healthcare
+When will the government fix this? No water connection despite paying the fees in Gumla.,0,Water Management
+issue in jamtara: doctors are prescribing medicines from private pharmacies only.,1,Healthcare
+"Sir/Madam, Drainage covers are missing on the main road in Jugsalai.",5,Infrastructure
+Complaint regarding: Stray cattle are destroying standing crops. kab theek hoga?,2,Agriculture
+"Issue in Hazaribagh: No cold storage facility functioning, vegetables rotting.",2,Agriculture
+Complaint regarding: Railway crossing needs an overbridge urgently in Sahebganj.,5,Infrastructure
+"Sir/Madam, No electricity connection provided to the newly built houses in Doranda.",8,Energy
+No teachers have attended the primary school this entire week.,3,Education
+I want to report that Speed breakers are completely unmarked and dangerous.,5,Infrastructure
+When will the government fix this? Plastic waste burning is causing severe air pollution.,4,Sanitation & Waste
+Urgent complaint: Stray cattle are destroying standing crops in Ramgarh.,2,Agriculture
+"Sir/Madam, No oxygen cylinders available in the ICU in Giridih.",1,Healthcare
+I want to report that Website for municipal corporation is not accessible. kab theek hoga?,7,Accessibility
+Urgent complaint: The soil testing lab is closed during working hours in Mango.,2,Agriculture
+Open drains are breeding mosquitoes in Bokaro. This is unacceptable in Bokaro. koi sunwai nahi hai yahan.,4,Sanitation & Waste
+Complaint regarding: Open cast mining fires are releasing poisonous gases in Lohardaga.,6,Environment
+When will the government fix this? The government school roof is leaking.,3,Education
+"No proper footpaths, pedestrians are at risk. This is unacceptable. mera appeal hai ki isko fix karein.",5,Infrastructure
+Electric poles are leaning dangerously over houses in Bistupur.,8,Energy
+Students haven't received their textbooks yet. This is unacceptable.,3,Education
+Ambulance service refused to come during an emergency in Doranda. This is unacceptable in Doranda. bahut problem hai.,1,Healthcare
+Rare bird sanctuary area is turned into a garbage dump in Sahebganj. This is unacceptable in Sahebganj.,6,Environment
+When will the government fix this? Students haven't received their textbooks yet in Bistupur.,3,Education
+When will the government fix this? Wheelchair ramps are missing at the government office.,7,Accessibility
+School building is unsafe in Ranchi. This is unacceptable in Ranchi. mera appeal hai ki isko fix karein.,3,Education
+The lake is completely covered in water hyacinth. This is unacceptable. koi dhyan nahi de raha.,6,Environment
+"Sir/Madam, Braille signage missing in public buildings.",7,Accessibility
+The public toilet near the bus stand is overflowing in Chaibasa.,4,Sanitation & Waste
+Issue in Jamtara: Staff at the clinic are very rude and unhelpful. bohot dikkat ho rahi hai.,1,Healthcare
+Swachh Bharat toilets are locked and unusable in Hazaribagh. This is unacceptable in Hazaribagh.,4,Sanitation & Waste
+When will the government fix this? Drainage water mixing with drinking water line.,0,Water Management
+Urgent complaint: No drinking water available at the municipal tap.,0,Water Management
+Complaint regarding: Website for municipal corporation is not accessible in Ramgarh. koi sunwai nahi hai yahan.,7,Accessibility
+When will the government fix this? Tree felling for road widening is excessive in Deoghar.,6,Environment
+complaint regarding: braille signage missing in public buildings.,7,Accessibility
+"Urgent complaint: No cold storage facility functioning, vegetables rotting.",2,Agriculture
+When will the government fix this? Bus terminal lacks seating and basic facilities in Dhurwa.,5,Infrastructure
+When will the government fix this? Manholes are left uncovered on the main road. mera appeal hai ki isko fix karein.,4,Sanitation & Waste
+Coal shortage is causing unannounced load shedding in Seraikela.,8,Energy
+No sign language interpreters available at the police station.,7,Accessibility
+tractor rental scheme is corrupted. koi sun nahi raha.,2,Agriculture
+Complaint regarding: Water rationing is poorly managed.,0,Water Management
+I want to report that Factories are dumping untreated chemicals into the river.,6,Environment
+Urgent complaint: The primary health centre has no doctors available in Doranda. mera appeal hai ki isko fix karein.,1,Healthcare
+I want to report that The x-ray machine at the district hospital has been broken for weeks in Bistupur. samadhan chahiye.,1,Healthcare
+Mid-day meal quality in school is terrible. bahut problem hai.,3,Education
+Bus terminal lacks seating and basic facilities in Palamu. This is unacceptable in Palamu. mera appeal hai ki isko fix karein.,5,Infrastructure
+"Sir/Madam, The government school roof is leaking. samadhan chahiye.",3,Education
+Complaint regarding: Sidewalks are too narrow and blocked for disabled citizens. please help.,7,Accessibility
+Issue in Dhanbad: Manholes are left uncovered on the main road.,4,Sanitation & Waste
+"Sir/Madam, Forest fires have been burning for 8 days unchecked. officials are sleeping, public pareshan hai.",6,Environment
+Complaint regarding: Disability certificates are being delayed by corrupt officials.,7,Accessibility
+"Urgent complaint: Three-phase line is broken, affecting pumps. mera appeal hai ki isko fix karein.",8,Energy
+Patients are forced to sleep on the floor in Simdega. This is unacceptable in Simdega.,1,Healthcare
+I want to report that Taps are running dry in the entire locality in Bokaro. halat bahut kharab hai.,0,Water Management
+Issue in Adityapur: Severe water crisis. Tankers are not arriving on time.,0,Water Management
+Complaint regarding: Wheelchair ramps are missing at the government office in Jugsalai. kab theek hoga?,7,Accessibility
+Urgent complaint: Audio announcements for visually impaired are broken at the bus stand in Doranda.,7,Accessibility
+I want to report that Power cuts last for more than 6 hours daily.,8,Energy
+Urgent complaint: Speed breakers are completely unmarked and dangerous in Ranchi.,5,Infrastructure
+"Sir/Madam, The main road is full of huge potholes in Lohardaga.",5,Infrastructure
+"Sir/Madam, The public toilet near the bus stand is overflowing in Deoghar.",4,Sanitation & Waste
+"sir/madam, the government school roof is leaking in gumla.",3,Education
+Issue in Phusro: Speed breakers are completely unmarked and dangerous. kab theek hoga?,5,Infrastructure
+Issue in Lohardaga: Staff at the clinic are very rude and unhelpful.,1,Healthcare
+When will the government fix this? Swachh Bharat toilets are locked and unusable in Pakur.,4,Sanitation & Waste
+"Sir/Madam, No designated parking spots for persons with disabilities in Koderma.",7,Accessibility
+"Sir/Madam, Dead animal lying on the road, foul smell everywhere in Latehar.",4,Sanitation & Waste
+"Complaint regarding: No cold storage facility functioning, vegetables rotting in Dumka.",2,Agriculture
+Urgent complaint: Operation theatre lacks basic sterilization equipment in Jugsalai.,1,Healthcare
+Issue in Latehar: Drainage covers are missing on the main road. koi sun nahi raha.,5,Infrastructure
+Complaint regarding: Girls' toilet in high school is non-functional in Bokaro. koi sun nahi raha.,3,Education
+"Water pipeline burst near the main road, causing massive leakage in Jamtara.",0,Water Management
+Complaint regarding: Stone crushers are causing extreme noise and dust pollution.,6,Environment
+Complaint regarding: Students haven't received their textbooks yet in Chatra. samadhan chahiye.,3,Education
+Safai karamcharis are demanding bribes in Jamtara.,4,Sanitation & Waste
+Water rationing is poorly managed. This is unacceptable.,0,Water Management
+"Dead animal lying on the road, foul smell everywhere. This is unacceptable. mera appeal hai ki isko fix karein.",4,Sanitation & Waste
+Issue in Simdega: No teachers have attended the primary school this entire week. bohot dikkat ho rahi hai.,3,Education
+Urgent complaint: No dustbins provided in the market area in Dhanbad. kab tak wait karein?,4,Sanitation & Waste
+When will the government fix this? Water rationing is poorly managed.,0,Water Management
+Issue in Chaibasa: Pedestrian crossings lack audio signals for the blind.,7,Accessibility
+"Sir/Madam, Shortage of essential medicines at the sadar hospital in Lohardaga.",1,Healthcare
+Doctors are prescribing medicines from private pharmacies only.,1,Healthcare
+Public buses are completely inaccessible for wheelchair users. This is unacceptable.,7,Accessibility
+When will the government fix this? Taps are running dry in the entire locality.,0,Water Management
+Issue in Jamshedpur: Teachers are forcing students to take private tuitions.,3,Education
+Urgent complaint: Tractor rental scheme is corrupted.,2,Agriculture
+Sewer line is blocked and backing up into houses in Jamshedpur.,4,Sanitation & Waste
+I want to report that Doctors are prescribing medicines from private pharmacies only in Palamu. please help.,1,Healthcare
+Issue in Giridih: Sewage water is flooding the streets.,4,Sanitation & Waste
+I want to report that The playground of the school has been encroached upon. kab tak wait karein?,3,Education
+Complaint regarding: Crop insurance claims for farmers are pending for months in Ramgarh.,2,Agriculture
+When will the government fix this? School building is unsafe in Deoghar.,3,Education
+No electricity for agricultural pumps in Koderma.,2,Agriculture
+"Sir/Madam, Kisan Credit Card applications are being rejected without reason.",2,Agriculture
+When will the government fix this? Power cuts last for more than 10 hours daily in Chaibasa.,8,Energy
+Complaint regarding: Coal shortage is causing unannounced load shedding in Seraikela.,8,Energy
+When will the government fix this? PM-Kisan money not credited to bank account.,2,Agriculture
+Complaint regarding: The x-ray machine at the district hospital has been broken for weeks.,1,Healthcare
+issue in lohardaga: paving blocks in market were removed and never replaced.,5,Infrastructure
+"I want to report that No proper footpaths, pedestrians are at risk in Bokaro.",5,Infrastructure
+complaint regarding: audio announcements for visually impaired are broken at the bus stand in bistupur. koi sunwai nahi hai yahan.,7,Accessibility
+I want to report that Railway crossing needs an overbridge urgently. bohot dikkat ho rahi hai.,5,Infrastructure
+Complaint regarding: Scholarship funds for students are delayed in Bokaro.,3,Education
+Issue in Bistupur: Disability pensions have been stopped without reason.,7,Accessibility
+I want to report that Wildlife habitat is being encroached upon by builders in Pakur.,6,Environment
+I want to report that Open drains are breeding mosquitoes.,4,Sanitation & Waste
+Urgent complaint: Wheelchair ramps are missing at the government office.,7,Accessibility
+When will the government fix this? PM-Kisan money not credited to bank account.,2,Agriculture
+Issue in Jamtara: Fertilizer shortage is killing our harvest. please help.,2,Agriculture
+Issue in Seraikela: Low water pressure means overhead tanks remain empty.,0,Water Management
+issue in seraikela: sidewalks are too narrow and blocked for disabled citizens.,7,Accessibility
+Smart meters are showing random high readings in Seraikela. bohot dikkat ho rahi hai.,8,Energy
+I want to report that Ambulance service refused to come during an emergency in Gumla.,1,Healthcare
+When will the government fix this? The handpump in our village is broken in Sahebganj. kab theek hoga?,0,Water Management
+Complaint regarding: No oxygen cylinders available in the ICU in Koderma.,1,Healthcare
+"Sir/Madam, Power cuts last for more than 5 hours daily.",8,Energy
+Safai karamcharis are demanding bribes in Bistupur. This is unacceptable in Bistupur.,4,Sanitation & Waste
+The new community hall has cracked walls already.,5,Infrastructure
+Issue in Jugsalai: Solar panels installed in panchayat bhavan are stolen.,8,Energy
+Forest fires have been burning for 3 days unchecked in Jugsalai. This is unacceptable in Jugsalai.,6,Environment
+No drinking water facility for kids at school in Phusro. koi sunwai nahi hai yahan.,3,Education
+When will the government fix this? Medical waste from clinics is dumped in the open in Chaibasa.,4,Sanitation & Waste
+Issue in Ranchi: Toll plaza is charging despite terrible road conditions.,5,Infrastructure
+Pani ki samasya is getting worse.,0,Water Management
+Complaint regarding: Mid-day meal quality in school is terrible in Latehar.,3,Education
+"Sir/Madam, No electricity for agricultural pumps. samadhan chahiye.",2,Agriculture
+Urgent complaint: The public toilet near the bus stand is overflowing.,4,Sanitation & Waste
+Urgent complaint: The public toilet near the bus stand is overflowing in Gumla. please help.,4,Sanitation & Waste
+Issue in Sahebganj: The disabled-friendly toilet at the hospital is always locked.,7,Accessibility
+The government school roof is leaking. This is unacceptable.,3,Education
+I want to report that Taps are running dry in the entire locality.,0,Water Management
+Urgent complaint: Water supply disrupted for 7 days. bohot dikkat ho rahi hai.,0,Water Management
+"I want to report that Three-phase line is broken, affecting pumps.",8,Energy
+Urgent complaint: Paving blocks in market were removed and never replaced in Giridih.,5,Infrastructure
+"Sir/Madam, Medical waste from clinics is dumped in the open.",4,Sanitation & Waste
+Issue in Hazaribagh: PM-Kisan money not credited to bank account.,2,Agriculture
+Urgent complaint: Safai karamcharis are demanding bribes in Bokaro. mera appeal hai ki isko fix karein.,4,Sanitation & Waste
+benches are broken and students sit on the floor. koi dhyan nahi de raha.,3,Education
+Complaint regarding: Streetlights on the highway are completely broken in Sahebganj.,5,Infrastructure
+When will the government fix this? Girls' toilet in high school is non-functional.,3,Education
+urgent complaint: no dustbins provided in the market area in lohardaga.,4,Sanitation & Waste
+I want to report that Crop insurance claims for farmers are pending for months in Simdega.,2,Agriculture
+Complaint regarding: Maternal healthcare facilities are extremely poor in Dhanbad.,1,Healthcare
+I want to report that Water rationing is poorly managed.,0,Water Management
+I want to report that The public toilet near the bus stand is overflowing.,4,Sanitation & Waste
+"urgent complaint: ash dyke from power plant breached, flooding fields in chaibasa.",6,Environment
+When will the government fix this? Factories are dumping untreated chemicals into the river in Ramgarh.,6,Environment
+Complaint regarding: Taps are running dry in the entire locality in Godda. turant action lijiye.,0,Water Management
+"Illegal sand mining is destroying the riverbed. officials are sleeping, public pareshan hai.",6,Environment
+"Sir/Madam, Smart meters are showing random high readings.",8,Energy
+I want to report that The dumping ground is toxic and needs to be relocated.,4,Sanitation & Waste
+Urgent complaint: Coal shortage is causing unannounced load shedding. kab theek hoga?,8,Energy
+"When will the government fix this? Three-phase line is broken, affecting pumps. bohot dikkat ho rahi hai.",8,Energy
+When will the government fix this? Toll plaza is charging despite terrible road conditions in Sahebganj.,5,Infrastructure
+I want to report that The new community hall has cracked walls already.,5,Infrastructure
+i want to report that bedsheets in the ward are dirty and blood-stained.,1,Healthcare
+Issue in Koderma: Toll plaza is charging despite terrible road conditions. halat bahut kharab hai.,5,Infrastructure
+I want to report that Water rationing is poorly managed.,0,Water Management
+Urgent complaint: Safai karamcharis are demanding bribes.,4,Sanitation & Waste
+Complaint regarding: Power cuts last for more than 5 hours daily in Ramgarh.,8,Energy
+Issue in Bistupur: Stray cattle are destroying standing crops. halat bahut kharab hai.,2,Agriculture
+Urgent complaint: Crop insurance claims for farmers are pending for months.,2,Agriculture
+When will the government fix this? Voltage is so low that tubelights don't turn on in Deoghar.,8,Energy
+Tree felling for road widening is excessive in Ramgarh. This is unacceptable in Ramgarh. please help.,6,Environment
+Issue in Doranda: Benches are broken and students sit on the floor.,3,Education
+Urgent complaint: Coal shortage is causing unannounced load shedding.,8,Energy
+"Sir/Madam, Toxic fumes from the industrial area are making people sick in Chaibasa.",6,Environment
+Issue in Chirkunda: Special education school lacks basic facilities.,7,Accessibility
+I want to report that Safai karamcharis are demanding bribes in Bokaro. kab theek hoga?,4,Sanitation & Waste
+When will the government fix this? Ambulance service refused to come during an emergency in Gumla.,1,Healthcare
+"sir/madam, shortage of essential medicines at the sadar hospital.",1,Healthcare
+"Water pipeline burst near the main road, causing massive leakage in Godda. This is unacceptable in Godda. bahut problem hai.",0,Water Management
+No sign language interpreters available at the police station in Hazaribagh. This is unacceptable in Hazaribagh. mera appeal hai ki isko fix karein.,7,Accessibility
+Complaint regarding: Doctors are prescribing medicines from private pharmacies only in Latehar.,1,Healthcare
+"Sir/Madam, No sign language interpreters available at the police station. koi sun nahi raha.",7,Accessibility
+Urgent complaint: Irrigation canal is completely dry in Chirkunda.,2,Agriculture
+"Sir/Madam, Sewage water is flooding the streets in Bokaro.",4,Sanitation & Waste
+I want to report that High voltage fluctuations ruined our appliances.,8,Energy
+I want to report that Garbage trucks are leaking filth onto the roads.,4,Sanitation & Waste
+"Maternal healthcare facilities are extremely poor in Seraikela. This is unacceptable in Seraikela. officials are sleeping, public pareshan hai.",1,Healthcare
+Urgent complaint: The disabled-friendly toilet at the hospital is always locked in Simdega.,7,Accessibility
+I want to report that Dangling live wires are a serious safety hazard in Godda. halat bahut kharab hai.,8,Energy
+Audio announcements for visually impaired are broken at the bus stand in Gumla.,7,Accessibility
+Jal Jeevan Mission pipes laid but no water flowing.,0,Water Management
+When will the government fix this? Elevator at the collectorate has been broken for months. mera appeal hai ki isko fix karein.,7,Accessibility
+Urgent complaint: Community health worker has not visited for 7 months.,1,Healthcare
+Issue in Dhanbad: The government school roof is leaking.,3,Education
+"No cold storage facility functioning, vegetables rotting in Phusro. This is unacceptable in Phusro.",2,Agriculture
+"No sign language interpreters available at the police station. officials are sleeping, public pareshan hai.",7,Accessibility
+shortage of essential medicines at the sadar hospital in mango. this is unacceptable in mango.,1,Healthcare

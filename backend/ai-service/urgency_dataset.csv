@@ -1,89 +1,168 @@
 text,domain_id,urgency_score,high_kw_count,med_kw_count,mild_kw_count,text_len
-Arsenic levels dangerously high in drinking water. Children showing skin lesions and falling sick.,0,10,1,1,0,87
-Death reported near Chas borewell. Villagers consumed contaminated water with toxic levels.,0,10,2,1,0,82
-Cholera outbreak in Sahibganj village. Multiple hospitalisations. PHC has no medicines.,1,10,2,0,0,81
-Malaria outbreak near Chaibasa. No anti-malarial drugs at health centre. Cases rising fast.,1,9,1,1,0,80
-River contamination causing acute illness outbreak. Multiple families affected in downstream village.,0,9,2,1,0,86
-Fatal accident at collapsed bridge near Seraikela. Vehicle fell. No warning sign installed.,5,9,2,0,0,80
-Epidemic risk from stagnant water after flood. No disease surveillance team deployed.,6,9,1,1,0,79
-Arsenic contamination reported in tubewell water at Chas block. No safe water alternative.,0,9,1,0,0,80
-Emergency: borewell pump collapsed. 200 families without water during heatwave.,0,9,1,0,0,79
-Toxic mine water discharge into river. Fishing communities showing acute symptoms.,6,9,2,1,0,80
-Flood waters mixing with sewage in Sahebganj. Waterborne disease risk very high.,4,8,0,2,0,79
-Dengue cases doubling every week in Ramgarh. Fogging not done. No beds in hospital.,1,8,0,2,0,79
-Maternal death occurred due to delay. Ambulance took 4 hours. Road broken.,1,8,1,2,0,72
-Drought has completely destroyed kharif crop in Palamu. Farmers have nothing to eat.,2,8,0,1,0,74
-Pregnant woman could not reach hospital. Road flooded. Delivered at home without help.,1,8,0,2,0,84
-Contamination from factory effluent affecting drinking water source of 5 villages.,0,8,0,1,0,79
-Malaria case at PHC not referred on time. Patient now in severe condition.,1,8,0,1,0,71
-Flood damaged road cutting off our village for 6 days. No emergency supply reached.,5,8,0,1,0,79
-TB patient has stopped taking medicine due to distance. Condition is worsening.,1,8,0,0,0,72
-Toxic fumes from coal mine ventilation shaft near school. Students complaining of dizziness.,6,8,1,0,0,81
-Anemia very high among pregnant women in our block. Supplements out of stock for 2 months.,1,7,0,2,0,83
-Water turbidity very high from treatment plant. Chlorine shortage disrupted supply.,0,7,0,2,0,79
-Crop failure due to untimely rainfall. Farmers requesting drought relief urgently.,2,7,0,1,0,70
-Dengue surveillance absent in our municipality. Mosquito breeding sites not cleared.,1,7,0,1,0,74
+Arsenic levels dangerously high in drinking water. Children showing skin lesions and falling sick.,0,10,1,1,0,97
+Death reported near Chas borewell. Villagers consumed contaminated water with toxic levels.,0,10,2,1,0,90
+Cholera outbreak in Sahibganj village. Multiple hospitalisations. PHC has no medicines.,1,10,2,0,0,86
+Three deaths from cholera epidemic in Pakur. No medical team deployed. Toxic water source identified.,1,10,3,0,0,99
+Fatal road collapse near Seraikela killed two people. Emergency services not responding.,5,10,2,0,0,86
+Arsenic poisoning in tubewells at Chas block. Acute symptoms in children. Hazard to entire community.,0,10,3,0,0,97
+Epidemic spreading in flood-affected Sahebganj. Multiple casualties reported. No ambulance available.,1,10,2,1,0,97
+Toxic chemical leak from factory near Jamshedpur river. Fish dying. Acute health hazard.,6,10,3,0,0,86
+Bridge collapsed on highway near Bokaro. Fatal accident. Emergency vehicles cannot pass.,5,10,2,0,0,86
+Death of pregnant woman due to no ambulance. Maternal care absent in Latehar block.,1,10,1,1,0,82
+Poison found in village water tank in Giridih. Entire hamlet sick. Emergency declared.,0,9,2,0,0,80
+Outbreak of dengue in Ramgarh town. Five deaths. Hospital beds full. No fogging done.,1,9,1,1,0,83
+Arsenic contamination reported in tubewell water at Chas block. No safe water alternative.,0,9,1,1,0,89
+Emergency: borewell pump collapsed. 200 families without water during heatwave.,0,9,1,0,0,78
+Toxic mine water discharge into river. Fishing communities showing acute symptoms.,6,9,2,0,0,80
+Malaria outbreak near Chaibasa forest villages. No anti-malarial drugs at health centre.,1,9,1,1,0,86
+Dam wall showing cracks near Hazaribagh. Acute flood hazard for downstream villages.,0,9,2,0,0,80
+Collapsed school building in Pakur. Students trapped. Casualty feared.,3,9,2,0,0,66
+Coal mine fire causing toxic fumes near Dhanbad residential area. Emergency evacuation needed.,6,9,2,0,0,92
+Fatal electrocution from collapsed power line in Ramgarh village. Hazard to pedestrians.,5,9,2,0,0,84
+Flood waters mixing with sewage in Sahebganj. Waterborne disease outbreak risk very high.,4,8,0,2,0,88
+Dengue cases doubling every week in Ramgarh. Fogging not done. No beds in hospital.,1,8,0,1,0,81
+Maternal death occurred due to delay. Ambulance took 4 hours. Broken road to hospital.,1,8,0,2,0,83
+Drought has completely destroyed kharif crop in Palamu. Farmers have nothing to eat.,2,8,0,1,0,80
+Pregnant woman could not reach hospital. Road broken and flooded. Delivered at home.,1,8,0,3,0,80
+Contamination from factory effluent affecting drinking water source of 5 villages.,0,8,0,1,0,80
+Malaria cases rising in tribal hamlets near Chaibasa. PHC has zero stock of medicines.,1,8,0,1,0,83
+Flood damaged all roads cutting off our village. No emergency supply reached for 6 days.,5,8,0,1,0,87
+TB patient has stopped taking medicine. Shortage of drugs at DOTS centre in Koderma.,1,8,0,1,0,83
+Pollution from burning coal waste causing breathing problems in Jharia township.,6,8,0,1,0,75
+Severe drought in Chatra district. All borewells dry. Shortage of drinking water for 3000 people.,0,8,0,2,0,96
+Mercury contamination found in stream near Ramgarh gold processing area. People falling ill.,6,8,0,1,0,87
+Anemia very high among pregnant women in our block. Iron supplements out of stock for 2 months.,1,7,0,2,0,90
+Water turbidity very high from treatment plant. Chlorine shortage disrupted supply.,0,7,0,2,0,80
+Crop failure due to untimely rainfall. Farmers requesting drought relief urgently.,2,7,0,1,0,79
+Dengue surveillance absent in our municipality. Mosquito breeding sites not cleared.,1,7,0,1,0,82
 Broken bridge making transport impossible for 3 villages since last monsoon.,5,7,0,1,0,73
 Food shortage in tribal hamlet. ICDS food supply disrupted for 6 weeks.,1,7,0,1,0,69
-Fluoride in groundwater causing dental and skeletal fluorosis in villagers.,0,7,0,1,0,71
-High tension electric wire snapped and lying on road. Risk of electrocution.,5,7,1,0,0,72
-Pollution from stone crusher causing respiratory illness in children near school.,6,7,0,0,0,74
-Open drain overflowing into homes during rain. Health hazard for 30 families.,4,7,0,1,0,70
-Irrigation canal broken for 3 months. Paddy crop will fail if not repaired now.,2,7,0,1,0,74
-Power outage affecting cold storage. Vaccine spoilage risk at sub-centre.,8,7,0,1,0,71
-Failure of solar pumps affecting water supply to 4 schools and 1 PHC.,8,7,0,1,0,70
-Maternal health services disrupted as ANM absent for 2 months in our block.,1,7,0,0,0,74
-Sand mining causing riverbank erosion. Houses on bank at risk of falling.,6,6,0,0,0,71
-Shortage of medicines at PHC for common diseases. Patients buying from private shops.,1,6,0,1,0,75
-Government school has no teacher for 2 months. Board exams approaching.,3,6,0,0,0,68
-Paddy yield down 40 percent due to pest attack. No extension officer visited.,2,6,0,0,0,68
-Pothole on highway caused vehicle accident. No repair in 3 months.,5,6,0,0,1,65
-Road needs urgent repair. Ambulance could not reach patient in time due to bad road.,5,6,0,0,0,73
-Electricity transformer failed. 8 villages without power during winter.,8,6,0,1,0,64
-Sewage plant non-functional for 4 months. Untreated waste going to river.,4,6,0,0,0,70
-Forest fire not controlled for 2 days. Large area of forest burned.,6,6,0,0,0,63
-Contaminated water from broken pipe mixing with supply. Complaints ignored.,0,6,0,1,0,68
-Deforestation near wildlife corridor happening unchecked. Elephants displaced.,6,6,0,0,0,69
-School building unsafe after cracks visible. Students sitting in damaged rooms.,3,6,0,0,0,69
-Doctor absent at PHC. Patients turned away without treatment.,1,6,0,0,0,61
-Septic tank overflowing near primary school. Waste visible on playground.,4,6,0,0,0,68
-Soil acidity in Kanke block making crops fail. Lime subsidy not given.,2,5,0,0,0,67
-Tubewell pump needs maintenance. Water supply disrupted for 2 days.,0,5,0,0,0,62
-Cold storage broken. Some vegetable produce rotting.,2,5,0,1,0,64
-Electricity available only 6 hours per day in our area. Supply very unreliable.,8,5,0,0,0,67
-Girls dropout rate increasing. No toilet in upper primary school.,3,5,0,0,0,63
-Garbage collection vehicle not coming for 3 weeks. Waste piling up.,4,5,0,0,0,62
-Community toilet locked most of the time. No caretaker.,4,5,0,0,1,58
-LPG delivery delayed by 3 weeks in remote area. Families using firewood.,8,5,0,0,0,67
-Digital literacy programme has no equipment delivered yet.,3,5,0,0,0,56
-Forest patrols reporting poaching activity in Palamau reserve.,6,5,0,0,0,62
-Irrigation pump needs repair. Farmers cannot water fields.,2,5,0,0,0,58
-Scholarship not credited to tribal students for 2 semesters.,3,5,0,0,0,61
-Biomass gasifier installed but not operational. No training given.,8,5,0,0,0,63
-Street lights in our ward not working since 2 months. Safety concern.,5,4,0,0,1,67
-Mid-day meal quality is poor at our school. Children complaining.,3,4,0,0,0,61
-Garbage bins not emptied regularly. Flies breeding at the site.,4,4,0,0,0,61
-Soil testing lab not functional. Farmers cannot get health card.,2,4,0,0,0,62
-Water meter faulty. Getting high bills despite low usage.,0,4,0,0,0,59
-Road has a few potholes but overall passable. Needs resurfacing.,5,4,0,0,1,62
-Computer lab installed but internet connection not given yet.,3,4,0,0,0,62
-Biogas plant producing less gas than expected. Needs maintenance check.,8,4,0,0,0,65
-Bus service to our block is not frequent. Waiting time too long.,5,4,0,0,0,62
-LPG recharge kiosk far from our village. Inconvenience for residents.,8,4,0,0,0,64
-Building maintenance of community hall needed. Roof needs minor repair.,5,3,0,0,0,65
-Dustbin in market area overflowing. Needs bigger container.,4,3,0,0,0,56
-School blackboard is old and needs replacement.,3,3,0,0,0,52
-Library needs more books on competitive exams.,3,3,0,0,0,56
-Solar panel on streetlight has minor dust accumulation. Needs cleaning.,8,3,0,0,0,64
-Road marking not visible on main road. Needs repainting.,5,3,0,0,0,57
-Anganwadi centre needs a new mat and some classroom equipment.,3,3,0,0,0,62
-Wire fencing of government tree nursery is broken in one section.,6,3,0,0,1,64
-EV charging station progress is slow. Expected 2 months ago.,8,3,0,0,0,62
-Community toilet needs soap and water availability improvement.,4,3,0,0,1,62
-Old water tank needs repainting and general maintenance.,0,2,0,0,0,58
-Forest nursery needs additional seedlings this season.,6,2,0,0,0,55
-District library timings could be extended for working students.,3,2,0,0,0,62
-Footpath in colony needs better paving. Slightly uneven.,5,2,0,0,1,60
-Agricultural fair should be organised more frequently in our block.,2,2,0,0,0,62
-Suggestion to add more routes to mobile library van.,3,2,0,0,0,56
-Request for additional variety of seeds at cooperative store.,2,2,0,0,0,58
+Fluoride in groundwater causing dental and skeletal fluorosis in Koderma villagers.,0,7,0,0,0,80
+High tension electric wire snapped and lying on road. Risk of electrocution for children.,5,7,0,0,0,85
+Open drain overflowing into homes during rain. Pollution affecting 30 families in Ranchi.,4,7,0,1,0,84
+Irrigation canal broken for 3 months. Paddy crop will fail if not repaired now.,2,7,0,1,0,78
+Power outage affecting cold storage. Vaccine spoilage risk at sub-centre in Dumka.,8,7,0,1,0,80
+Failure of solar pumps affecting water supply to 4 schools and 1 PHC in Latehar.,8,7,0,1,0,80
+Maternal health services disrupted as ANM absent for 2 months in our block.,1,7,0,2,0,73
+River pollution killing fish in Subarnarekha near Jamshedpur. Families losing livelihood.,6,7,0,1,0,83
+Sewage overflow into residential area during monsoon. Children playing in contaminated water.,4,7,0,1,0,89
+Forest fire in Palamau reserve burning for 2 days. No fire department response yet.,6,7,0,0,0,80
+Dialysis unit at Dhanbad district hospital broken. Renal failure patients travel to Kolkata.,1,7,0,1,0,85
+Tuberculosis medicines unavailable at PHC for 3 months. Patients defaulting treatment.,1,7,0,0,0,81
+Sand mining causing riverbank erosion. Houses on bank at risk of falling into river.,6,6,0,0,0,82
+Shortage of essential medicines at PHC. Patients buying from private shops at 5x cost.,1,6,0,1,0,82
+Government school has no teacher for 2 months. Board exams approaching in Giridih.,3,6,0,0,0,75
+Paddy yield down 40 percent due to pest attack. No extension officer visited our area.,2,6,0,0,0,81
+Road accident due to pothole on highway. Victim hospitalised. No repair in 3 months.,5,6,0,0,1,81
+Road needs urgent repair. Ambulance could not reach patient in time due to bad road.,5,6,0,0,0,81
+Electricity transformer failed. 8 villages without power during winter in Latehar.,8,6,0,1,0,80
+Sewage treatment plant non-functional for 4 months. Untreated waste going to river.,4,6,0,0,0,80
+Forest fire not controlled for 2 days. Large area of protected forest burned.,6,6,0,0,0,74
+Contaminated water from broken pipe mixing with supply. Complaints ignored by officials.,0,6,0,2,0,84
+Deforestation near wildlife corridor happening unchecked. Elephants displaced to villages.,6,6,0,0,0,83
+School building unsafe after cracks appeared. Students sitting in damaged rooms in Pakur.,3,6,0,0,0,83
+Doctor absent at PHC for 3 weeks. Patients turned away without treatment in Simdega.,1,6,0,0,0,80
+Septic tank overflowing near primary school playground. Waste visible and smelling badly.,4,6,0,0,0,83
+No anti-rabies vaccine available at government hospital. Dog bite cases increasing in Hazaribagh.,1,6,0,0,0,89
+Air pollution from coal washery in Bokaro affecting respiratory health of nearby residents.,6,6,0,1,0,88
+Cold storage broken for 2 months. Vegetable produce rotting in Dumka market area.,2,6,0,1,0,77
+Wheelchair ramp at collectorate blocked. Disabled persons cannot access government office.,7,6,0,0,0,83
+Water supply pipeline leaking at 5 joints. Losing 40 percent water before reaching homes.,0,5,0,0,0,83
+Soil acidity in Kanke block making crops fail. Lime subsidy not given to farmers.,2,5,0,0,0,78
+Tubewell pump needs maintenance. Water supply disrupted for 2 days in our hamlet.,0,5,0,0,0,77
+Electricity available only 6 hours per day in our area. Supply very unreliable.,8,5,0,0,0,77
+Girls dropout rate increasing after class 8. No toilet in upper primary school in Khunti.,3,5,0,0,0,83
+Garbage collection vehicle not coming for 3 weeks. Waste piling up at street corners.,4,5,0,0,0,80
+Community toilet locked most of the time. No caretaker assigned by municipality.,4,5,0,0,0,74
+LPG delivery delayed by 3 weeks in remote area. Families using firewood again.,8,5,0,0,0,74
+Digital literacy programme for women has no equipment delivered yet in Gumla.,3,5,0,0,0,69
+Forest patrols reporting poaching activity in Palamau tiger reserve. No action taken.,6,5,0,0,0,82
+Irrigation pump needs repair. Farmers cannot water fields during critical rabi season.,2,5,0,0,0,81
+Scholarship not credited to tribal students for 2 semesters. Dropouts increasing.,3,5,0,0,0,73
+Biomass gasifier installed but not operational. No training given to operators.,8,5,0,0,0,71
+Disability certificate issuance delayed for 8 months. Persons with disability cannot access schemes.,7,5,0,0,0,90
+Sign language interpreter not available at government hospital for hearing impaired patients.,7,5,0,0,0,86
+Mobile network tower in Simdega village defunct for 2 months. No connectivity for calls.,5,5,0,0,0,82
+Pension for persons with disability not revised for 5 years. Amount very insufficient.,7,5,0,0,0,78
+Vocational training given but no certification. Youth trained but employers reject them.,3,5,0,0,0,80
+Employment quota for disabled persons in state government not being filled.,7,5,0,0,0,69
+Custom hiring centre for farm equipment is locked. Tractor available but no operator.,2,5,0,0,0,78
+Solar water heater at school broken. Students have no hot water during winter months.,8,5,0,0,0,80
+Road connecting village to block HQ has potholes. Heavy vehicles cannot pass safely.,5,5,0,0,1,79
+Organic farming cluster in Lohardaga lacks market linkage. Produce sold at conventional price.,2,5,0,0,0,84
+Street lights in our ward not working since 2 months. Safety concern at night for women.,5,4,0,0,1,83
+Mid-day meal quality is poor at our school. Children complaining of stomach issues.,3,4,0,0,0,79
+Garbage bins not emptied regularly. Flies and mosquitoes breeding at the collection site.,4,4,0,0,0,83
+Soil testing lab not functional. Farmers cannot get soil health card in Hazaribagh.,2,4,0,0,0,79
+Water meter faulty at our colony. Getting high bills despite low actual usage.,0,4,0,0,0,73
+Road has several potholes near school area. Needs resurfacing before monsoon season.,5,4,0,0,1,80
+Computer lab installed at school but internet connection not given yet by department.,3,4,0,0,0,82
+Biogas plant producing less gas than expected. Needs maintenance check by technician.,8,4,0,0,0,79
+Bus service to our block is not frequent. Waiting time too long for commuters.,5,4,0,0,0,73
+LPG recharge kiosk is 15km from our village. Senior citizens face inconvenience.,8,4,0,0,0,69
+Anganwadi centre has no helper. Nutritional programmes not being implemented properly.,3,4,0,0,0,79
+Accessible toilet not available at bus stand. Disabled passengers struggle to use facility.,7,4,0,0,0,83
+Braille materials not available at district library. Visually impaired students have nothing.,7,4,0,0,0,83
+Public urinal near bus stand in poor condition. Needs repair and regular cleaning.,4,4,0,0,1,77
+Agricultural input store under cooperative closed. Seeds unavailable before sowing season.,2,4,0,0,0,83
+Fibre optic cable laid under BharatNet is cut. Internet offline at gram panchayat office.,5,4,0,0,0,82
+Hearing aids provided to students are poor quality and break within 3 months of use.,7,4,0,0,0,80
+Smart prepaid electricity meters installed but recharge kiosk not set up in our block.,8,4,0,0,0,83
+Railway level crossing near our town has no gate keeper. Safety concern for vehicles.,5,4,0,0,0,80
+Drain in our locality needs desilting before monsoon. Last cleaned 2 years ago.,4,4,0,0,1,77
+Building maintenance of community hall needed. Roof leaking during rain in Chatra.,5,3,0,0,0,78
+Dustbin in market area overflowing. Needs bigger container or more frequent collection.,4,3,0,0,0,80
+School blackboard is old and barely readable. Needs replacement for 3 classrooms.,3,3,0,0,1,79
+Library needs more books on competitive exam preparation. Students requesting since months.,3,3,0,0,1,85
+Solar panel on streetlight has dust accumulation. Needs cleaning for proper functioning.,8,3,0,0,0,80
+Road marking not visible on main road intersection. Needs repainting before accidents happen.,5,3,0,0,0,84
+Anganwadi centre needs a new mat and some basic classroom supplies for children.,3,3,0,0,1,76
+Wire fencing of government tree nursery is broken in one section. Cattle entering.,6,3,0,0,1,77
+EV charging station progress is slow. Expected completion was 2 months ago in Ranchi.,8,3,0,0,0,82
+Community toilet needs soap and regular water supply improvement at bus terminal.,4,3,0,0,1,76
+Electricity meter reading officer not visiting regularly. Estimated bills being sent.,8,3,0,0,0,72
+Vegetable market shed needs roof repair. Leaks during rain affecting produce quality.,2,3,0,0,0,79
+Garbage segregation awareness campaign not conducted in our ward. Bins lying unused.,4,3,0,0,0,78
+School playground leveling needed. Children cannot play sports on uneven surface.,3,3,0,0,0,76
+Government guest house in district town needs maintenance. Used for official visits.,5,3,0,0,0,76
+Public park in Ranchi needs better lighting and seating arrangements for elderly.,5,3,0,0,1,76
+Mobile science lab promised for rural schools has visited our block only once.,3,3,0,0,0,73
+Check dam construction incomplete since 6 months. Contractor absent from site.,5,3,0,0,0,72
+Tree plantation drive announced but no saplings distributed to our panchayat yet.,6,3,0,0,0,78
+Assistive devices like walking sticks not available at PHC for elderly patients.,7,3,0,0,0,76
+Solar home system batteries in village need replacement after warranty period expired.,8,3,0,0,0,80
+Old water tank needs repainting and general maintenance before monsoon.,0,2,0,0,0,65
+Forest nursery needs additional seedlings for this season plantation drive.,6,2,0,0,0,69
+District library timings could be extended for working students preparing for exams.,3,2,0,0,0,78
+Footpath in colony needs better paving. Slightly uneven surface in some areas.,5,2,0,0,0,73
+Agricultural fair should be organised more frequently in our block for awareness.,2,2,0,0,0,77
+Suggestion to add more routes to mobile library van covering remote hamlets.,3,2,0,0,0,73
+Request for additional variety of seeds at cooperative store for rabi season.,2,2,0,0,0,73
+Community hall could use a fresh coat of paint. Looks worn but structurally fine.,5,2,0,0,0,77
+Suggestion to install solar panels on school roof to reduce electricity bills.,8,2,0,0,0,75
+Request to add wheelchair accessible path in local park for elderly residents.,7,2,0,0,0,75
+Could we have a complaint drop box installed at panchayat office for written grievances.,5,2,0,0,0,83
+Requesting signboards in Hindi and Santhali at government offices in tribal areas.,7,2,0,0,0,80
+Market area would benefit from covered walkway for shade during summer months.,5,2,0,0,0,74
+Bus shelter at our stop needs a bench for waiting passengers. Currently standing only.,5,2,0,0,0,79
+Rain gauge installation requested at block office for better weather data collection.,6,2,0,0,0,80
+Request for evening coaching centre for tribal students in Khunti block.,3,2,0,0,0,68
+Suggestion for more tree plantation along village road for shade and environment.,6,2,0,0,0,76
+Would be helpful to have ATM machine at block headquarters. Nearest is 12km away.,5,2,0,0,0,77
+Community garden space available but unused. Request to develop it for vegetable growing.,2,2,0,0,0,82
+Fish pond maintenance requested. Minor desilting would improve fish production.,2,2,0,0,0,72
+Request for painting crosswalk near school entrance for student safety.,3,1,0,0,0,68
+Suggestion to keep government office open on alternate Saturdays for working citizens.,5,1,0,0,0,80
+Village square beautification would improve community pride. Minor landscaping needed.,5,1,0,0,0,80
+Proposal to organise monthly health awareness camp in our gram panchayat.,1,1,0,0,0,72
+Request for book donation drive for school library in our village.,3,1,0,0,1,63
+Suggestion to create WhatsApp group for panchayat announcements to citizens.,3,1,0,0,0,72
+Village entrance could use a name board and direction sign for visitors.,5,1,0,0,0,70
+Suggesting periodic cleaning schedule for community water tank in our colony.,0,1,0,0,1,73
+Request to add dustbin near village temple. Currently no waste disposal point.,4,1,0,0,0,72
+Would appreciate a notice board at panchayat office with scheme information.,3,1,0,0,0,72
+Community feedback session for improving local governance would be appreciated.,5,1,0,0,0,73
+Requesting informational pamphlets about disability rights at block development office.,7,1,0,0,0,80
+Suggestion for tree guard installation around newly planted saplings on road.,6,1,0,0,0,71
+Could village children get drawing competition during republic day celebration.,3,1,0,0,0,71
+Request for speed breaker near school zone for traffic safety on main road.,5,1,0,0,0,73

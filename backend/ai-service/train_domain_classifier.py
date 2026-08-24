@@ -3,9 +3,9 @@ train_domain_classifier.py
 Fine-tunes distilbert-base-uncased on the synthetic domain_dataset.csv
 for Jharkhand civic complaint domain classification.
 
-Training data: ~180 synthetic examples across 9 domain categories.
+Training data: ~450 synthetic examples across 9 domain categories.
 Data is synthetic (generated for SIH 26043 hackathon prototype).
-Run on CPU — takes ~10-20 minutes for 3 epochs on this dataset size.
+Run on CPU — takes ~5-10 minutes for 10 epochs on this dataset size.
 
 Usage:
     cd backend/
@@ -80,8 +80,11 @@ ID2LABEL = {i: d for d, i in LABEL2ID.items()}
 SEED = 42
 TRAIN_RATIO = 0.80
 MODEL_NAME = "distilbert-base-uncased"
-EPOCHS = 3
-BATCH_SIZE = 8
+EPOCHS = 10
+BATCH_SIZE = 16
+LEARNING_RATE = 2e-5
+WEIGHT_DECAY = 0.01
+WARMUP_RATIO = 0.1
 MAX_LEN = 128
 
 # ---------------------------------------------------------------------------
@@ -193,6 +196,9 @@ def main():
         num_train_epochs=EPOCHS,
         per_device_train_batch_size=BATCH_SIZE,
         per_device_eval_batch_size=BATCH_SIZE,
+        learning_rate=LEARNING_RATE,
+        weight_decay=WEIGHT_DECAY,
+        warmup_ratio=WARMUP_RATIO,
         eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,

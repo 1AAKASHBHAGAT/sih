@@ -82,21 +82,27 @@ _MODEL_PATH = os.path.abspath(
 
 
 def _build_model():
-    """Reconstruct the UrgencyNet architecture for loading weights."""
+    """Reconstruct the V2 UrgencyNet architecture for loading weights."""
     import torch.nn as nn
 
+    NUM_FEATURES = 9 + NUM_DOMAINS  # 18
+
     class UrgencyNet(nn.Module):
-        INPUT_DIM = 4 + NUM_DOMAINS  # 13
+        INPUT_DIM = NUM_FEATURES  # 18
 
         def __init__(self):
             super().__init__()
             self.net = nn.Sequential(
-                nn.Linear(self.INPUT_DIM, 64),
+                nn.Linear(self.INPUT_DIM, 128),
+                nn.BatchNorm1d(128),
                 nn.ReLU(),
-                nn.Dropout(0.3),
+                nn.Dropout(0.2),
+                nn.Linear(128, 64),
+                nn.BatchNorm1d(64),
+                nn.ReLU(),
+                nn.Dropout(0.2),
                 nn.Linear(64, 32),
                 nn.ReLU(),
-                nn.Dropout(0.3),
                 nn.Linear(32, 1),
                 nn.Sigmoid(),
             )
@@ -126,7 +132,7 @@ def _load_urgency_model():
         _urgency_model = model
         _urgency_available = True
         mae = checkpoint.get("final_val_mae", "unknown")
-        print(f"[URGENCY] PyTorch UrgencyNet loaded. Training val MAE={mae:.2f}" if isinstance(mae, float) else f"[URGENCY] PyTorch UrgencyNet loaded.")
+        print(f"[URGENCY] PyTorch UrgencyNet V2 loaded. Training val MAE={mae:.2f}" if isinstance(mae, float) else f"[URGENCY] PyTorch UrgencyNet V2 loaded.")
     except Exception as e:
         print(f"[URGENCY] Failed to load urgency model ({e}). Using rules fallback.")
         _urgency_available = False
@@ -135,11 +141,19 @@ def _load_urgency_model():
 
 
 def _extract_features(text: str, category: str) -> list:
-    """Extract the same 13 features used during training."""
+    """Extract the same 18 features used during V2 training."""
     text_lower = text.lower()
+    words = re.findall(r"\w+", text_lower)
+
     high_kw = sum(1 for kw in HIGH_KEYWORDS if kw in text_lower)
     med_kw = sum(1 for kw in MEDIUM_KEYWORDS if kw in text_lower)
     mild_kw = sum(1 for kw in MILD_KEYWORDS if kw in text_lower)
+    total_kw = high_kw + med_kw + mild_kw
+
+    word_count = len(words)
+    avg_word_len = sum(len(w) for w in words) / max(word_count, 1)
+    has_exclamation = 1.0 if "!" in text else 0.0
+    has_question = 1.0 if "?" in text else 0.0
 
     domain_vec = [0.0] * NUM_DOMAINS
     idx = DOMAIN2IDX.get(category, -1)
@@ -150,7 +164,12 @@ def _extract_features(text: str, category: str) -> list:
         min(high_kw / 3.0, 1.0),
         min(med_kw / 4.0, 1.0),
         min(mild_kw / 3.0, 1.0),
+        min(total_kw / 6.0, 1.0),
         min(len(text) / MAX_TEXT_LEN, 1.0),
+        min(word_count / 25.0, 1.0),
+        min(avg_word_len / 8.0, 1.0),
+        has_exclamation,
+        has_question,
     ] + domain_vec
 
 

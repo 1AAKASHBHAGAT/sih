@@ -1,0 +1,50 @@
+{
+  "activation": "gelu",
+  "architectures": [
+    "DistilBertForSequenceClassification"
+  ],
+  "attention_dropout": 0.1,
+  "bos_token_id": null,
+  "dim": 768,
+  "dropout": 0.1,
+  "dtype": "float32",
+  "eos_token_id": null,
+  "hidden_dim": 3072,
+  "id2label": {
+    "0": "Water Management",
+    "1": "Healthcare",
+    "2": "Agriculture",
+    "3": "Education",
+    "4": "Sanitation & Waste",
+    "5": "Infrastructure",
+    "6": "Environment",
+    "7": "Accessibility",
+    "8": "Energy"
+  },
+  "initializer_range": 0.02,
+  "label2id": {
+    "Accessibility": 7,
+    "Agriculture": 2,
+    "Education": 3,
+    "Energy": 8,
+    "Environment": 6,
+    "Healthcare": 1,
+    "Infrastructure": 5,
+    "Sanitation & Waste": 4,
+    "Water Management": 0
+  },
+  "max_position_embeddings": 512,
+  "model_type": "distilbert",
+  "n_heads": 12,
+  "n_layers": 6,
+  "pad_token_id": 0,
+  "problem_type": "single_label_classification",
+  "qa_dropout": 0.1,
+  "seq_classif_dropout": 0.2,
+  "sinusoidal_pos_embds": false,
+  "tie_weights_": true,
+  "tie_word_embeddings": true,
+  "transformers_version": "5.3.0",
+  "use_cache": false,
+  "vocab_size": 30522
+}
