@@ -12,7 +12,4 @@ psycopg2-binary>=2.9.9
 asyncpg>=0.29.0
 httpx>=0.26.0
 pytest>=8.0.0
-torch>=2.0.0
-transformers>=4.37.0
-accelerate>=1.1.0
 scikit-learn>=1.4.0
