@@ -3,7 +3,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { ExternalLink } from 'lucide-react';
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+try {
+  if (L && (L as any).Icon && (L as any).Icon.Default && (L as any).Icon.Default.prototype) {
+    delete (L as any).Icon.Default.prototype._getIconUrl;
+  }
+} catch (e) {
+  // Safe fallback if Leaflet icon prototype is missing
+}
 
 const DOMAIN_COLORS: Record<string, string> = {
   "Water Management": "#38bdf8",
