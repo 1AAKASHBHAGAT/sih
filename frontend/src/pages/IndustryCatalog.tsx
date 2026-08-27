@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { 
   Briefcase, 
-  HeartHandshake, 
   Sparkles,
   AlertCircle,
   RefreshCw
 } from 'lucide-react';
 import { getProblems, submitCSRPledge, getAllPledges } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
+import { Problem, CSRPledge } from '../types';
 
 const COMPANY_SUGGESTIONS = [
   "Tata Steel CSR Division",
@@ -19,14 +19,14 @@ const COMPANY_SUGGESTIONS = [
 
 function IndustryCatalog() {
   const { t } = useLanguage();
-  const [problems, setProblems] = useState([]);
-  const [pledges, setPledges] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [pledgeModalProblem, setPledgeModalProblem] = useState(null);
-  const [pledgeSuccess, setPledgeSuccess] = useState(null);
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [pledges, setPledges] = useState<CSRPledge[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pledgeModalProblem, setPledgeModalProblem] = useState<Problem | null>(null);
+  const [pledgeSuccess, setPledgeSuccess] = useState<string | null>(null);
 
-  const [selectedDomain, setSelectedDomain] = useState("All");
+  const [selectedDomain, setSelectedDomain] = useState<string>("All");
 
   const [pledgeForm, setPledgeForm] = useState({
     company_name: 'Tata Steel CSR Division',
@@ -59,7 +59,7 @@ function IndustryCatalog() {
     loadData();
   }, []);
 
-  const handlePledgeSubmit = async (e) => {
+  const handlePledgeSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!pledgeModalProblem) return;
     try {
@@ -75,9 +75,9 @@ function IndustryCatalog() {
 
   const filteredProblems = selectedDomain === "All"
     ? problems
-    : problems.filter(p => p.ai_predicted_category === selectedDomain || p.user_category === selectedDomain);
+    : problems.filter(p => p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain);
 
-  const totalCommitted = pledges.reduce((acc, curr) => acc + (curr.amount || 0), 0);
+  const totalCommitted = pledges.reduce((acc, curr) => acc + (curr.pledge_amount || (curr as any).amount || 0), 0);
 
   if (loading) {
     return (
@@ -196,8 +196,8 @@ function IndustryCatalog() {
               <div className="p-3.5 rounded-xl bg-[#080d1a] border border-[#1e2d54] space-y-1.5 text-xs font-mono">
                 <div className="text-slate-300"><strong className="text-slate-100">Routed HEI:</strong> {prob.assigned_university}</div>
                 <div className="text-slate-300"><strong className="text-slate-100">District:</strong> {prob.district}</div>
-                {prob.project && (
-                  <div className="text-slate-300"><strong className="text-slate-100">R&D Team:</strong> {prob.project.team_name} ({prob.project.student_lead})</div>
+                {(prob as any).project && (
+                  <div className="text-slate-300"><strong className="text-slate-100">R&D Team:</strong> {(prob as any).project.team_name} ({(prob as any).project.student_lead})</div>
                 )}
               </div>
             </div>
@@ -206,7 +206,7 @@ function IndustryCatalog() {
               <div>
                 <span className="text-[10px] font-bold text-slate-300 uppercase block">Required Support</span>
                 <span className="text-xs font-bold text-white">
-                  ₹{(prob.project?.budget_allocated || 75000).toLocaleString('en-IN')}
+                  ₹{((prob as any).project?.budget_allocated || 75000).toLocaleString('en-IN')}
                 </span>
               </div>
 
@@ -306,7 +306,7 @@ function IndustryCatalog() {
                 <label htmlFor="corporate-notes" className="block font-semibold text-slate-200 uppercase mb-1">Corporate Notes / CSR Scope</label>
                 <textarea
                   id="corporate-notes"
-                  rows="3"
+                  rows={3}
                   className="form-textarea bg-[#080d1a] border-[#2a3b63] text-white"
                   value={pledgeForm.notes}
                   onChange={(e) => setPledgeForm({ ...pledgeForm, notes: e.target.value })}

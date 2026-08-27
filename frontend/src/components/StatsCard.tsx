@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 
-function StatsCard({ title, value, icon: Icon, color = 'blue', subtitle, trend }) {
-  const colorStyles = {
+interface StatsCardProps {
+  title: string;
+  value: string | number;
+  icon: ElementType;
+  color?: 'blue' | 'cyan' | 'amber' | 'emerald' | 'purple';
+  subtitle?: string;
+  trend?: string;
+}
+
+function StatsCard({ title, value, icon: Icon, color = 'blue', subtitle, trend }: StatsCardProps) {
+  const colorMap = {
     blue: { 
       bg: 'bg-blue-500/15', 
       text: 'text-blue-400', 
@@ -37,7 +46,9 @@ function StatsCard({ title, value, icon: Icon, color = 'blue', subtitle, trend }
       gradient: 'from-purple-600/30 to-pink-600/30',
       glow: 'shadow-purple-500/20'
     },
-  }[color] || { bg: 'bg-blue-500/15', text: 'text-blue-400', border: 'border-blue-500/30', gradient: 'from-blue-600/30 to-indigo-600/30', glow: 'shadow-blue-500/20' };
+  };
+
+  const colorStyles = colorMap[color] || colorMap.blue;
 
   return (
     <div className="glass-card p-6 relative overflow-hidden group hover:border-slate-700/80">

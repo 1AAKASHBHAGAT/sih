@@ -16,11 +16,19 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { UserRole } from '../types';
 
-function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
+interface NavbarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  onOpenTicketLookup: () => void;
+  onOpenLogin: (role?: UserRole | null) => void;
+}
+
+function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: NavbarProps) {
   const { language, setLanguage, t } = useLanguage();
   const { user, isAuthenticated, role, logout } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const allNavItems = [
     { id: 'submit', label: t('navSubmit'), icon: Sparkles, roles: ['guest', 'citizen', 'university_admin', 'industry', 'government'], desc: 'Report societal challenges & track AI routing' },
@@ -31,12 +39,12 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
 
   const visibleNavItems = allNavItems.filter(item => item.roles.includes(role) || role === 'government');
 
-  const handleTabChange = (id) => {
+  const handleTabChange = (id: string) => {
     setActiveTab(id);
     setMobileMenuOpen(false);
   };
 
-  const getRoleBadge = (r) => {
+  const getRoleBadge = (r: UserRole) => {
     switch (r) {
       case 'government':
         return { label: 'Gov Executive', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' };
@@ -68,7 +76,7 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
               src="/jharkhand_emblem.png" 
               alt="Jharkhand State Seal" 
               className="w-6 h-6 object-contain rounded-full border border-amber-500/40 shrink-0"
-              onError={(e) => { e.target.style.display = 'none'; }}
+              onError={(e: any) => { e.target.style.display = 'none'; }}
             />
             <div className="flex items-center gap-2 text-[11px] font-bold">
               <span className="text-amber-400 uppercase tracking-wide">{t('govtTitle')}</span>
@@ -161,7 +169,7 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
             </div>
 
             {/* Authentication Button & Profile Badge */}
-            {isAuthenticated ? (
+            {isAuthenticated && user ? (
               <div className="flex items-center gap-2.5">
                 <div className={`hidden md:flex flex-col items-end px-3 py-1 rounded-xl border ${badgeInfo.color} text-xs`}>
                   <span className="font-bold text-white text-xs leading-none mb-0.5">{user.full_name.split(' ')[0]}</span>
@@ -266,7 +274,7 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
                     src="/jharkhand_emblem.png" 
                     alt="Jharkhand State Seal" 
                     className="w-7 h-7 object-contain rounded-full border border-amber-500/40"
-                    onError={(e) => { e.target.style.display = 'none'; }}
+                    onError={(e: any) => { e.target.style.display = 'none'; }}
                   />
                   <div>
                     <h3 className="font-bold text-white text-sm">State Nodal Portal Menu</h3>
@@ -292,7 +300,7 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }) {
                   </span>
                 </div>
 
-                {isAuthenticated ? (
+                {isAuthenticated && user ? (
                   <div className="flex items-center justify-between pt-1">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-400/40 flex items-center justify-center font-bold text-white font-mono">

@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { 
-  Building2, 
-  Clock, 
-  CheckCircle2, 
-  Users, 
-  ChevronRight, 
   RefreshCw, 
   Sparkles,
-  Search,
   Filter,
   Check,
-  ChevronDown,
   ShieldCheck
 } from 'lucide-react';
 import { getProblems, updateProblemStatus, assignTeam } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { Problem } from '../types';
 
 const UNIVERSITIES = [
   "All Universities",
@@ -27,7 +21,7 @@ const UNIVERSITIES = [
   "BIT Mesra - Civil & Renewable Energy Center"
 ];
 
-const STAGE_TRANSITIONS = {
+const STAGE_TRANSITIONS: Record<string, string[]> = {
   'Submitted': ['Assigned'],
   'Assigned': ['In Progress', 'Submitted'],
   'In Progress': ['Testing', 'Assigned'],
@@ -38,13 +32,13 @@ const STAGE_TRANSITIONS = {
 function UniversityQueue() {
   const { t } = useLanguage();
   const { role, institution } = useAuth();
-  const [problems, setProblems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedUni, setSelectedUni] = useState(UNIVERSITIES[0]);
-  const [selectedDomain, setSelectedDomain] = useState("All Domains");
-  const [selectedProblem, setSelectedProblem] = useState(null);
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectedUni, setSelectedUni] = useState<string>(UNIVERSITIES[0]);
+  const [selectedDomain, setSelectedDomain] = useState<string>("All Domains");
+  const [selectedProblem, setSelectedProblem] = useState<Problem | any>(null);
   
-  const [assignModalProblem, setAssignModalProblem] = useState(null);
+  const [assignModalProblem, setAssignModalProblem] = useState<Problem | null>(null);
   const [teamForm, setTeamForm] = useState({
     team_name: '',
     student_lead: '',
@@ -56,7 +50,7 @@ function UniversityQueue() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const params = {};
+      const params: any = {};
       if (selectedUni !== "All Universities") {
         params.university = selectedUni;
       }
@@ -79,30 +73,30 @@ function UniversityQueue() {
     loadData();
   }, [selectedUni]);
 
-  const handleStageChange = async (problemId, newStatus) => {
+  const handleStageChange = async (problemId: string, newStatus: string) => {
     try {
       await updateProblemStatus(problemId, newStatus);
       loadData();
-    } catch (err) {
+    } catch (err: any) {
       alert(err.response?.data?.detail || 'Failed to update stage.');
     }
   };
 
-  const handleAssignSubmit = async (e) => {
+  const handleAssignSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!assignModalProblem) return;
     try {
       await assignTeam(assignModalProblem.id, teamForm);
       setAssignModalProblem(null);
       loadData();
-    } catch (err) {
+    } catch (err: any) {
       alert(err.response?.data?.detail || 'Failed to assign team.');
     }
   };
 
-  const handleToggleMilestone = async (milestoneId) => {
+  const handleToggleMilestone = async (milestoneId: string) => {
     if (!selectedProblem || !selectedProblem.project) return;
-    const updatedMilestones = selectedProblem.project.milestones.map(m => {
+    const updatedMilestones = selectedProblem.project.milestones.map((m: any) => {
       if (m.id === milestoneId) {
         return { ...m, status: m.status === 'Completed' ? 'Pending' : 'Completed' };
       }
@@ -130,7 +124,7 @@ function UniversityQueue() {
 
   const filteredProblems = selectedDomain === "All Domains"
     ? problems
-    : problems.filter(p => p.ai_predicted_category === selectedDomain || p.user_category === selectedDomain);
+    : problems.filter(p => p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain);
 
   const stagesList = [
     { id: 'Submitted', label: t('colSubmitted'), desc: 'Newly crowdsourced challenges awaiting university assignment' },
@@ -270,7 +264,7 @@ function UniversityQueue() {
                           {prob.ticket_code}
                         </span>
                         <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                          Priority {prob.urgency_score}/10
+                          Priority {prob.calculated_priority || (prob as any).urgency_score || 5}/10
                         </span>
                       </div>
 
@@ -305,10 +299,10 @@ function UniversityQueue() {
                       </div>
 
                       {/* Team Lead Indicator if Assigned */}
-                      {prob.project && prob.project.student_lead && (
+                      {(prob as any).project && (prob as any).project.student_lead && (
                         <div className="text-[10px] text-slate-200 bg-[#0e172e] p-2 rounded-lg border border-[#1e2d54] flex items-center justify-between font-mono">
-                          <span className="truncate">👤 {prob.project.student_lead}</span>
-                          <span className="text-emerald-400 font-bold">₹{(prob.project.budget_allocated || 0).toLocaleString()}</span>
+                          <span className="truncate">👤 {(prob as any).project.student_lead}</span>
+                          <span className="text-emerald-400 font-bold">₹{((prob as any).project.budget_allocated || 0).toLocaleString()}</span>
                         </div>
                       )}
                     </div>
@@ -356,9 +350,9 @@ function UniversityQueue() {
                 <p className="text-slate-200 leading-relaxed">{selectedProblem.description}</p>
                 <div className="pt-2 border-t border-[#1e2d54] space-y-1 text-slate-300 font-mono text-[11px]">
                   <div><strong className="text-slate-200">District:</strong> {selectedProblem.district}</div>
-                  <div><strong className="text-slate-200">Location:</strong> {selectedProblem.location}</div>
-                  <div><strong className="text-slate-200">Reporter:</strong> {selectedProblem.reporter_name} ({selectedProblem.contact_phone || 'N/A'})</div>
-                  <div><strong className="text-slate-200">Category:</strong> {selectedProblem.ai_predicted_category}</div>
+                  <div><strong className="text-slate-200">Location:</strong> {selectedProblem.location || 'Jharkhand'}</div>
+                  <div><strong className="text-slate-200">Reporter:</strong> {selectedProblem.reporter_name || 'Citizen'} ({selectedProblem.contact_phone || 'N/A'})</div>
+                  <div><strong className="text-slate-200">Category:</strong> {selectedProblem.domain || selectedProblem.ai_predicted_category}</div>
                 </div>
               </div>
 
@@ -382,7 +376,7 @@ function UniversityQueue() {
 
                 {selectedProblem.project ? (
                   <div className="space-y-2 text-slate-200 font-mono text-[11px]">
-                    <div><strong className="text-slate-300">University:</strong> {selectedProblem.project.university_name}</div>
+                    <div><strong className="text-slate-300">University:</strong> {selectedProblem.project.university_name || selectedProblem.assigned_university}</div>
                     <div><strong className="text-slate-300">Team Name:</strong> {selectedProblem.project.team_name}</div>
                     <div><strong className="text-slate-300">Student Lead:</strong> {selectedProblem.project.student_lead}</div>
                     <div><strong className="text-slate-300">Faculty Advisor:</strong> {selectedProblem.project.faculty_advisor}</div>
@@ -404,7 +398,7 @@ function UniversityQueue() {
               <div className="space-y-3 bg-[#080d1a] p-4 rounded-xl border border-[#1e2d54]">
                 <h3 className="font-bold text-slate-200 uppercase tracking-wider text-[10px]">Project Milestone Tracker</h3>
                 <div className="space-y-2">
-                  {selectedProblem.project.milestones.map((m) => (
+                  {selectedProblem.project.milestones.map((m: any) => (
                     <div 
                       key={m.id}
                       role="checkbox"
@@ -506,7 +500,7 @@ function UniversityQueue() {
                 <label htmlFor="proposal-summary" className="block font-semibold text-slate-200 uppercase mb-1">Proposal Summary</label>
                 <textarea 
                   id="proposal-summary"
-                  rows="3"
+                  rows={3}
                   className="form-textarea bg-[#080d1a] border-[#2a3b63] text-white"
                   placeholder="Brief methodology summary..."
                   value={teamForm.proposal_summary}

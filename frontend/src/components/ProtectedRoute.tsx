@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ShieldAlert, LogIn, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { UserRole } from '../types';
 
-function ProtectedRoute({ allowedRoles, children, pageTitle, onOpenLogin }) {
+interface ProtectedRouteProps {
+  allowedRoles: UserRole[];
+  children: ReactNode;
+  pageTitle: string;
+  onOpenLogin: (role?: UserRole | null) => void;
+}
+
+function ProtectedRoute({ allowedRoles, children, pageTitle, onOpenLogin }: ProtectedRouteProps) {
   const { user, isAuthenticated, role } = useAuth();
 
   if (!isAuthenticated) {
@@ -52,7 +60,7 @@ function ProtectedRoute({ allowedRoles, children, pageTitle, onOpenLogin }) {
               Access Denied for Role '{role}'
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
-              Your account ('{user.email}') is signed in as <span className="font-bold text-white">{role}</span>, which is not authorized to access {pageTitle}.
+              Your account ('{user?.email}') is signed in as <span className="font-bold text-white">{role}</span>, which is not authorized to access {pageTitle}.
             </p>
           </div>
 
@@ -69,7 +77,7 @@ function ProtectedRoute({ allowedRoles, children, pageTitle, onOpenLogin }) {
     );
   }
 
-  return children;
+  return <>{children}</>;
 }
 
 export default ProtectedRoute;

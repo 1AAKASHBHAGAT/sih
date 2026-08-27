@@ -13,12 +13,12 @@ import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState('submit');
-  const [ticketModalOpen, setTicketModalOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [targetLoginRole, setTargetLoginRole] = useState(null);
+  const [activeTab, setActiveTab] = useState<string>('submit');
+  const [ticketModalOpen, setTicketModalOpen] = useState<boolean>(false);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [targetLoginRole, setTargetLoginRole] = useState<string | null>(null);
 
-  const handleOpenLogin = (role = null) => {
+  const handleOpenLogin = (role: string | null = null) => {
     setTargetLoginRole(role);
     setLoginModalOpen(true);
   };

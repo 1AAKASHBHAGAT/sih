@@ -20,8 +20,9 @@ import {
 import MapView from '../components/MapView';
 import { getAnalyticsSummary, getProblems } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
+import { AnalyticsSummary, Problem } from '../types';
 
-const DOMAIN_COLOR_MAP = {
+const DOMAIN_COLOR_MAP: Record<string, string> = {
   "Water Management": "#38bdf8",
   "Healthcare": "#f43f5e",
   "Agriculture": "#22c55e",
@@ -46,14 +47,13 @@ const VIBRANT_BAR_COLORS = [
 
 function AdminDashboard() {
   const { t } = useLanguage();
-  const [summary, setSummary] = useState(null);
-  const [problems, setProblems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [summary, setSummary] = useState<AnalyticsSummary | any>(null);
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const loadData = async (isSilent = false) => {
     if (!isSilent) setLoading(true);
     
-    // Per-request resilient loading using Promise.allSettled
     const results = await Promise.allSettled([
       getAnalyticsSummary(),
       getProblems()
@@ -63,13 +63,13 @@ function AdminDashboard() {
 
     if (sumResult.status === 'fulfilled' && sumResult.value?.data) {
       setSummary(sumResult.value.data);
-    } else {
+    } else if (sumResult.status === 'rejected') {
       console.warn('Analytics summary dataset request failed or unauthenticated:', sumResult.reason);
     }
 
     if (probResult.status === 'fulfilled' && probResult.value?.data) {
       setProblems(probResult.value.data);
-    } else {
+    } else if (probResult.status === 'rejected') {
       console.warn('Problems dataset request failed:', probResult.reason);
     }
 
@@ -94,7 +94,7 @@ function AdminDashboard() {
     );
   }
 
-  const domainDist = summary?.domain_distribution || [];
+  const domainDist: { name: string; value: number }[] = summary?.domain_distribution || [];
   const totalDomainCount = domainDist.reduce((acc, curr) => acc + curr.value, 0) || 1;
 
   return (
@@ -264,7 +264,7 @@ function AdminDashboard() {
                   contentStyle={{ backgroundColor: '#080d1a', borderColor: '#1e2d54', borderRadius: '8px', color: '#fff', fontSize: '12px' }}
                 />
                 <Bar dataKey="count" radius={[0, 6, 6, 0]} barSize={18}>
-                  {(summary?.district_distribution || []).map((entry, index) => (
+                  {(summary?.district_distribution || []).map((_entry: any, index: number) => (
                     <Cell key={`cell-${index}`} fill={VIBRANT_BAR_COLORS[index % VIBRANT_BAR_COLORS.length]} />
                   ))}
                 </Bar>
@@ -325,12 +325,12 @@ function AdminDashboard() {
             <tbody className="divide-y divide-[#1e2d54]/60">
               {(!summary?.university_performance || summary.university_performance.length === 0) ? (
                 <tr>
-                  <td colSpan="5" className="py-12 text-center text-slate-300 text-xs sm:text-sm font-medium">
+                  <td colSpan={5} className="py-12 text-center text-slate-300 text-xs sm:text-sm font-medium">
                     Synchronizing University R&D Performance Rankings...
                   </td>
                 </tr>
               ) : (
-                summary.university_performance.map((uni, idx) => (
+                summary.university_performance.map((uni: any, idx: number) => (
                   <tr key={idx} className="hover:bg-[#111c38]/60 transition-colors">
                     <td className="py-4 px-4 font-bold text-white flex items-center gap-3">
                       <span className="w-6 h-6 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-[10px] font-mono shrink-0">

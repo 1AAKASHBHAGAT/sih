@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { 
   Sparkles, 
   MapPin, 
@@ -21,7 +21,7 @@ const JHARKHAND_DISTRICTS = [
   "Dumka", "Deoghar", "Giridih", "Palamu", "Chaibasa", "Ramgarh", "Koderma"
 ];
 
-const ROUTE_MAP = {
+const ROUTE_MAP: Record<string, string> = {
   "Water Management": "IIT (ISM) Dhanbad - Water Research Center",
   "Healthcare": "Central University of Jharkhand (CUJ) - Health Tech Hub",
   "Agriculture": "Birsa Agricultural University, Ranchi",
@@ -31,7 +31,12 @@ const ROUTE_MAP = {
   "Environment & Forests": "NIT Jamshedpur - Environmental Engineering Department"
 };
 
-function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
+interface CitizenSubmitProps {
+  onNavigateToUniversity?: () => void;
+  onOpenTicketLookup?: () => void;
+}
+
+function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }: CitizenSubmitProps) {
   const { t } = useLanguage();
 
   const CATEGORIES = [
@@ -93,16 +98,15 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
     image_url: ''
   });
 
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  const [geoStatus, setGeoStatus] = useState('');
-  const [validationError, setValidationError] = useState('');
-  const [networkError, setNetworkError] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [result, setResult] = useState<any | null>(null);
+  const [geoStatus, setGeoStatus] = useState<string>('');
+  const [validationError, setValidationError] = useState<string>('');
+  const [networkError, setNetworkError] = useState<string>('');
   
-  // PWA Offline Queue & Network Status State (PRD Roadmap CE3)
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [offlineQueueCount, setOfflineQueueCount] = useState(0);
-  const [syncMessage, setSyncMessage] = useState('');
+  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const [offlineQueueCount, setOfflineQueueCount] = useState<number>(0);
+  const [syncMessage, setSyncMessage] = useState<string>('');
 
   React.useEffect(() => {
     const checkOfflineQueue = () => {
@@ -169,13 +173,13 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
         }));
         setGeoStatus(`📍 GPS Locked (${pos.coords.latitude.toFixed(3)}, ${pos.coords.longitude.toFixed(3)})`);
       },
-      (err) => {
+      (_err) => {
         setGeoStatus('GPS Permission Denied. Please select district manually.');
       }
     );
   };
 
-  const handlePresetSelect = (preset) => {
+  const handlePresetSelect = (preset: typeof SAMPLE_PRESETS[0]) => {
     setValidationError('');
     setNetworkError('');
     setFormData(prev => ({
@@ -190,7 +194,7 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setValidationError('');
     setNetworkError('');
@@ -207,7 +211,6 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
     setLoading(true);
     setResult(null);
 
-    // OFFLINE SUBMISSION HANDLING (PWA Queue First)
     if (!navigator.onLine) {
       const offlineItem = {
         ...formData,
@@ -415,7 +418,7 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
               </label>
               <textarea
                 id="challenge-description"
-                rows="5"
+                rows={5}
                 className="form-textarea text-xs sm:text-sm leading-relaxed bg-[#080d1a] border-[#2a3b63]/80 focus:border-blue-500 py-3.5 px-4 rounded-xl text-white"
                 placeholder={t('descriptionPlaceholder')}
                 value={formData.description}
@@ -703,23 +706,23 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }) {
                 <span className="text-slate-300">Domain Category:</span>
                 <span className="font-bold text-slate-100 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />
-                  {result.ai_predicted_category}
+                  {result.domain || result.ai_predicted_category}
                 </span>
               </div>
 
               <div className="flex items-center justify-between border-b border-[#1e2d54] pb-2.5">
                 <span className="text-slate-300">Urgency Level:</span>
                 <span className={`font-bold px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1.5 ${
-                  (result.urgency_score ?? 5) >= 8 
+                  (result.calculated_priority ?? result.urgency_score ?? 5) >= 8 
                     ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' 
-                    : (result.urgency_score ?? 5) >= 6 
+                    : (result.calculated_priority ?? result.urgency_score ?? 5) >= 6 
                     ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' 
                     : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                 }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${
-                    (result.urgency_score ?? 5) >= 8 ? 'bg-rose-400 animate-pulse' : (result.urgency_score ?? 5) >= 6 ? 'bg-amber-400' : 'bg-emerald-400'
+                    (result.calculated_priority ?? result.urgency_score ?? 5) >= 8 ? 'bg-rose-400 animate-pulse' : (result.calculated_priority ?? result.urgency_score ?? 5) >= 6 ? 'bg-amber-400' : 'bg-emerald-400'
                   }`} />
-                  {result.urgency_score ? `Priority ${result.urgency_score}/10` : 'Standard Priority'}
+                  {result.calculated_priority || result.urgency_score ? `Priority ${result.calculated_priority || result.urgency_score}/10` : 'Standard Priority'}
                 </span>
               </div>
 

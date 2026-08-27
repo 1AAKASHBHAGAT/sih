@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import { Search, X, Building2, CheckCircle2, Bell, Smartphone, ShieldCheck } from 'lucide-react';
+import React, { useState, FormEvent } from 'react';
+import { Search, X, Building2, CheckCircle2, Bell, Smartphone } from 'lucide-react';
 import { getProblemByTicket, getNotificationsForTicket } from '../services/api';
+import { NotificationItem } from '../types';
 
-function TicketLookupModal({ isOpen, onClose }) {
-  const [ticketInput, setTicketInput] = useState('');
-  const [problemData, setProblemData] = useState(null);
-  const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+interface TicketLookupModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function TicketLookupModal({ isOpen, onClose }: TicketLookupModalProps) {
+  const [ticketInput, setTicketInput] = useState<string>('');
+  const [problemData, setProblemData] = useState<any | null>(null);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   if (!isOpen) return null;
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: FormEvent) => {
     e.preventDefault();
     if (!ticketInput.trim()) return;
     setLoading(true);
@@ -28,13 +34,14 @@ function TicketLookupModal({ isOpen, onClose }) {
       if (probRes.status === 'fulfilled' && probRes.value?.data) {
         setProblemData(probRes.value.data);
       } else {
-        throw new Error(probRes.reason?.response?.data?.detail || 'Ticket not found. Please verify tracking code (e.g. SIH-JH-1042).');
+        const reason: any = (probRes as PromiseRejectedResult).reason;
+        throw new Error(reason?.response?.data?.detail || 'Ticket not found. Please verify tracking code (e.g. SIH-JH-1042).');
       }
 
       if (notifRes.status === 'fulfilled' && notifRes.value?.data) {
         setNotifications(notifRes.value.data);
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'Ticket not found. Please verify tracking code (e.g. SIH-JH-1042).');
     } finally {
       setLoading(false);
@@ -110,7 +117,7 @@ function TicketLookupModal({ isOpen, onClose }) {
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="bg-[#0e172e] p-3 rounded-xl border border-[#1e2d54]">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">AI Category</span>
-                <span className="text-cyan-400 font-bold">{problemData.ai_predicted_category}</span>
+                <span className="text-cyan-400 font-bold">{problemData.domain || problemData.ai_predicted_category}</span>
               </div>
               <div className="bg-[#0e172e] p-3 rounded-xl border border-[#1e2d54]">
                 <span className="text-slate-400 block text-[10px] uppercase font-bold">Location</span>
@@ -172,7 +179,7 @@ function TicketLookupModal({ isOpen, onClose }) {
                 </div>
               ) : (
                 <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                  {notifications.map((notif) => (
+                  {notifications.map((notif: any) => (
                     <div key={notif.id} className="bg-[#0e172e] p-3 rounded-xl border border-[#1e2d54] space-y-1.5">
                       <div className="flex items-center justify-between text-[10px] font-mono">
                         <span className="text-blue-400 font-bold flex items-center gap-1">
@@ -185,7 +192,7 @@ function TicketLookupModal({ isOpen, onClose }) {
                       <p className="text-xs text-slate-200 leading-relaxed font-sans">{notif.message}</p>
                       <div className="flex items-center justify-between text-[10px] text-slate-400 pt-0.5 font-mono">
                         <span>Recipient: {notif.recipient_contact || '+91 94311 02931'}</span>
-                        <span className="text-emerald-400 font-bold">✓ {notif.channel} ({notif.status})</span>
+                        <span className="text-emerald-400 font-bold">✓ {notif.channel || 'SMS'} ({notif.status || 'SENT'})</span>
                       </div>
                     </div>
                   ))}

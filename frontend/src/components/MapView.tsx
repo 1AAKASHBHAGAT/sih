@@ -3,9 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { ExternalLink } from 'lucide-react';
 
-delete L.Icon.Default.prototype._getIconUrl;
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-const DOMAIN_COLORS = {
+const DOMAIN_COLORS: Record<string, string> = {
   "Water Management": "#38bdf8",
   "Healthcare": "#f43f5e",
   "Agriculture": "#22c55e",
@@ -24,7 +24,7 @@ const HEI_NODES = [
   { name: "BIT Mesra", lat: 23.4123, lng: 85.4399, category: "Civil & Energy" }
 ];
 
-function createProblemMarker(category) {
+function createProblemMarker(category: string) {
   const color = DOMAIN_COLORS[category] || '#3b82f6';
   const customHtml = `
     <div style="
@@ -80,9 +80,15 @@ function createHeiMarker() {
   });
 }
 
-function MapView({ problems = [], height = "480px", onSelectProblem }) {
+interface MapViewProps {
+  problems?: any[];
+  height?: string;
+  onSelectProblem?: (prob: any) => void;
+}
+
+function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewProps) {
   // Center of Jharkhand (Ranchi / State geographic center)
-  const defaultCenter = [23.6102, 85.2799];
+  const defaultCenter: [number, number] = [23.6102, 85.2799];
   const defaultZoom = 8;
 
   return (
@@ -120,13 +126,17 @@ function MapView({ problems = [], height = "480px", onSelectProblem }) {
 
         {/* Submitted Problem Markers */}
         {problems.map((prob) => {
-          if (!prob.latitude || !prob.longitude) return null;
-          const icon = createProblemMarker(prob.ai_predicted_category);
+          const lat = prob.latitude || prob.location_lat;
+          const lng = prob.longitude || prob.location_lng;
+          if (!lat || !lng) return null;
+          const domainName = prob.domain || prob.ai_predicted_category || 'Infrastructure & Energy';
+          const icon = createProblemMarker(domainName);
+          const univ = prob.assigned_university || 'Nodal University';
 
           return (
             <Marker 
-              key={prob.id} 
-              position={[prob.latitude, prob.longitude]} 
+              key={prob.id || prob.ticket_code} 
+              position={[lat, lng]} 
               icon={icon}
             >
               <Popup>
@@ -151,13 +161,13 @@ function MapView({ problems = [], height = "480px", onSelectProblem }) {
                   <div className="pt-2 border-t border-[#1e2d54] space-y-1.5 text-xs text-slate-200">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300">AI Domain:</span>
-                      <span className="font-semibold text-sky-400">{prob.ai_predicted_category}</span>
+                      <span className="font-semibold text-sky-400">{domainName}</span>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300">Routed HEI:</span>
-                      <span className="font-semibold text-slate-100 truncate max-w-[140px]" title={prob.assigned_university}>
-                        {prob.assigned_university.split('-')[0]}
+                      <span className="font-semibold text-slate-100 truncate max-w-[140px]" title={univ}>
+                        {univ.split('-')[0]}
                       </span>
                     </div>
                   </div>

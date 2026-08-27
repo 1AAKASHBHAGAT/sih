@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { 
   loginStep1 as apiLoginStep1, 
   loginStep2 as apiLoginStep2, 
@@ -8,8 +8,9 @@ import {
   registerUser as apiRegister, 
   getAuthMe 
 } from '../services/api';
+import { User, AuthContextType } from '../types';
 
-const defaultAuthContext = {
+const defaultAuthContext: AuthContextType = {
   user: null,
   token: null,
   loading: false,
@@ -22,16 +23,22 @@ const defaultAuthContext = {
   forgotPasswordRequest: async () => ({}),
   forgotPasswordConfirm: async () => ({}),
   resendOTP: async () => ({}),
-  register: async () => ({}),
+  register: async () => ({} as User),
   logout: () => {}
 };
 
-const AuthContext = createContext(defaultAuthContext);
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('setu_jwt_token') || null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('setu_jwt_token') || null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const logout = () => {
+    localStorage.removeItem('setu_jwt_token');
+    setToken(null);
+    setUser(null);
+  };
 
   const fetchProfile = async () => {
     if (!token) {
@@ -55,12 +62,12 @@ export const AuthProvider = ({ children }) => {
     fetchProfile();
   }, [token]);
 
-  const executeLoginStep1 = async (email, password) => {
+  const executeLoginStep1 = async (email: string, password: string) => {
     const res = await apiLoginStep1({ email, password });
     return res.data;
   };
 
-  const executeLoginStep2 = async (email, password, otp) => {
+  const executeLoginStep2 = async (email: string, password: string, otp: string) => {
     const res = await apiLoginStep2({ email, password, otp });
     const { access_token, user: userData } = res.data;
     localStorage.setItem('setu_jwt_token', access_token);
@@ -69,12 +76,12 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
-  const executeForgotPasswordRequest = async (email) => {
+  const executeForgotPasswordRequest = async (email: string) => {
     const res = await apiRequestPasswordReset(email);
     return res.data;
   };
 
-  const executeForgotPasswordConfirm = async (email, otp, newPassword) => {
+  const executeForgotPasswordConfirm = async (email: string, otp: string, newPassword: string) => {
     const res = await apiConfirmPasswordReset({ email, otp, new_password: newPassword });
     const { access_token, user: userData } = res.data;
     localStorage.setItem('setu_jwt_token', access_token);
@@ -83,24 +90,18 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
-  const executeResendOTP = async (email) => {
+  const executeResendOTP = async (email: string) => {
     const res = await apiResendOTP(email);
     return res.data;
   };
 
-  const register = async (formData) => {
+  const register = async (formData: any) => {
     const res = await apiRegister(formData);
     const { access_token, user: userData } = res.data;
     localStorage.setItem('setu_jwt_token', access_token);
     setToken(access_token);
     setUser(userData);
     return userData;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('setu_jwt_token');
-    setToken(null);
-    setUser(null);
   };
 
   return (

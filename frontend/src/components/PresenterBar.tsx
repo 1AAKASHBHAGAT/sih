@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Zap, ShieldCheck, Check, Sparkles } from 'lucide-react';
+import { Zap, Check, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const DEMO_PRESETS = [
+interface DemoPreset {
+  label: string;
+  email: string;
+  password: string;
+  role: string;
+  icon: string;
+}
+
+const DEMO_PRESETS: DemoPreset[] = [
   {
     label: "Gov Nodal Officer",
     email: "gov@jharkhand.gov.in",
@@ -41,16 +49,16 @@ const DEMO_PRESETS = [
 ];
 
 function PresenterBar() {
-  const { loginStep1, loginStep2, logout, user } = useAuth();
-  const [activePreset, setActivePreset] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState('');
+  const { loginStep1, loginStep2, user } = useAuth();
+  const [, setActivePreset] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   // Feature gate check: local/presentation build defaults to true, public deployment turns off
-  const enableDemo = import.meta.env.VITE_ENABLE_DEMO_LOGIN !== 'false';
+  const enableDemo = (import.meta as any).env.VITE_ENABLE_DEMO_LOGIN !== 'false';
   if (!enableDemo) return null;
 
-  const handleRunDemoFlow = async (preset) => {
+  const handleRunDemoFlow = async (preset: DemoPreset) => {
     setLoading(true);
     setActivePreset(preset.label);
     setStatusMessage(`Step 1: Verifying password for ${preset.email}...`);
@@ -67,7 +75,7 @@ function PresenterBar() {
       
       setStatusMessage(`✅ Authenticated as ${preset.label}!`);
       setTimeout(() => setStatusMessage(''), 3000);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       setStatusMessage(`Failed: ${err.response?.data?.detail || 'Authentication error'}`);
     } finally {

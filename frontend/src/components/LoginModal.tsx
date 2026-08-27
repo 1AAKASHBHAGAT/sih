@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { 
   ShieldCheck, 
   Lock, 
@@ -9,18 +9,24 @@ import {
   MessageSquareCode, 
   AlertTriangle,
   ArrowLeft,
-  RefreshCw,
-  HelpCircle
+  RefreshCw
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { UserRole } from '../types';
 
-const validateIdentifier = (input) => {
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  defaultTab?: string;
+  targetRole?: UserRole | string | null;
+}
+
+const validateIdentifier = (input: string) => {
   const str = input.trim();
   if (!str) {
     return { valid: false, message: 'Please enter your email address or mobile phone number.' };
   }
 
-  // If digits only: validate 10-digit Indian phone number format
   if (/^\d+$/.test(str)) {
     if (!/^[6-9]\d{9}$/.test(str)) {
       return { valid: false, message: 'Please enter a valid 10-digit mobile phone number (e.g. 9876543210).' };
@@ -28,7 +34,6 @@ const validateIdentifier = (input) => {
     return { valid: true };
   }
 
-  // If contains letters, @, or domain structure: validate RFC Email Format
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(str)) {
     if (str.includes('@') && !str.substring(str.indexOf('@')).includes('.')) {
@@ -37,9 +42,8 @@ const validateIdentifier = (input) => {
     return { valid: false, message: 'Please enter a valid email address (e.g. user@gmail.com or user@domain.org).' };
   }
 
-  // Common typo checks for domain extensions
   const domain = str.split('@')[1]?.toLowerCase();
-  const typoMap = {
+  const typoMap: Record<string, string> = {
     'gmai.com': 'gmail.com',
     'gamil.com': 'gmail.com',
     'gmailcom': 'gmail.com',
@@ -59,7 +63,7 @@ const validateIdentifier = (input) => {
   return { valid: true };
 };
 
-function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }) {
+function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }: LoginModalProps) {
   const { 
     loginStep1, 
     loginStep2, 
@@ -69,35 +73,28 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     register 
   } = useAuth();
   
-  const [tab, setTab] = useState(defaultTab);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [tab, setTab] = useState<string>(defaultTab);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  // Password Visibility Toggle
-  const [showPassword, setShowPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
 
-  // Step state: 'credentials' | 'otp' | 'forgot_request' | 'forgot_confirm'
-  const [step, setStep] = useState('credentials');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [otpCode, setOtpCode] = useState('');
-  const [dispatchedOTP, setDispatchedOTP] = useState(null);
+  const [step, setStep] = useState<string>('credentials');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [otpCode, setOtpCode] = useState<string>('');
+  const [dispatchedOTP, setDispatchedOTP] = useState<string | null>(null);
 
-  // Forgot password form state
-  const [resetEmail, setResetEmail] = useState('');
-  const [resetOtp, setResetOtp] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [resetEmail, setResetEmail] = useState<string>('');
+  const [resetOtp, setResetOtp] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  // Resend OTP Cooldown timer (30 seconds)
-  const [cooldown, setCooldown] = useState(0);
+  const [cooldown, setCooldown] = useState<number>(0);
+  const [, setFailedAttempts] = useState<number>(0);
 
-  // Attempt tracker
-  const [failedAttempts, setFailedAttempts] = useState(0);
-
-  // Register form state
   const [regForm, setRegForm] = useState({
     email: '',
     password: '',
@@ -108,7 +105,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
   });
 
   useEffect(() => {
-    let timer;
+    let timer: any;
     if (cooldown > 0) {
       timer = setInterval(() => setCooldown(prev => prev - 1), 1000);
     }
@@ -117,8 +114,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
   if (!isOpen) return null;
 
-  // Mask email for security display (e.g., a***n@example.com)
-  const maskIdentifier = (str) => {
+  const maskIdentifier = (str: string) => {
     if (!str) return '';
     if (str.includes('@')) {
       const [name, domain] = str.split('@');
@@ -131,15 +127,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     return str;
   };
 
-  // Step 1: Submit Password (First Factor)
-  const handleStep1Submit = async (e) => {
+  const handleStep1Submit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
 
     const valResult = validateIdentifier(email);
     if (!valResult.valid) {
-      setError(valResult.message);
+      setError(valResult.message || 'Invalid format');
       return;
     }
 
@@ -156,7 +151,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       setStep('otp');
       setCooldown(30);
       setFailedAttempts(0);
-    } catch (err) {
+    } catch (err: any) {
       if (!err.response) {
         setError('Cannot connect to backend server (http://127.0.0.1:8000). Please verify the backend service is running.');
       } else {
@@ -167,8 +162,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     }
   };
 
-  // Step 2: Submit OTP (Second Factor)
-  const handleStep2Submit = async (e) => {
+  const handleStep2Submit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -182,7 +176,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     try {
       await loginStep2(email.trim(), password, otpCode.trim());
       onClose();
-    } catch (err) {
+    } catch (err: any) {
       const errMsg = err.response?.data?.detail || 'Invalid OTP verification code.';
       setError(errMsg);
       setFailedAttempts(prev => prev + 1);
@@ -198,8 +192,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     }
   };
 
-  // Forgot Password Step 1: Request Reset Code
-  const handleForgotRequestSubmit = async (e) => {
+  const handleForgotRequestSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
@@ -207,7 +200,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     const targetEmail = resetEmail || email;
     const valResult = validateIdentifier(targetEmail);
     if (!valResult.valid) {
-      setError(valResult.message);
+      setError(valResult.message || 'Invalid format');
       return;
     }
 
@@ -219,15 +212,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       setEmail(targetEmail.trim());
       setStep('forgot_confirm');
       setCooldown(30);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.detail || 'No account found matching this email address.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Forgot Password Step 2: Confirm Reset & Change Password
-  const handleForgotConfirmSubmit = async (e) => {
+  const handleForgotConfirmSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
@@ -253,14 +245,13 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       setTimeout(() => {
         onClose();
       }, 1500);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.detail || 'Invalid password reset code.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Resend OTP Code
   const handleResendOTP = async () => {
     if (cooldown > 0) return;
     setError(null);
@@ -270,15 +261,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       const res = await resendOTP(email.trim());
       setDispatchedOTP(res.dev_otp || null);
       setCooldown(30);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to resend OTP. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Register Submit
-  const handleRegisterSubmit = async (e) => {
+  const handleRegisterSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -289,7 +279,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     const valResult = validateIdentifier(regForm.email);
     if (!valResult.valid) {
-      setError(valResult.message);
+      setError(valResult.message || 'Invalid format');
       return;
     }
 
@@ -303,7 +293,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     try {
       await register(regForm);
       onClose();
-    } catch (err) {
+    } catch (err: any) {
       if (!err.response) {
         setError('Cannot connect to backend server (http://127.0.0.1:8000). Please verify the backend service is running.');
       } else {
@@ -344,7 +334,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
         {targetRole && (
           <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
-            Authentication Required: Please sign in as <span className="text-white font-bold">{targetRole.toUpperCase()}</span> to access this workspace.
+            Authentication Required: Please sign in as <span className="text-white font-bold">{String(targetRole).toUpperCase()}</span> to access this workspace.
           </div>
         )}
 
@@ -498,7 +488,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Key className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  maxLength="6"
+                  maxLength={6}
                   className="form-input text-lg pl-10 font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
                   placeholder="849201"
                   value={otpCode}
@@ -632,7 +622,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Key className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  maxLength="6"
+                  maxLength={6}
                   className="form-input text-lg pl-10 font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
                   placeholder="739102"
                   value={resetOtp}
