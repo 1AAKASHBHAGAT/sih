@@ -4,7 +4,7 @@ import { Problem, CSRPledge, NotificationItem, AnalyticsSummary } from '../types
 const API_BASE_URL = (import.meta as any).env.VITE_API_URL || (
     window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
         ? 'http://127.0.0.1:8000/api' 
-        : 'https://setu-jharkhand-api.onrender.com/api'
+        : 'https://sih-2y11.onrender.com/api'
 );
 
 const API = axios.create({
