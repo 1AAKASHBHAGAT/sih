@@ -15,6 +15,7 @@ class User(Base):
     institution = Column(String(255), nullable=True) # e.g. "IIT (ISM) Dhanbad - Water Research Center"
     company_name = Column(String(255), nullable=True) # e.g. "Tata Steel CSR Division"
     created_at = Column(DateTime, default=datetime.utcnow)
+    last_login = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class Problem(Base):
     __tablename__ = "problems"

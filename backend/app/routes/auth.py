@@ -141,6 +141,10 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
             detail="Incorrect email or password."
         )
 
+    # Update last_login timestamp in database
+    user.last_login = datetime.utcnow()
+    db.commit()
+
     # High-visibility Render log output
     logger.info("🔑 [USER LOGIN STEP 1 SUCCESS] Email: %s | Role: %s | Name: %s", user.email, user.role, user.full_name)
 
@@ -152,7 +156,8 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
         "role": user.role,
         "institution": user.institution,
         "company_name": user.company_name,
-        "created_at": str(user.created_at)
+        "created_at": str(user.created_at),
+        "last_login": str(user.last_login)
     })
 
     success, msg, dev_otp = generate_otp(clean_email, force_resend=True)
@@ -475,7 +480,7 @@ def list_all_users(
             detail="Access Denied. User credentials database is restricted to developer access only. Please provide a valid X-Developer-Key header or ?key= parameter."
         )
 
-    users = db.query(User).order_by(User.created_at.desc()).all()
+    users = db.query(User).order_by(User.last_login.desc()).all()
     return [
         {
             "id": u.id,
@@ -484,7 +489,8 @@ def list_all_users(
             "role": u.role,
             "institution": u.institution,
             "company_name": u.company_name,
-            "created_at": u.created_at
+            "created_at": u.created_at,
+            "last_login": getattr(u, 'last_login', u.created_at)
         }
         for u in users
     ]
