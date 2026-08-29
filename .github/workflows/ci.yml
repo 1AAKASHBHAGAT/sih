@@ -60,9 +60,30 @@ jobs:
       - name: Run Vitest Component Unit Tests
         working-directory: ./frontend
         run: |
-          npm test
+          npx vitest run
 
       - name: Build Production Web App Bundle
         working-directory: ./frontend
         run: |
           npm run build
+
+  render-cd-deploy:
+    name: Render Backend Continuous Deployment (CD)
+    needs: [backend-tests, frontend-build-and-test]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify & Trigger Render Production Deployment
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          echo "=================================================="
+          echo "🟢 CI/CD Test Pipeline Completed Successfully!"
+          echo "=================================================="
+          if [ -n "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "🚀 Triggering Render Production Deploy Hook..."
+            curl -s -X POST "$RENDER_DEPLOY_HOOK_URL"
+          else
+            echo "ℹ️ Render Auto-Deploy on Git Push is active for repository 1AAKASHBHAGAT/sih master branch."
+          fi
