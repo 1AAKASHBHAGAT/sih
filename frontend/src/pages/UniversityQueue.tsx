@@ -59,26 +59,42 @@ function UniversityQueue() {
     } catch (e) {}
 
     try {
-      const params: any = {};
-      if (selectedUni !== "All Universities") {
-        params.university = selectedUni;
-      }
-      const res = await getProblems(params);
+      const res = await getProblems();
       const apiProbs = res.data || [];
-      
       const combined = [...localProblems, ...apiProbs];
-      const unique = combined.filter((prob, index, self) => 
+      
+      const normalized = combined.map(p => {
+        let s = p.status || 'Submitted';
+        if (!['Submitted', 'Assigned', 'In Progress', 'Testing', 'Deployed'].includes(s)) {
+          s = 'Submitted';
+        }
+        return { ...p, status: s };
+      });
+
+      const unique = normalized.filter((prob, index, self) => 
         index === self.findIndex(p => p.ticket_code === prob.ticket_code)
       );
 
       setProblems(unique);
     } catch (err) {
       console.warn('API fetch failed, loading local problem queue.');
-      setProblems(localProblems);
+      const normalizedLocal = localProblems.map(p => {
+        let s = p.status || 'Submitted';
+        if (!['Submitted', 'Assigned', 'In Progress', 'Testing', 'Deployed'].includes(s)) {
+          s = 'Submitted';
+        }
+        return { ...p, status: s };
+      });
+      setProblems(normalizedLocal);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.addEventListener('setu_problem_submitted', loadData);
+    return () => window.removeEventListener('setu_problem_submitted', loadData);
+  }, []);
 
   useEffect(() => {
     if (institution && role === 'university_admin') {
@@ -97,6 +113,11 @@ function UniversityQueue() {
     } catch (err: any) {
       // Local fallback
       setProblems(prev => prev.map(p => p.id === problemId ? { ...p, status: newStatus } : p));
+      try {
+        const local = JSON.parse(localStorage.getItem('setu_local_problems') || '[]');
+        const updated = local.map((p: any) => p.id === problemId || p.ticket_code === problemId ? { ...p, status: newStatus } : p);
+        localStorage.setItem('setu_local_problems', JSON.stringify(updated));
+      } catch (e) {}
     }
   };
 
@@ -141,9 +162,18 @@ function UniversityQueue() {
     "Environment & Forests"
   ];
 
+  const isUniMatch = (p: Problem) => {
+    if (!selectedUni || selectedUni === "All Universities") return true;
+    const target = (p.assigned_university || '').toLowerCase();
+    const uniClean = selectedUni.toLowerCase().split('-')[0].trim();
+    return target.includes(uniClean) || target.includes(selectedUni.toLowerCase());
+  };
+
+  const uniFiltered = problems.filter(isUniMatch);
+
   const filteredProblems = selectedDomain === "All Domains"
-    ? problems
-    : problems.filter(p => p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain);
+    ? uniFiltered
+    : uniFiltered.filter(p => p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain);
 
   const stagesList = [
     { id: 'Submitted', label: t('colSubmitted') || 'New Submissions', desc: 'Newly crowdsourced challenges' },

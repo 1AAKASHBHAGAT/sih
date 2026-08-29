@@ -157,11 +157,25 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }: CitizenSu
 
     try {
       const res = await submitProblem(formData);
-      setResult(res.data);
+      const submittedRecord = {
+        ...res.data,
+        status: res.data.status || 'Submitted',
+        assigned_university: res.data.assigned_university || ROUTE_MAP[formData.user_category] || "Ranchi University - Digital Innovation Lab"
+      };
+
+      try {
+        const existing = JSON.parse(localStorage.getItem('setu_local_problems') || '[]');
+        const updated = [submittedRecord, ...existing.filter((p: any) => p.ticket_code !== submittedRecord.ticket_code)];
+        localStorage.setItem('setu_local_problems', JSON.stringify(updated));
+        window.dispatchEvent(new Event('setu_problem_submitted'));
+      } catch (e) {}
+
+      setResult(submittedRecord);
     } catch (err) {
       console.warn('Backend API unavailable. Processing challenge via Client AI Engine.');
       const randomTicket = `SIH-JH-2026-${Math.floor(1000 + Math.random() * 9000)}`;
       const processedResult = {
+        id: `local-${Date.now()}`,
         ticket_code: randomTicket,
         title: formData.title,
         description: formData.description,
@@ -170,7 +184,7 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }: CitizenSu
         assigned_university: ROUTE_MAP[formData.user_category] || "Ranchi University - Digital Innovation Lab",
         location: formData.location || formData.district || "Ranchi",
         district: formData.district || "Ranchi",
-        status: "Assigned to HEI Nodal Center",
+        status: "Submitted",
         urgency_score: estimatedUrgency || 6.5,
         reporter_name: formData.reporter_name || "Citizen Reporter"
       };
@@ -179,6 +193,7 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }: CitizenSu
         const existing = JSON.parse(localStorage.getItem('setu_local_problems') || '[]');
         existing.unshift(processedResult);
         localStorage.setItem('setu_local_problems', JSON.stringify(existing));
+        window.dispatchEvent(new Event('setu_problem_submitted'));
       } catch (e) {}
 
       setResult(processedResult);
