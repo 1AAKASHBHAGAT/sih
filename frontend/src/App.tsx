@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import TicketLookupModal from './components/TicketLookupModal';
@@ -13,28 +13,48 @@ import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { UserRole } from './types';
 
+const ROLE_TAB_MAP: Record<UserRole, string> = {
+  citizen: 'submit',
+  university_admin: 'university',
+  government: 'analytics',
+  industry: 'industry',
+  guest: 'gate'
+};
+
 function AppContent() {
-  const [activeTab, setActiveTab] = useState<string>('gate'); // 'gate', 'submit', 'university', 'analytics', 'industry'
+  const { isAuthenticated, role } = useAuth();
+  const [activeTab, setActiveTab] = useState<string>('gate');
   const [ticketModalOpen, setTicketModalOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [targetLoginRole, setTargetLoginRole] = useState<string | null>(null);
 
-  const handleOpenLogin = (role: string | null = null) => {
-    setTargetLoginRole(role);
+  // Automatically navigate authenticated user to their role's dedicated category interface!
+  useEffect(() => {
+    if (isAuthenticated && role && role !== 'guest') {
+      const targetTab = ROLE_TAB_MAP[role] || 'submit';
+      setActiveTab(targetTab);
+    } else if (!isAuthenticated) {
+      setActiveTab('gate');
+    }
+  }, [isAuthenticated, role]);
+
+  const handleOpenLogin = (targetRole: string | null = null) => {
+    setTargetLoginRole(targetRole);
     setLoginModalOpen(true);
   };
 
-  const handleSelectTier = (tabId: string, roleName: UserRole) => {
-    setActiveTab(tabId);
+  const handleLoginSuccess = (userRole: UserRole) => {
+    const targetTab = ROLE_TAB_MAP[userRole] || 'submit';
+    setActiveTab(targetTab);
   };
 
   return (
     <div className="min-h-screen w-full flex flex-col portal-bg text-slate-100 overflow-x-hidden">
       
-      {/* Feature Gated Demo Presenter Mode Toolbar */}
+      {/* Presenter Demo Bar */}
       <PresenterBar />
 
-      {/* Header & Navigation Bar */}
+      {/* Header Navigation Bar */}
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
@@ -42,32 +62,31 @@ function AppContent() {
         onOpenLogin={handleOpenLogin}
       />
 
-      {/* Main View Container */}
+      {/* Main Content Area */}
       <main className="flex-1 w-full py-4">
-        {activeTab === 'gate' && (
-          <RoleGateLanding 
-            onSelectTier={handleSelectTier}
-            onOpenLogin={handleOpenLogin}
-          />
-        )}
+        {(!isAuthenticated || activeTab === 'gate') ? (
+          <RoleGateLanding onLoginSuccess={handleLoginSuccess} />
+        ) : (
+          <>
+            {activeTab === 'submit' && (
+              <CitizenSubmit 
+                onNavigateToUniversity={() => setActiveTab('university')}
+                onOpenTicketLookup={() => setTicketModalOpen(true)}
+              />
+            )}
 
-        {activeTab === 'submit' && (
-          <CitizenSubmit 
-            onNavigateToUniversity={() => setActiveTab('university')}
-            onOpenTicketLookup={() => setTicketModalOpen(true)}
-          />
-        )}
+            {activeTab === 'university' && (
+              <UniversityQueue />
+            )}
 
-        {activeTab === 'university' && (
-          <UniversityQueue />
-        )}
+            {activeTab === 'analytics' && (
+              <AdminDashboard />
+            )}
 
-        {activeTab === 'analytics' && (
-          <AdminDashboard />
-        )}
-
-        {activeTab === 'industry' && (
-          <IndustryCatalog />
+            {activeTab === 'industry' && (
+              <IndustryCatalog />
+            )}
+          </>
         )}
       </main>
 
@@ -77,7 +96,7 @@ function AppContent() {
         onClose={() => setTicketModalOpen(false)} 
       />
 
-      {/* Role Login / Register Modal */}
+      {/* Login Modal */}
       <LoginModal 
         isOpen={loginModalOpen} 
         onClose={() => setLoginModalOpen(false)}
