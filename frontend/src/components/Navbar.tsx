@@ -12,6 +12,7 @@ import {
   LogIn,
   LogOut,
   ChevronDown,
+  Layers,
   Activity,
   Award
 } from 'lucide-react';
@@ -33,6 +34,7 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: Na
   const [langDropdownOpen, setLangDropdownOpen] = useState<boolean>(false);
 
   const navItems = [
+    { id: 'gate', label: 'Select Tier', icon: Layers, roles: ['guest', 'citizen', 'university_admin', 'industry', 'government'] },
     { id: 'submit', label: 'Submit Issue', icon: Sparkles, roles: ['guest', 'citizen', 'university_admin', 'industry', 'government'] },
     { id: 'university', label: 'HEI R&D Queue', icon: Building2, roles: ['university_admin', 'government'] },
     { id: 'analytics', label: 'Executive Dashboard', icon: BarChart3, roles: ['government'] },

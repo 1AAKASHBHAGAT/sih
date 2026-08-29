@@ -49,15 +49,29 @@ function UniversityQueue() {
 
   const loadData = async () => {
     setLoading(true);
+    let localProblems: Problem[] = [];
+    try {
+      localProblems = JSON.parse(localStorage.getItem('setu_local_problems') || '[]');
+    } catch (e) {}
+
     try {
       const params: any = {};
       if (selectedUni !== "All Universities") {
         params.university = selectedUni;
       }
       const res = await getProblems(params);
-      setProblems(res.data);
+      const apiProbs = res.data || [];
+      
+      // Deduplicate by ticket_code
+      const combined = [...localProblems, ...apiProbs];
+      const unique = combined.filter((prob, index, self) => 
+        index === self.findIndex(p => p.ticket_code === prob.ticket_code)
+      );
+
+      setProblems(unique);
     } catch (err) {
-      console.error(err);
+      console.warn('API fetch failed, loading local problem queue.');
+      setProblems(localProblems);
     } finally {
       setLoading(false);
     }

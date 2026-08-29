@@ -4,15 +4,17 @@ import Footer from './components/Footer';
 import TicketLookupModal from './components/TicketLookupModal';
 import LoginModal from './components/LoginModal';
 import PresenterBar from './components/PresenterBar';
+import RoleGateLanding from './components/RoleGateLanding';
 import CitizenSubmit from './pages/CitizenSubmit';
 import UniversityQueue from './pages/UniversityQueue';
 import AdminDashboard from './pages/AdminDashboard';
 import IndustryCatalog from './pages/IndustryCatalog';
 import { LanguageProvider } from './context/LanguageContext';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { UserRole } from './types';
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState<string>('submit');
+  const [activeTab, setActiveTab] = useState<string>('gate'); // 'gate', 'submit', 'university', 'analytics', 'industry'
   const [ticketModalOpen, setTicketModalOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [targetLoginRole, setTargetLoginRole] = useState<string | null>(null);
@@ -22,13 +24,17 @@ function AppContent() {
     setLoginModalOpen(true);
   };
 
+  const handleSelectTier = (tabId: string, roleName: UserRole) => {
+    setActiveTab(tabId);
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col portal-bg text-slate-100 overflow-x-hidden">
       
       {/* Feature Gated Demo Presenter Mode Toolbar */}
       <PresenterBar />
 
-      {/* Header & Role Navigation Bar */}
+      {/* Header & Navigation Bar */}
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
@@ -36,8 +42,15 @@ function AppContent() {
         onOpenLogin={handleOpenLogin}
       />
 
-      {/* Main Content View Container */}
+      {/* Main View Container */}
       <main className="flex-1 w-full py-4">
+        {activeTab === 'gate' && (
+          <RoleGateLanding 
+            onSelectTier={handleSelectTier}
+            onOpenLogin={handleOpenLogin}
+          />
+        )}
+
         {activeTab === 'submit' && (
           <CitizenSubmit 
             onNavigateToUniversity={() => setActiveTab('university')}
@@ -71,7 +84,7 @@ function AppContent() {
         targetRole={targetLoginRole}
       />
 
-      {/* Formal Institutional Footer */}
+      {/* Institutional Footer */}
       <Footer />
 
     </div>
