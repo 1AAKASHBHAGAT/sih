@@ -43,6 +43,9 @@ _ip_request_history = defaultdict(list)
 @app.middleware("http")
 async def rate_limiting_middleware(request: Request, call_next):
     """Enforces 60 requests/minute per IP rate limiting on all public & API endpoints."""
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
     path = request.url.path
     if path.startswith("/api/"):
         client_ip = request.client.host if request.client else "127.0.0.1"
