@@ -4,7 +4,6 @@ import Footer from './components/Footer';
 import TicketLookupModal from './components/TicketLookupModal';
 import LoginModal from './components/LoginModal';
 import PresenterBar from './components/PresenterBar';
-import ProtectedRoute from './components/ProtectedRoute';
 import CitizenSubmit from './pages/CitizenSubmit';
 import UniversityQueue from './pages/UniversityQueue';
 import AdminDashboard from './pages/AdminDashboard';
@@ -38,7 +37,7 @@ function AppContent() {
       />
 
       {/* Main Content View Container */}
-      <main className="flex-1 w-full py-2">
+      <main className="flex-1 w-full py-4">
         {activeTab === 'submit' && (
           <CitizenSubmit 
             onNavigateToUniversity={() => setActiveTab('university')}
@@ -47,33 +46,15 @@ function AppContent() {
         )}
 
         {activeTab === 'university' && (
-          <ProtectedRoute
-            allowedRoles={['university_admin', 'government']}
-            pageTitle="University Collaboration Workspace"
-            onOpenLogin={handleOpenLogin}
-          >
-            <UniversityQueue />
-          </ProtectedRoute>
+          <UniversityQueue />
         )}
 
         {activeTab === 'analytics' && (
-          <ProtectedRoute
-            allowedRoles={['government']}
-            pageTitle="Gov Executive Dashboard"
-            onOpenLogin={handleOpenLogin}
-          >
-            <AdminDashboard />
-          </ProtectedRoute>
+          <AdminDashboard />
         )}
 
         {activeTab === 'industry' && (
-          <ProtectedRoute
-            allowedRoles={['industry', 'government']}
-            pageTitle="Industry CSR Partnership Hub"
-            onOpenLogin={handleOpenLogin}
-          >
-            <IndustryCatalog />
-          </ProtectedRoute>
+          <IndustryCatalog />
         )}
       </main>
 
