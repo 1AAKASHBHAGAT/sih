@@ -9,16 +9,17 @@ from .routes import problems, projects, analytics, industry, auth, notifications
 from .routes.auth import seed_demo_users_if_needed
 from .routes.problems import seed_initial_problems_if_needed
 
-# Initialize database tables
-Base.metadata.create_all(bind=engine)
-
-# Seed default demo accounts and initial diverse university challenges
-db = SessionLocal()
+# Initialize database tables & seed initial data safely
 try:
-    seed_demo_users_if_needed(db)
-    seed_initial_problems_if_needed(db)
-finally:
-    db.close()
+    Base.metadata.create_all(bind=engine)
+    db = SessionLocal()
+    try:
+        seed_demo_users_if_needed(db)
+        seed_initial_problems_if_needed(db)
+    finally:
+        db.close()
+except Exception as e:
+    print(f"Warning during DB startup initialization: {e}")
 
 app = FastAPI(
     title="Societal Innovation Collaboration Platform (SIH 26043)",
