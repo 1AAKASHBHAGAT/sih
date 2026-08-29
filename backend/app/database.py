@@ -51,6 +51,18 @@ def build_engine():
     )
 
 engine = build_engine()
+
+def apply_migrations():
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("ALTER TABLE users ADD COLUMN last_login TIMESTAMP"))
+            conn.commit()
+            logger.info("Auto-migrated last_login column to users table.")
+    except Exception:
+        pass
+
+apply_migrations()
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 

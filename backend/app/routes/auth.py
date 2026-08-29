@@ -141,24 +141,30 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
             detail="Incorrect email or password."
         )
 
-    # Update last_login timestamp in database
-    user.last_login = datetime.utcnow()
-    db.commit()
+    # Update last_login timestamp in database if column exists
+    try:
+        user.last_login = datetime.utcnow()
+        db.commit()
+    except Exception:
+        db.rollback()
 
     # High-visibility Render log output
     logger.info("🔑 [USER LOGIN STEP 1 SUCCESS] Email: %s | Role: %s | Name: %s", user.email, user.role, user.full_name)
 
     # Persist user login activity safely
-    save_user_persistently({
-        "id": user.id,
-        "email": user.email,
-        "full_name": user.full_name,
-        "role": user.role,
-        "institution": user.institution,
-        "company_name": user.company_name,
-        "created_at": str(user.created_at),
-        "last_login": str(user.last_login)
-    })
+    try:
+        save_user_persistently({
+            "id": user.id,
+            "email": user.email,
+            "full_name": user.full_name,
+            "role": user.role,
+            "institution": user.institution,
+            "company_name": user.company_name,
+            "created_at": str(user.created_at),
+            "last_login": str(getattr(user, 'last_login', user.created_at))
+        })
+    except Exception:
+        pass
 
     success, msg, dev_otp = generate_otp(clean_email, force_resend=True)
     if not success:
