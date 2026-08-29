@@ -9,7 +9,8 @@ import {
   Sparkles,
   LogIn,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  User as UserIcon
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -20,9 +21,10 @@ interface NavbarProps {
   setActiveTab: (tab: string) => void;
   onOpenTicketLookup: () => void;
   onOpenLogin: (role?: UserRole | null) => void;
+  onOpenProfile: () => void;
 }
 
-function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: NavbarProps) {
+function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin, onOpenProfile }: NavbarProps) {
   const { language, setLanguage } = useLanguage();
   const { user, isAuthenticated, role, logout } = useAuth();
   const [langDropdownOpen, setLangDropdownOpen] = useState<boolean>(false);
@@ -163,23 +165,34 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: Na
             )}
           </div>
 
-          {/* Auth State Button */}
+          {/* Auth State Button & Profile Card Trigger */}
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2.5">
-              <div className="hidden lg:flex flex-col text-right">
-                <span className="text-xs font-bold text-slate-900 truncate max-w-[140px]">{user.full_name}</span>
-                <span className={`text-[10px] font-bold px-2 py-0.2 rounded border ${badge.color}`}>
-                  {badge.label}
-                </span>
-              </div>
+              <button
+                type="button"
+                onClick={onOpenProfile}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 transition text-left cursor-pointer"
+                title="View Account Credentials & Profile"
+              >
+                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
+                  {user.full_name ? user.full_name[0].toUpperCase() : 'U'}
+                </div>
+                <div className="hidden lg:flex flex-col">
+                  <span className="text-xs font-bold text-slate-900 truncate max-w-[120px]">{user.full_name}</span>
+                  <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${badge.color}`}>
+                    {badge.label}
+                  </span>
+                </div>
+              </button>
+
               <button
                 type="button"
                 onClick={logout}
-                className="btn-secondary text-xs py-2 px-3.5 bg-white border-slate-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 font-bold"
+                className="btn-secondary text-xs py-2 px-3 bg-white border-slate-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 font-bold"
                 title="Sign Out & Lock System"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out</span>
+                <span className="hidden sm:inline">Sign Out</span>
               </button>
             </div>
           ) : (

@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import TicketLookupModal from './components/TicketLookupModal';
 import LoginModal from './components/LoginModal';
+import UserProfileModal from './components/UserProfileModal';
 import PresenterBar from './components/PresenterBar';
 import RoleGateLanding from './components/RoleGateLanding';
 import CitizenSubmit from './pages/CitizenSubmit';
@@ -18,6 +19,7 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState<string>('gate');
   const [ticketModalOpen, setTicketModalOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [profileModalOpen, setProfileModalOpen] = useState<boolean>(false);
   const [targetLoginRole, setTargetLoginRole] = useState<string | null>(null);
 
   const handleOpenLogin = (targetRole: string | null = null) => {
@@ -29,8 +31,18 @@ function AppContent() {
     // Role selection successfully authenticated!
   };
 
+  /* STRICT UNAUTHENTICATED GATE: Unauthenticated visitors see ONLY the Sign In / Sign Up interface */
+  if (!isAuthenticated || !user || role === 'guest') {
+    return (
+      <div className="min-h-screen w-full flex flex-col items-center justify-center portal-bg text-slate-900 px-4 py-8">
+        <RoleGateLanding onLoginSuccess={handleLoginSuccess} />
+      </div>
+    );
+  }
+
+  /* AUTHENTICATED STAKEHOLDER WORKSPACE: Users see ONLY their assigned category workspace */
   return (
-    <div className="min-h-screen w-full flex flex-col portal-bg text-slate-100 overflow-x-hidden">
+    <div className="min-h-screen w-full flex flex-col portal-bg text-slate-900 overflow-x-hidden">
       
       {/* Presenter Demo Bar */}
       <PresenterBar />
@@ -41,36 +53,35 @@ function AppContent() {
         setActiveTab={setActiveTab} 
         onOpenTicketLookup={() => setTicketModalOpen(true)}
         onOpenLogin={handleOpenLogin}
+        onOpenProfile={() => setProfileModalOpen(true)}
       />
 
-      {/* Main Content Area: Strictly Locked by Authentication & Role */}
+      {/* Main Content Area: Strictly Scoped by Role */}
       <main className="flex-1 w-full py-4">
-        {!isAuthenticated || !user || role === 'guest' ? (
-          /* STRICT WALL: Unauthenticated visitors see ONLY the Sign In / Sign Up Gate */
-          <RoleGateLanding onLoginSuccess={handleLoginSuccess} />
-        ) : (
-          /* STRICT ROLE-SCOPED INTERFACE: Users see ONLY their assigned designation interface */
-          <>
-            {role === 'citizen' && (
-              <CitizenSubmit 
-                onOpenTicketLookup={() => setTicketModalOpen(true)}
-              />
-            )}
+        {role === 'citizen' && (
+          <CitizenSubmit 
+            onOpenTicketLookup={() => setTicketModalOpen(true)}
+          />
+        )}
 
-            {role === 'university_admin' && (
-              <UniversityQueue />
-            )}
+        {role === 'university_admin' && (
+          <UniversityQueue />
+        )}
 
-            {role === 'government' && (
-              <AdminDashboard />
-            )}
+        {role === 'government' && (
+          <AdminDashboard />
+        )}
 
-            {role === 'industry' && (
-              <IndustryCatalog />
-            )}
-          </>
+        {role === 'industry' && (
+          <IndustryCatalog />
         )}
       </main>
+
+      {/* User Credentials & Profile Modal */}
+      <UserProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
 
       {/* Ticket Tracking Modal */}
       <TicketLookupModal 
