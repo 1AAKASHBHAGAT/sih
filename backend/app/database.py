@@ -15,14 +15,20 @@ def build_engine():
         if url.startswith("postgres://"):
             url = url.replace("postgres://", "postgresql://", 1)
 
-        # Convert direct IPv6 Supabase host to IPv4 Transaction Pooler host for Render compatibility
-        if "supabase.co" in url and "db." in url:
-            url = url.replace("db.xmnvypaghvydlaetudla.supabase.co", "aws-0-ap-south-1.pooler.supabase.com")
+        # Convert direct IPv6 Supabase host to IPv4 Transaction Pooler format for Render compatibility
+        if "supabase.co" in url or "supabase" in url:
+            # Replace direct host with IPv4 Pooler host
+            if "db.xmnvypaghvydlaetudla.supabase.co" in url:
+                url = url.replace("db.xmnvypaghvydlaetudla.supabase.co", "aws-0-ap-south-1.pooler.supabase.com")
+            # Upgrade user format for transaction pooler if needed
+            if "://postgres:" in url and "aws-0-ap-south-1.pooler.supabase.com" in url:
+                url = url.replace("://postgres:", "://postgres.xmnvypaghvydlaetudla:", 1)
+            # Switch default port 5432 to IPv4 pooler port 6543
             if ":5432" in url:
                 url = url.replace(":5432", ":6543")
 
         try:
-            logger.info("Attempting connection to PostgreSQL database (Cloud Storage)...")
+            logger.info("Attempting connection to Supabase Cloud PostgreSQL database...")
             pg_engine = create_engine(
                 url,
                 pool_pre_ping=True,
@@ -32,10 +38,10 @@ def build_engine():
             )
             with pg_engine.connect() as conn:
                 conn.execute(text("SELECT 1"))
-            logger.info("PostgreSQL Cloud Database connected and verified successfully!")
+            logger.info("🟢 Supabase Cloud PostgreSQL Database connected & verified successfully!")
             return pg_engine
         except Exception as e:
-            logger.info("PostgreSQL connection fallback. Active Engine: Persistent Local File DB (sqlite:///./sih_platform.db)")
+            logger.warning("PostgreSQL connection fallback (%s). Active Engine: Local File DB (sqlite:///./sih_platform.db)", str(e))
 
     sqlite_url = "sqlite:///./sih_platform.db"
     logger.info("Database Engine: SQLite Production File DB (%s)", sqlite_url)
