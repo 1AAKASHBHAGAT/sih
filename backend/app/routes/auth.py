@@ -480,8 +480,7 @@ def list_all_users(
             detail="Access Denied. User credentials database is restricted to developer access only. Please provide a valid X-Developer-Key header or ?key= parameter."
         )
 
-    users = db.query(User).order_by(User.last_login.desc()).all()
-    return [
+    db_users = [
         {
             "id": u.id,
             "email": u.email,
@@ -489,8 +488,19 @@ def list_all_users(
             "role": u.role,
             "institution": u.institution,
             "company_name": u.company_name,
-            "created_at": u.created_at,
-            "last_login": getattr(u, 'last_login', u.created_at)
+            "created_at": str(u.created_at),
+            "last_login": str(getattr(u, 'last_login', u.created_at))
         }
-        for u in users
+        for u in db.query(User).order_by(User.created_at.desc()).all()
     ]
+    file_users = get_all_persistent_users()
+
+    combined = file_users + db_users
+    seen_emails = set()
+    unique_users = []
+    for u in combined:
+        if u.get("email") not in seen_emails:
+            seen_emails.add(u.get("email"))
+            unique_users.append(u)
+
+    return unique_users
