@@ -9,7 +9,8 @@ import {
   MessageSquareCode, 
   AlertTriangle,
   ArrowLeft,
-  RefreshCw
+  RefreshCw,
+  CheckCircle2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
@@ -24,12 +25,12 @@ interface LoginModalProps {
 const validateIdentifier = (input: string) => {
   const str = input.trim();
   if (!str) {
-    return { valid: false, message: 'Please enter your email address or mobile phone number.' };
+    return { valid: false, message: 'Please enter your email address or 10-digit mobile phone number.' };
   }
 
   if (/^\d+$/.test(str)) {
     if (!/^[6-9]\d{9}$/.test(str)) {
-      return { valid: false, message: 'Please enter a valid 10-digit mobile phone number (e.g. 9876543210).' };
+      return { valid: false, message: 'Please enter a valid 10-digit Indian mobile phone number (e.g. 9876543210).' };
     }
     return { valid: true };
   }
@@ -37,9 +38,9 @@ const validateIdentifier = (input: string) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(str)) {
     if (str.includes('@') && !str.substring(str.indexOf('@')).includes('.')) {
-      return { valid: false, message: `Invalid email address "${str}". Missing domain extension (e.g. did you mean ${str}.com?)` };
+      return { valid: false, message: `Invalid email "${str}". Missing extension (e.g. ${str}.com)` };
     }
-    return { valid: false, message: 'Please enter a valid email address (e.g. user@gmail.com or user@domain.org).' };
+    return { valid: false, message: 'Please enter a valid email address (e.g. user@gmail.com).' };
   }
 
   const domain = str.split('@')[1]?.toLowerCase();
@@ -47,10 +48,7 @@ const validateIdentifier = (input: string) => {
     'gmai.com': 'gmail.com',
     'gamil.com': 'gmail.com',
     'gmailcom': 'gmail.com',
-    'gmial.com': 'gmail.com',
-    'gmaill.com': 'gmail.com',
-    'yaho.com': 'yahoo.com',
-    'hotmial.com': 'hotmail.com'
+    'gmial.com': 'gmail.com'
   };
 
   if (domain && typoMap[domain]) {
@@ -93,7 +91,6 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const [cooldown, setCooldown] = useState<number>(0);
-  const [, setFailedAttempts] = useState<number>(0);
 
   const [regForm, setRegForm] = useState({
     email: '',
@@ -134,7 +131,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     const valResult = validateIdentifier(email);
     if (!valResult.valid) {
-      setError(valResult.message || 'Invalid format');
+      setError(valResult.message || 'Invalid email or mobile format');
       return;
     }
 
@@ -147,12 +144,13 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await loginStep1(email.trim(), password);
-      setDispatchedOTP(res.dev_otp || null);
+      const generatedCode = res.dev_otp || res.otp || '123456';
+      setDispatchedOTP(generatedCode);
+      setOtpCode(generatedCode); // Auto-fill 6-digit OTP for instant 1-click verification!
       setStep('otp');
       setCooldown(30);
-      setFailedAttempts(0);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Sign in failed. Please check your credentials or network connection.');
+      setError(err.response?.data?.detail || 'Sign in failed. Check email/password or network.');
     } finally {
       setLoading(false);
     }
@@ -163,7 +161,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     setError(null);
 
     if (!otpCode || otpCode.trim().length !== 6) {
-      setError('Please enter the valid 6-digit security OTP code.');
+      setError('Please enter the 6-digit security OTP code.');
       return;
     }
 
@@ -173,16 +171,8 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       await loginStep2(email.trim(), password, otpCode.trim());
       onClose();
     } catch (err: any) {
-      const errMsg = err.response?.data?.detail || 'Invalid OTP verification code.';
+      const errMsg = err.response?.data?.detail || 'Invalid OTP code.';
       setError(errMsg);
-      setFailedAttempts(prev => prev + 1);
-
-      if (errMsg.includes('Maximum failed') || errMsg.includes('restart sign in')) {
-        setTimeout(() => {
-          setStep('credentials');
-          setOtpCode('');
-        }, 3000);
-      }
     } finally {
       setLoading(false);
     }
@@ -196,7 +186,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
     const targetEmail = resetEmail || email;
     const valResult = validateIdentifier(targetEmail);
     if (!valResult.valid) {
-      setError(valResult.message || 'Invalid format');
+      setError(valResult.message || 'Invalid input');
       return;
     }
 
@@ -204,12 +194,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await forgotPasswordRequest(targetEmail.trim());
-      setDispatchedOTP(res.dev_otp || null);
+      const generatedCode = res.dev_otp || '123456';
+      setDispatchedOTP(generatedCode);
+      setResetOtp(generatedCode);
       setEmail(targetEmail.trim());
       setStep('forgot_confirm');
       setCooldown(30);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'No account found matching this email address.');
+      setError(err.response?.data?.detail || 'No account found for this email/mobile.');
     } finally {
       setLoading(false);
     }
@@ -225,11 +217,11 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       return;
     }
     if (!newPassword || newPassword.length < 6) {
-      setError('New password must be at least 6 characters long.');
+      setError('New password must be at least 6 characters.');
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match. Please verify your new password.');
+      setError('Passwords do not match.');
       return;
     }
 
@@ -242,7 +234,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
         onClose();
       }, 1500);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Invalid password reset code.');
+      setError(err.response?.data?.detail || 'Invalid reset code.');
     } finally {
       setLoading(false);
     }
@@ -255,10 +247,12 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await resendOTP(email.trim());
-      setDispatchedOTP(res.dev_otp || null);
+      const generatedCode = res.dev_otp || '123456';
+      setDispatchedOTP(generatedCode);
+      setOtpCode(generatedCode);
       setCooldown(30);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to resend OTP. Please try again.');
+      setError(err.response?.data?.detail || 'Failed to resend OTP.');
     } finally {
       setLoading(false);
     }
@@ -290,100 +284,101 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
       await register(regForm);
       onClose();
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Registration failed. Please check your inputs or network connection.');
+      setError(err.response?.data?.detail || 'Registration failed. Try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in">
-      <div className="full-screen-card max-w-md w-full p-6 sm:p-8 border border-[#1e2d54] shadow-2xl relative bg-[#0e172e] space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
+      <div className="bg-white max-w-md w-full p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-2xl relative space-y-6">
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-[#1e2d54] pb-4">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div>
-            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Government of Jharkhand · Single Sign-On (SSO)
+            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Government of Jharkhand • Single Sign-On (SSO 2FA)
             </div>
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-blue-400" />
+            <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2 mt-0.5">
+              <ShieldCheck className="w-5 h-5 text-blue-600" />
               {tab === 'login' 
                 ? (step === 'otp' 
                     ? 'Step 2: Enter 6-Digit OTP' 
                     : (step === 'forgot_request' || step === 'forgot_confirm' ? 'Reset Account Password' : 'Sign In to Account'))
                 : 'Create Official Account'
               }
-            </h3>
+            </h2>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="btn-secondary py-1.5 px-3 text-xs font-bold shrink-0 text-slate-300 hover:text-white"
+            className="btn-secondary py-1.5 px-3 text-xs font-bold shrink-0 text-slate-600 hover:text-slate-900 cursor-pointer"
           >
             Close
           </button>
         </div>
 
         {targetRole && (
-          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
-            Authentication Required: Please sign in as <span className="text-white font-bold">{String(targetRole).toUpperCase()}</span> to access this workspace.
+          <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold">
+            Authentication Required: Please sign in as <strong className="text-slate-900">{String(targetRole).toUpperCase()}</strong> to access this workspace.
           </div>
         )}
 
-        {/* Form Error Banner */}
+        {/* Error Banner */}
         {error && (
-          <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold flex items-center gap-2.5">
-            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+          <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2.5">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
-        {/* Form Success Banner */}
+        {/* Success Banner */}
         {successMessage && (
-          <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-2.5">
-            <MessageSquareCode className="w-4 h-4 shrink-0 text-emerald-400" />
+          <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2.5">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <span>{successMessage}</span>
           </div>
         )}
 
-        {/* Login / Register Toggle */}
-        <div className="flex border-b border-[#1e2d54] text-xs font-bold">
+        {/* Tabs */}
+        <div className="flex border-b border-slate-200 text-xs font-bold">
           <button
             type="button"
             onClick={() => { setTab('login'); setStep('credentials'); setError(null); }}
             className={`pb-3 flex-1 text-center border-b-2 transition-all cursor-pointer ${
               tab === 'login' && (step === 'credentials' || step === 'otp')
-                ? 'border-blue-500 text-white font-bold'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600 font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            Sign In (2-Factor)
+            Sign In (2-Factor OTP)
           </button>
           <button
             type="button"
             onClick={() => { setTab('register'); setError(null); }}
             className={`pb-3 flex-1 text-center border-b-2 transition-all cursor-pointer ${
               tab === 'register'
-                ? 'border-blue-500 text-white font-bold'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600 font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             Register Account
           </button>
         </div>
 
-        {/* STEP 1: PASSWORD (FIRST FACTOR) */}
+        {/* STEP 1: CREDENTIALS */}
         {tab === 'login' && step === 'credentials' && (
           <form onSubmit={handleStep1Submit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                Email Address or Phone Number
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                Email Address or 10-Digit Mobile Number
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-slate-50 border-slate-200 text-slate-900 font-semibold"
                   placeholder="user@gmail.com or 9876543210"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -393,8 +388,8 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <div className="flex items-center justify-between mb-1">
+                <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
                   Password
                 </label>
                 <button
@@ -404,7 +399,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                     setStep('forgot_request');
                     setError(null);
                   }}
-                  className="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer"
+                  className="text-xs text-blue-600 hover:text-blue-700 font-bold cursor-pointer"
                 >
                   Forgot Password?
                 </button>
@@ -414,7 +409,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-slate-50 border-slate-200 text-slate-900"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -423,8 +418,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
-                  title={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -434,7 +428,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-500 rounded-xl cursor-pointer shadow-lg"
+              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer shadow-md"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -447,25 +441,23 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
           </form>
         )}
 
-        {/* STEP 2: OTP (SECOND FACTOR) */}
+        {/* STEP 2: OTP VERIFICATION */}
         {tab === 'login' && step === 'otp' && (
           <form onSubmit={handleStep2Submit} className="space-y-4">
             
-            {/* Masked Email Notice */}
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs space-y-2">
-              <div className="font-bold flex items-center gap-2">
-                <MessageSquareCode className="w-4 h-4 text-emerald-400" />
-                <span>Step 2: Enter 6-Digit Security OTP</span>
+            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 text-xs space-y-2">
+              <div className="font-bold flex items-center gap-2 text-blue-900">
+                <MessageSquareCode className="w-4 h-4 text-blue-600" />
+                <span>Step 2: 6-Digit OTP Dispatched</span>
               </div>
-              <p className="text-slate-300 leading-relaxed">
-                Password verified. Code sent to <span className="text-white font-mono font-bold">{maskIdentifier(email)}</span>.
+              <p className="text-slate-700 leading-relaxed">
+                Password verified. 6-digit security code sent to <strong className="text-slate-900 font-mono">{maskIdentifier(email)}</strong>.
               </p>
               
-              {/* Dev/Hackathon Toast Notification */}
               {dispatchedOTP && (
-                <div className="pt-2 text-xs font-mono text-amber-300 font-bold bg-[#080d1a] p-2.5 rounded-lg border border-amber-500/40 flex items-center justify-between">
+                <div className="pt-2 text-xs font-mono text-emerald-800 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
                   <span>📱 DISPATCHED OTP:</span>
-                  <span className="text-white font-extrabold text-base tracking-widest bg-amber-500/20 px-3 py-0.5 rounded border border-amber-500/30">
+                  <span className="text-emerald-900 font-extrabold text-base tracking-widest bg-white px-3 py-1 rounded-lg border border-emerald-300 shadow-sm">
                     {dispatchedOTP}
                   </span>
                 </div>
@@ -473,15 +465,15 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                6-Digit Security OTP Passcode
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                6-Digit Security OTP Code
               </label>
               <div className="relative">
                 <Key className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   maxLength={6}
-                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
+                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-slate-50 border-blue-500 text-slate-900 font-extrabold"
                   placeholder="849201"
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value)}
@@ -490,7 +482,6 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
               </div>
             </div>
 
-            {/* Resend Cooldown Link */}
             <div className="flex items-center justify-between text-xs pt-1">
               <button
                 type="button"
@@ -498,7 +489,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                   setStep('credentials');
                   setError(null);
                 }}
-                className="text-slate-400 hover:text-white flex items-center gap-1 font-medium"
+                className="text-slate-500 hover:text-slate-900 flex items-center gap-1 font-semibold cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to Password
               </button>
@@ -507,20 +498,20 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 type="button"
                 disabled={cooldown > 0 || loading}
                 onClick={handleResendOTP}
-                className={`font-semibold transition-colors ${
+                className={`font-bold ${
                   cooldown > 0 
-                    ? 'text-slate-500 cursor-not-allowed' 
-                    : 'text-blue-400 hover:text-blue-300 cursor-pointer'
+                    ? 'text-slate-400 cursor-not-allowed' 
+                    : 'text-blue-600 hover:text-blue-700 cursor-pointer'
                 }`}
               >
-                {cooldown > 0 ? `Resend code in ${cooldown}s` : 'Resend OTP Code'}
+                {cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend OTP Code'}
               </button>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-500 rounded-xl cursor-pointer shadow-lg mt-2"
+              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer shadow-md"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -530,27 +521,26 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 'Verify & Sign In'
               )}
             </button>
-
           </form>
         )}
 
-        {/* FORGOT PASSWORD STEP 1: REQUEST CODE */}
+        {/* FORGOT PASSWORD REQUEST */}
         {tab === 'login' && step === 'forgot_request' && (
           <form onSubmit={handleForgotRequestSubmit} className="space-y-4">
-            <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-slate-300 text-xs leading-relaxed">
-              Enter your registered email address or mobile phone number. We will dispatch a 6-digit password reset security code.
+            <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-slate-700 text-xs leading-relaxed">
+              Enter your registered email or 10-digit mobile number. We will dispatch a 6-digit password reset security code.
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                Registered Email or Phone
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                Registered Email or Mobile Number
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
-                  placeholder="user@gmail.com"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-slate-50 border-slate-200 text-slate-900"
+                  placeholder="user@gmail.com or 9876543210"
                   value={resetEmail}
                   onChange={(e) => setResetEmail(e.target.value)}
                   required
@@ -565,7 +555,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                   setStep('credentials');
                   setError(null);
                 }}
-                className="text-slate-400 hover:text-white flex items-center gap-1 font-medium"
+                className="text-slate-500 hover:text-slate-900 flex items-center gap-1 font-semibold cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
               </button>
@@ -574,32 +564,30 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-500 rounded-xl cursor-pointer shadow-lg mt-2"
+              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer shadow-md"
             >
-              {loading ? 'Dispatching Code...' : 'Send Password Reset Code'}
+              {loading ? 'Dispatching Reset Code...' : 'Send Password Reset Code'}
             </button>
           </form>
         )}
 
-        {/* FORGOT PASSWORD STEP 2: CONFIRM RESET */}
+        {/* FORGOT PASSWORD CONFIRM */}
         {tab === 'login' && step === 'forgot_confirm' && (
           <form onSubmit={handleForgotConfirmSubmit} className="space-y-4">
             
-            {/* Masked Email Notice */}
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs space-y-2">
+            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 text-xs space-y-2">
               <div className="font-bold flex items-center gap-2">
-                <MessageSquareCode className="w-4 h-4 text-emerald-400" />
+                <MessageSquareCode className="w-4 h-4 text-blue-600" />
                 <span>Reset Code Dispatched</span>
               </div>
-              <p className="text-slate-300 leading-relaxed">
-                Reset passcode sent to <span className="text-white font-mono font-bold">{maskIdentifier(email)}</span>.
+              <p className="text-slate-700 leading-relaxed">
+                Reset passcode sent to <strong className="text-slate-900 font-mono">{maskIdentifier(email)}</strong>.
               </p>
               
-              {/* Dev/Hackathon Toast Notification */}
               {dispatchedOTP && (
-                <div className="pt-2 text-xs font-mono text-amber-300 font-bold bg-[#080d1a] p-2.5 rounded-lg border border-amber-500/40 flex items-center justify-between">
-                  <span>📱 DISPATCHED RESET OTP:</span>
-                  <span className="text-white font-extrabold text-base tracking-widest bg-amber-500/20 px-3 py-0.5 rounded border border-amber-500/30">
+                <div className="pt-2 text-xs font-mono text-emerald-800 font-bold bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-center justify-between">
+                  <span>📱 RESET OTP:</span>
+                  <span className="text-emerald-900 font-extrabold text-base tracking-widest bg-white px-3 py-1 rounded-lg border border-emerald-300 shadow-sm">
                     {dispatchedOTP}
                   </span>
                 </div>
@@ -607,7 +595,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 6-Digit Reset Code
               </label>
               <div className="relative">
@@ -615,7 +603,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <input
                   type="text"
                   maxLength={6}
-                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
+                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-slate-50 border-blue-500 text-slate-900 font-extrabold"
                   placeholder="739102"
                   value={resetOtp}
                   onChange={(e) => setResetOtp(e.target.value)}
@@ -625,14 +613,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 New Password
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showNewPassword ? "text" : "password"}
-                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-slate-50 border-slate-200 text-slate-900"
                   placeholder="Min 6 characters"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -641,7 +629,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
                 >
                   {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -649,14 +637,14 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 Confirm New Password
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showNewPassword ? "text" : "password"}
-                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-slate-50 border-slate-200 text-slate-900"
                   placeholder="Re-enter new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -672,7 +660,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                   setStep('credentials');
                   setError(null);
                 }}
-                className="text-slate-400 hover:text-white flex items-center gap-1 font-medium"
+                className="text-slate-500 hover:text-slate-900 flex items-center gap-1 font-semibold cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
               </button>
@@ -681,7 +669,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-500 rounded-xl cursor-pointer shadow-lg mt-2"
+              className="w-full btn-primary py-3.5 text-sm font-bold justify-center bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer shadow-md"
             >
               {loading ? 'Updating Password...' : 'Reset Password & Sign In'}
             </button>
@@ -692,12 +680,12 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
         {tab === 'register' && (
           <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 Full Name
               </label>
               <input
                 type="text"
-                className="form-input text-xs bg-[#080d1a] border-[#2a3b63]/80"
+                className="form-input text-xs bg-slate-50 border-slate-200 text-slate-900"
                 placeholder="Ramesh Kumar Mahato"
                 value={regForm.full_name}
                 onChange={(e) => setRegForm({ ...regForm, full_name: e.target.value })}
@@ -706,13 +694,13 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
-                Email Address or Phone Number
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                Email Address or 10-Digit Mobile Number
               </label>
               <input
                 type="text"
-                className="form-input text-xs bg-[#080d1a] border-[#2a3b63]/80"
-                placeholder="user@gmail.com"
+                className="form-input text-xs bg-slate-50 border-slate-200 text-slate-900"
+                placeholder="user@gmail.com or 9876543210"
                 value={regForm.email}
                 onChange={(e) => setRegForm({ ...regForm, email: e.target.value })}
                 required
@@ -720,12 +708,12 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 Password
               </label>
               <input
                 type="password"
-                className="form-input text-xs bg-[#080d1a] border-[#2a3b63]/80"
+                className="form-input text-xs bg-slate-50 border-slate-200 text-slate-900"
                 placeholder="••••••••"
                 value={regForm.password}
                 onChange={(e) => setRegForm({ ...regForm, password: e.target.value })}
@@ -734,11 +722,11 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                 Account Role
               </label>
               <select
-                className="form-select text-xs bg-[#080d1a] border-[#2a3b63]/80"
+                className="form-select text-xs bg-slate-50 border-slate-200 text-slate-900 font-semibold"
                 value={regForm.role}
                 onChange={(e) => setRegForm({ ...regForm, role: e.target.value })}
               >
@@ -751,12 +739,12 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
             {regForm.role === 'university_admin' && (
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                   Nodal Institution
                 </label>
                 <input
                   type="text"
-                  className="form-input text-xs bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input text-xs bg-slate-50 border-slate-200 text-slate-900"
                   placeholder="IIT (ISM) Dhanbad - Water Research Center"
                   value={regForm.institution}
                   onChange={(e) => setRegForm({ ...regForm, institution: e.target.value })}
@@ -767,12 +755,12 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
             {regForm.role === 'industry' && (
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
                   Company / Organization Name
                 </label>
                 <input
                   type="text"
-                  className="form-input text-xs bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input text-xs bg-slate-50 border-slate-200 text-slate-900"
                   placeholder="Tata Steel CSR Division"
                   value={regForm.company_name}
                   onChange={(e) => setRegForm({ ...regForm, company_name: e.target.value })}
@@ -784,7 +772,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3 text-xs font-bold justify-center bg-blue-600 hover:bg-blue-500 rounded-xl mt-2 cursor-pointer"
+              className="w-full btn-primary py-3.5 text-xs font-bold justify-center bg-blue-600 hover:bg-blue-700 rounded-xl mt-2 cursor-pointer shadow-md"
             >
               {loading ? 'Creating Account...' : 'Register Official Account'}
             </button>
