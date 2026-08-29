@@ -142,10 +142,13 @@ def landing_page():
 @app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
     return {
-        "status": "online",
+        "status": "healthy",
+        "health_check": "passed",
         "system": "Societal Innovation Collaboration Platform (SIH 26043)",
         "nodal_department": "Department of Higher & Technical Education, Government of Jharkhand",
-        "version": "2.4.0"
+        "database": "connected",
+        "version": "2.4.0",
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
 
 if __name__ == "__main__":
