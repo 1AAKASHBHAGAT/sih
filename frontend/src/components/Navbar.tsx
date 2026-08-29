@@ -7,14 +7,10 @@ import {
   Globe, 
   ShieldCheck, 
   Sparkles,
-  Menu,
-  X,
   LogIn,
   LogOut,
   ChevronDown,
-  Layers,
-  Activity,
-  Award
+  UserCheck
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -28,47 +24,53 @@ interface NavbarProps {
 }
 
 function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: NavbarProps) {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const { user, isAuthenticated, role, logout } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState<boolean>(false);
 
-  const navItems = [
-    { id: 'gate', label: 'Select Tier', icon: Layers, roles: ['guest', 'citizen', 'university_admin', 'industry', 'government'] },
-    { id: 'submit', label: 'Submit Issue', icon: Sparkles, roles: ['guest', 'citizen', 'university_admin', 'industry', 'government'] },
-    { id: 'university', label: 'HEI R&D Queue', icon: Building2, roles: ['university_admin', 'government'] },
-    { id: 'analytics', label: 'Executive Dashboard', icon: BarChart3, roles: ['government'] },
-    { id: 'industry', label: 'CSR Grants Hub', icon: Briefcase, roles: ['industry', 'government'] },
-  ];
-
-  const visibleNavItems = navItems.filter(item => item.roles.includes(role) || role === 'government');
+  // Role-locked navigation configuration
+  const getRoleTab = (r: UserRole) => {
+    switch (r) {
+      case 'citizen':
+        return { id: 'submit', label: 'Citizen Problem Reporting & Status', icon: Sparkles };
+      case 'university_admin':
+        return { id: 'university', label: 'University HEI R&D Queue', icon: Building2 };
+      case 'government':
+        return { id: 'analytics', label: 'Government Executive Dashboard', icon: BarChart3 };
+      case 'industry':
+        return { id: 'industry', label: 'Corporate CSR Grants Hub', icon: Briefcase };
+      default:
+        return null;
+    }
+  };
 
   const getRoleBadge = (r: UserRole) => {
     switch (r) {
       case 'government':
-        return { label: 'Gov Executive', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' };
+        return { label: 'Gov Executive Nodal', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' };
       case 'university_admin':
-        return { label: 'University Nodal', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' };
+        return { label: 'University R&D Lead', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' };
       case 'industry':
-        return { label: 'CSR Sponsor', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' };
+        return { label: 'CSR Sponsor Partner', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' };
       default:
-        return { label: 'Citizen User', color: 'bg-slate-800 text-slate-300 border-slate-700' };
+        return { label: 'Citizen Reporter', color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' };
     }
   };
 
+  const currentTabInfo = getRoleTab(role);
   const badge = getRoleBadge(role);
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-[#030712]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
-      {/* Tri-Color Flag Line */}
+    <header className="w-full sticky top-0 z-50 bg-[#030712]/90 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
+      {/* Tri-Color Flag Accent Bar */}
       <div className="gov-tricolor-bar" aria-hidden="true" />
 
-      {/* Top Nodal Ticker */}
+      {/* Top Nodal Ticker Strip */}
       <div className="bg-[#02040a] border-b border-white/5 py-1.5 px-4 sm:px-8 text-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 truncate">
             <span className="flex items-center gap-1.5 text-emerald-400 font-medium text-[11px] sm:text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 24 Districts Live Connected
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Single Sign-On Portal Active
             </span>
             <span className="text-slate-600">•</span>
             <span className="text-slate-300 font-medium truncate text-[11px] sm:text-xs">
@@ -77,75 +79,58 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: Na
           </div>
 
           <div className="flex items-center gap-4 shrink-0 text-[11px]">
-            <span className="hidden sm:inline-flex items-center gap-1 text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-              <Award className="w-3 h-3" /> SIH 26043 Nodal Platform
+            <span className="text-amber-400 font-bold bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/20">
+              SIH 26043 Role-Locked System
             </span>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
         
         {/* Brand Logo */}
-        <button 
-          type="button"
-          onClick={() => setActiveTab('submit')}
-          className="flex items-center gap-3.5 group text-left cursor-pointer focus:outline-none"
-        >
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-all duration-300 border border-white/20">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25 border border-white/20">
             <ShieldCheck className="w-6 h-6 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg sm:text-xl font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
+              <h1 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
                 SETU <span className="text-gradient-blue">Jharkhand</span>
               </h1>
               <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">
-                v2.4
+                SSO Secured
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
-              Societal Innovation Collaboration Ecosystem
+              Societal Innovation Nodal Portal
             </p>
           </div>
-        </button>
+        </div>
 
-        {/* Navigation Tabs (Desktop) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#0b1329]/80 p-1.5 rounded-2xl border border-white/10 shadow-inner">
-          {visibleNavItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
-                className={`flex items-center gap-2 px-4.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/35 border border-white/20 scale-[1.02]' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-blue-400'}`} />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
+        {/* Strictly Scoped Tab indicator (Only visible when signed in) */}
+        {isAuthenticated && currentTabInfo && (
+          <div className="hidden md:flex items-center gap-2.5 px-4 py-2 rounded-xl bg-blue-600/10 border border-blue-500/30 text-blue-300 text-xs font-bold">
+            {React.createElement(currentTabInfo.icon, { className: "w-4 h-4 text-blue-400" })}
+            <span>{currentTabInfo.label}</span>
+          </div>
+        )}
 
-        {/* Right Tools & Actions */}
+        {/* Right Tools & Account Session Controls */}
         <div className="flex items-center gap-3">
           
-          {/* Track Grievance Button */}
-          <button
-            type="button"
-            onClick={onOpenTicketLookup}
-            className="btn-secondary text-xs py-2.5 px-3.5 bg-[#0b1329] border-white/10 text-slate-200 hover:text-white hover:border-blue-500/50"
-          >
-            <Search className="w-3.5 h-3.5 text-blue-400" />
-            <span className="hidden sm:inline">Track Ticket</span>
-          </button>
+          {/* Track Grievance Button (Available to Citizen or Signed Out) */}
+          {(!isAuthenticated || role === 'citizen') && (
+            <button
+              type="button"
+              onClick={onOpenTicketLookup}
+              className="btn-secondary text-xs py-2.5 px-3.5 bg-[#0b1329] border-white/10 text-slate-200 hover:text-white hover:border-blue-500/50"
+            >
+              <Search className="w-3.5 h-3.5 text-blue-400" />
+              <span className="hidden sm:inline">Track Ticket Code</span>
+            </button>
+          )}
 
           {/* Language Switcher */}
           <div className="relative">
@@ -180,19 +165,23 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: Na
             )}
           </div>
 
-          {/* Auth Button */}
+          {/* Auth State Button */}
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2.5">
-              <span className={`hidden md:inline-block text-[11px] font-bold px-3 py-1 rounded-xl border ${badge.color}`}>
-                {badge.label}
-              </span>
+              <div className="hidden lg:flex flex-col text-right">
+                <span className="text-xs font-bold text-white truncate max-w-[140px]">{user.full_name}</span>
+                <span className={`text-[10px] font-bold px-2 py-0.2 rounded border ${badge.color}`}>
+                  {badge.label}
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={logout}
-                className="btn-secondary text-xs py-2.5 px-3.5 bg-[#0b1329] border-white/10 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30"
+                className="btn-secondary text-xs py-2.5 px-3.5 bg-[#0b1329] border-white/10 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 font-bold"
+                title="Sign Out & Lock System"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Sign Out</span>
+                <span>Sign Out</span>
               </button>
             </div>
           ) : (
@@ -202,52 +191,13 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin }: Na
               className="btn-primary text-xs py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-blue-600/25 border border-white/20"
             >
               <LogIn className="w-3.5 h-3.5" />
-              <span>Sign In</span>
+              <span>Sign In / Sign Up</span>
             </button>
           )}
-
-          {/* Mobile Menu Toggle */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-xl bg-[#0b1329] border border-white/10 text-slate-300 hover:text-white"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-rose-400" /> : <Menu className="w-5 h-5" />}
-          </button>
 
         </div>
 
       </div>
-
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#030712]/95 border-b border-white/10 p-5 space-y-4 animate-fade-in backdrop-blur-2xl">
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
-            Institutional Dashboards
-          </div>
-          <div className="grid grid-cols-1 gap-2.5">
-            {visibleNavItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
-                  className={`flex items-center gap-3 p-3.5 rounded-xl text-xs font-bold transition-all text-left ${
-                    isActive 
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/30' 
-                      : 'bg-[#0b1329] text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-blue-400'}`} />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
     </header>
   );
