@@ -16,8 +16,8 @@
   html, body, #root {
     width: 100%;
     min-height: 100vh;
-    background-color: #030712 !important;
-    color: #f8fafc;
+    background-color: #f8fafc !important;
+    color: #0f172a;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -30,99 +30,61 @@
   }
 }
 
-/* Background Animated Gradient Mesh */
+/* Vibrant Light Background Gradient Mesh */
 .portal-bg {
   width: 100%;
   min-height: 100vh;
-  background-color: #030712;
+  background-color: #f8fafc;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(147, 51, 234, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
 }
 
-/* Cyber Grid Effect Overlay */
-.cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-/* Tri-Color Flag Line */
+/* Tri-Color Indian Flag Accent Bar */
 .gov-tricolor-bar {
   height: 3.5px;
   width: 100%;
   background: linear-gradient(90deg, #ff9933 0%, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%, #138808 100%);
 }
 
-/* Glowing Glass Cards */
+/* Clean Radiant White Glass Cards */
 .glass-card {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 20px;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(96, 165, 250, 0.35);
-  box-shadow: 0 25px 60px -10px rgba(37, 99, 235, 0.25);
+  border-color: #cbd5e1;
+  box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.12);
 }
 
 /* Gradient Text Utilities */
 .text-gradient-blue {
-  background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #38bdf8 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-::-webkit-scrollbar-track {
-  background: #030712;
-}
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6;
 }
 
 /* Form Controls */
 .form-input, .form-select, .form-textarea {
   width: 100%;
-  background: rgba(11, 19, 41, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding-top: 13px;
-  padding-bottom: 13px;
-  padding-right: 18px;
-  padding-left: 18px;
-  color: #f8fafc;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 16px;
+  padding-left: 16px;
+  color: #0f172a;
   font-size: 0.92rem;
   outline: none;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 /* Helper for inputs that contain a left icon */
@@ -131,50 +93,66 @@
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: #3b82f6;
-  background: rgba(15, 23, 42, 0.95);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
 /* Buttons */
 .btn-primary {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;
-  font-weight: 700;
-  padding: 14px 28px;
-  border-radius: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
 }
 
 .btn-secondary {
-  background: rgba(15, 23, 42, 0.8);
-  color: #e2e8f0;
+  background: #ffffff;
+  color: #334155;
   font-weight: 600;
-  padding: 12px 22px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .btn-secondary:hover {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(59, 130, 246, 0.5);
-  color: #ffffff;
-  transform: translateY(-1px);
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
 }
