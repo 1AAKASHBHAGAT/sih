@@ -121,13 +121,18 @@ HTML_PORTAL_CONTENT = """
             <div class="info-row"><span class="label">Primary User Web Interface: </span> <a href="https://sih-lake-beta.vercel.app" style="color:#38bdf8; text-decoration:underline;" target="_blank">https://sih-lake-beta.vercel.app</a></div>
             <div class="info-row"><span class="label">Backend Service Host: </span> <span class="val">sih-2y11.onrender.com (Render Free Tier)</span></div>
             <div class="info-row"><span class="label">Database Connection: </span> <span class="val" style="color:#4ade80;">Active (SQLite / PostgreSQL Engine)</span></div>
+            <div class="info-row"><span class="label">Reported Problems Endpoint: </span> <a href="/api/problems" style="color:#38bdf8; text-decoration:underline;" target="_blank">/api/problems</a></div>
             <div class="info-row"><span class="label">User Accounts Database Endpoint: </span> <a href="/api/auth/users" style="color:#38bdf8; text-decoration:underline;" target="_blank">/api/auth/users</a></div>
         </div>
 
         <div class="stats-grid">
             <a href="https://sih-lake-beta.vercel.app" target="_blank" class="stat-card" style="border-color:#3b82f6; background:#1e3a8a33;">
-                <div class="stat-title" style="color:#93c5fd;">🚀 Launch Web Website Application →</div>
+                <div class="stat-title" style="color:#93c5fd;">🚀 Launch Web Application →</div>
                 <div class="stat-desc">Open the full interactive React Web Interface on Vercel to sign in or submit citizen challenges.</div>
+            </a>
+            <a href="/api/problems" target="_blank" class="stat-card" style="border-color:#10b981; background:#064e3b33;">
+                <div class="stat-title" style="color:#6ee7b7;">📋 All Reported Citizen Problems →</div>
+                <div class="stat-desc">View all reported citizen challenges, descriptions, ticket codes, districts, and reporter details.</div>
             </a>
             <a href="/docs" class="stat-card">
                 <div class="stat-title">⚡ Interactive Swagger UI API Docs →</div>
