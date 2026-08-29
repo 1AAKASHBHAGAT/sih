@@ -149,26 +149,13 @@ HTML_PORTAL_CONTENT = """
 """
 
 @app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
+@app.api_route("/health", methods=["GET", "HEAD"], response_class=HTMLResponse)
 def landing_page():
     return HTML_PORTAL_CONTENT
 
-@app.api_route("/health", methods=["GET", "HEAD"])
-def health_check(request: Request):
-    accept_header = request.headers.get("accept", "")
-    if "text/html" in accept_header and not "application/json" in accept_header:
-        return HTMLResponse(content=HTML_PORTAL_CONTENT)
-    return {
-        "status": "healthy",
-        "health_check": "passed",
-        "system": "Societal Innovation Collaboration Platform (SIH 26043)",
-        "nodal_department": "Department of Higher & Technical Education, Government of Jharkhand",
-        "database": "connected",
-        "version": "2.4.0",
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    }
-
 @app.api_route("/api", methods=["GET", "HEAD"])
-def api_root():
+@app.api_route("/health/json", methods=["GET", "HEAD"])
+def api_json_status():
     return {
         "status": "healthy",
         "health_check": "passed",
