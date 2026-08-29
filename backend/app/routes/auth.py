@@ -120,6 +120,9 @@ def seed_demo_users_if_needed(db: Session):
             db.add(user)
     db.commit()
 
+import logging
+logger = logging.getLogger("uvicorn.error")
+
 from ..services.persistent_store import save_user_persistently, get_all_persistent_users
 
 @router.post("/login-step1")
@@ -132,10 +135,14 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == clean_email).first()
 
     if not user or not verify_password(payload.password, user.hashed_password):
+        logger.warning("❌ [LOGIN FAILED] Attempted email/phone: %s", clean_email)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password."
         )
+
+    # High-visibility Render log output
+    logger.info("🔑 [USER LOGIN STEP 1 SUCCESS] Email: %s | Role: %s | Name: %s", user.email, user.role, user.full_name)
 
     # Persist user login activity safely
     save_user_persistently({
@@ -193,6 +200,8 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
         "company_name": user.company_name,
         "created_at": str(user.created_at)
     })
+
+    logger.info("🎉 [NEW USER REGISTERED] Email: %s | Role: %s | Name: %s", user.email, user.role, user.full_name)
 
     token = create_access_token(
         user_id=user.id,

@@ -322,6 +322,9 @@ def submit_problem(
             "status": problem.status,
             "created_at": str(problem.created_at)
         })
+        import logging
+        logger = logging.getLogger("uvicorn.error")
+        logger.info("📋 [NEW PROBLEM SUBMITTED] Ticket: %s | Title: %s | District: %s | Reporter: %s", problem.ticket_code, problem.title, problem.district, problem.reporter_name)
     except Exception as pe:
         pass
 
