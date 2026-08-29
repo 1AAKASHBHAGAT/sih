@@ -72,6 +72,8 @@ app.include_router(industry.router)
 app.include_router(notifications.router)
 
 @app.get("/")
+@app.get("/api")
+@app.get("/health")
 def root():
     return {
         "status": "online",
