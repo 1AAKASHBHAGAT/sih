@@ -195,10 +195,18 @@ def seed_initial_problems_if_needed(db: Session):
 
             notify_ticket_created(db, problem.ticket_code, problem.title, problem.ai_predicted_category, problem.assigned_university, problem.contact_phone)
 
-def generate_ticket_code() -> str:
+def generate_ticket_code(db: Session = None) -> str:
     """Generates unique tracking code like SIH-JH-8492"""
-    digits = ''.join(random.choices(string.digits, k=4))
-    return f"SIH-JH-{digits}"
+    for _ in range(20):
+        digits = ''.join(random.choices(string.digits, k=4))
+        code = f"SIH-JH-{digits}"
+        if db is not None:
+            existing = db.query(Problem).filter(Problem.ticket_code == code).first()
+            if not existing:
+                return code
+        else:
+            return code
+    return f"SIH-JH-{random.randint(10000, 99999)}"
 
 @router.post("/submit", response_model=ProblemResponse)
 def submit_problem(
@@ -240,7 +248,7 @@ def submit_problem(
         lng = base_lng + random.uniform(-0.02, 0.02)
         
     # 6. Create database record with DPDP consent tracking (PRD Section 12)
-    ticket = generate_ticket_code()
+    ticket = generate_ticket_code(db)
     reporter_name = payload.reporter_name or (current_user.full_name if current_user else "Anonymous Citizen")
     
     problem = Problem(
