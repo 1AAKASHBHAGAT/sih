@@ -344,3 +344,22 @@ def get_me(current_user: User = Depends(get_current_user)):
     Returns current authenticated user details from JWT token.
     """
     return current_user
+
+@router.get("/users")
+def list_all_users(db: Session = Depends(get_db)):
+    """
+    Returns list of all registered stakeholder user accounts in the database.
+    """
+    users = db.query(User).order_by(User.created_at.desc()).all()
+    return [
+        {
+            "id": u.id,
+            "email": u.email,
+            "full_name": u.full_name,
+            "role": u.role,
+            "institution": u.institution,
+            "company_name": u.company_name,
+            "created_at": u.created_at
+        }
+        for u in users
+    ]

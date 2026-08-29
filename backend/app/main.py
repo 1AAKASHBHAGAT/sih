@@ -77,7 +77,7 @@ app.include_router(analytics.router)
 app.include_router(industry.router)
 app.include_router(notifications.router)
 
-@app.get("/", response_class=HTMLResponse)
+@app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 def landing_page():
     return """
     <!DOCTYPE html>
@@ -138,8 +138,8 @@ def landing_page():
     </html>
     """
 
-@app.get("/api")
-@app.get("/health")
+@app.api_route("/api", methods=["GET", "HEAD"])
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
     return {
         "status": "online",
