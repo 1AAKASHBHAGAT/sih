@@ -454,11 +454,27 @@ def get_me(current_user: User = Depends(get_current_user)):
     """
     return current_user
 
+from fastapi import Header
+
 @router.get("/users")
-def list_all_users(db: Session = Depends(get_db)):
+def list_all_users(
+    dev_key: Optional[str] = Header(None, alias="X-Developer-Key"),
+    key: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
     """
     Returns list of all registered stakeholder user accounts in the database.
+    STRICT DEVELOPER SECURITY: Restricted to developer access via X-Developer-Key header or ?key= parameter.
     """
+    provided_key = dev_key or key
+    DEV_SECRET = "sih2026devkey"
+
+    if provided_key != DEV_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access Denied. User credentials database is restricted to developer access only. Please provide a valid X-Developer-Key header or ?key= parameter."
+        )
+
     users = db.query(User).order_by(User.created_at.desc()).all()
     return [
         {

@@ -122,7 +122,6 @@ HTML_PORTAL_CONTENT = """
             <div class="info-row"><span class="label">Backend Service Host: </span> <span class="val">sih-2y11.onrender.com (Render Free Tier)</span></div>
             <div class="info-row"><span class="label">Database Connection: </span> <span class="val" style="color:#4ade80;">Active (SQLite / PostgreSQL Engine)</span></div>
             <div class="info-row"><span class="label">Reported Problems Endpoint: </span> <a href="/api/problems" style="color:#38bdf8; text-decoration:underline;" target="_blank">/api/problems</a></div>
-            <div class="info-row"><span class="label">User Accounts Database Endpoint: </span> <a href="/api/auth/users" style="color:#38bdf8; text-decoration:underline;" target="_blank">/api/auth/users</a></div>
         </div>
 
         <div class="stats-grid">
@@ -137,10 +136,6 @@ HTML_PORTAL_CONTENT = """
             <a href="/docs" class="stat-card">
                 <div class="stat-title">⚡ Interactive Swagger UI API Docs →</div>
                 <div class="stat-desc">Test all 18 FastAPI endpoints interactively in your browser with request execution.</div>
-            </a>
-            <a href="/api/auth/users" class="stat-card">
-                <div class="stat-title">👥 User Accounts Database →</div>
-                <div class="stat-desc">View all registered user login profiles and role metadata in real-time JSON format.</div>
             </a>
         </div>
 
@@ -170,6 +165,31 @@ def api_json_status():
         "version": "2.4.0",
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
+
+from typing import Optional
+from fastapi import Header
+
+@app.post("/api/admin/reset-database")
+def reset_database(dev_key: Optional[str] = Header(None, alias="X-Developer-Key"), key: Optional[str] = None):
+    """
+    Developer-Only Endpoint: Resets all database tables & persistent store files, re-seeding clean demo data.
+    """
+    provided_key = dev_key or key
+    if provided_key != "sih2026devkey":
+        return JSONResponse(
+            status_code=status.HTTP_403_FORBIDDEN,
+            content={"detail": "Access Denied. Database reset is restricted to developer access only."}
+        )
+
+    try:
+        from .reset_db import reset_and_reseed_database
+        reset_and_reseed_database()
+        return {"status": "success", "message": "Database and persistent store reset complete. Clean demo data re-seeded!"}
+    except Exception as e:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": f"Database reset error: {str(e)}"}
+        )
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
