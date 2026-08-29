@@ -70,6 +70,7 @@ export const confirmPasswordReset = (data: { email: string; otp: string; new_pas
 export const resendOTP = (email: string) => API.post('/auth/resend-otp', { email });
 export const registerUser = (data: any) => API.post('/auth/register', data);
 export const getAuthMe = () => API.get('/auth/me');
+export const getAllUsers = () => API.get<any[]>('/auth/users');
 
 // Application endpoints
 export const submitProblem = (data: any) => API.post<Problem>('/problems/submit', data);

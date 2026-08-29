@@ -23,7 +23,7 @@ import {
   CartesianGrid 
 } from 'recharts';
 import MapView from '../components/MapView';
-import { getAnalyticsSummary, getProblems } from '../services/api';
+import { getAnalyticsSummary, getProblems, getAllUsers } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import { AnalyticsSummary, Problem } from '../types';
 
@@ -83,7 +83,9 @@ function AdminDashboard() {
   const { t } = useLanguage();
   const [summary, setSummary] = useState<AnalyticsSummary | any>(null);
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [usersList, setUsersList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [activeTab, setActiveTab] = useState<'users' | 'problems'>('users');
 
   const loadData = async (isSilent = false) => {
     if (!isSilent) setLoading(true);
@@ -95,10 +97,11 @@ function AdminDashboard() {
 
     const results = await Promise.allSettled([
       getAnalyticsSummary(),
-      getProblems()
+      getProblems(),
+      getAllUsers()
     ]);
 
-    const [sumResult, probResult] = results;
+    const [sumResult, probResult, usersResult] = results;
 
     if (sumResult.status === 'fulfilled' && sumResult.value?.data) {
       setSummary(sumResult.value.data);
@@ -106,9 +109,16 @@ function AdminDashboard() {
 
     if (probResult.status === 'fulfilled' && probResult.value?.data) {
       const merged = [...localProbs, ...probResult.value.data];
-      setProblems(merged);
+      const unique = merged.filter((prob, index, self) => 
+        index === self.findIndex(p => p.ticket_code === prob.ticket_code)
+      );
+      setProblems(unique);
     } else {
       setProblems(localProbs);
+    }
+
+    if (usersResult.status === 'fulfilled' && usersResult.value?.data) {
+      setUsersList(usersResult.value.data);
     }
 
     if (!isSilent) setLoading(false);
@@ -371,6 +381,123 @@ function AdminDashboard() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* LIVE DATABASE AUDIT SECTION (REGISTERED USERS & REPORTED PROBLEMS) */}
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-blue-600" /> Live Database Records & User Audit Log
+            </h2>
+            <p className="text-xs text-slate-500 mt-1">Real-time database inspection of user accounts, sign in activity, and reported citizen grievances</p>
+          </div>
+
+          <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+            <button
+              type="button"
+              onClick={() => setActiveTab('users')}
+              className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                activeTab === 'users' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              👥 Registered Users ({usersList.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('problems')}
+              className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                activeTab === 'problems' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              📋 Reported Problems ({problems.length})
+            </button>
+          </div>
+        </div>
+
+        {activeTab === 'users' && (
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-xs sm:text-sm text-left">
+              <thead>
+                <tr className="border-b border-slate-200 text-[11px] uppercase font-bold text-slate-500 bg-slate-50">
+                  <th className="py-3 px-4">User Identifier (Email / Mobile)</th>
+                  <th className="py-3 px-4">Full Name</th>
+                  <th className="py-3 px-4 text-center">Account Role</th>
+                  <th className="py-3 px-4">Institution / Organization</th>
+                  <th className="py-3 px-4 text-right">Created Timestamp</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {usersList.map((user: any, idx: number) => (
+                  <tr key={user.id || idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-3.5 px-4 font-mono font-bold text-slate-900">
+                      {user.email}
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-slate-800">{user.full_name}</td>
+                    <td className="py-3.5 px-4 text-center">
+                      <span className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase ${
+                        user.role === 'government' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
+                        user.role === 'university_admin' ? 'bg-purple-50 text-purple-800 border border-purple-200' :
+                        user.role === 'industry' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' :
+                        'bg-blue-50 text-blue-800 border border-blue-200'
+                      }`}>
+                        {user.role}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-600 text-xs font-semibold">
+                      {user.institution || user.company_name || 'N/A (Citizen)'}
+                    </td>
+                    <td className="py-3.5 px-4 text-right font-mono text-slate-500 text-xs">
+                      {user.created_at ? String(user.created_at).substring(0, 19).replace('T', ' ') : 'Just Now'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTab === 'problems' && (
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-xs sm:text-sm text-left">
+              <thead>
+                <tr className="border-b border-slate-200 text-[11px] uppercase font-bold text-slate-500 bg-slate-50">
+                  <th className="py-3 px-4">Ticket Code</th>
+                  <th className="py-3 px-4">Problem Title & Domain</th>
+                  <th className="py-3 px-4">Assigned University</th>
+                  <th className="py-3 px-4 text-center">District</th>
+                  <th className="py-3 px-4 text-center">Reporter</th>
+                  <th className="py-3 px-4 text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {problems.map((prob: any, idx: number) => (
+                  <tr key={prob.id || prob.ticket_code || idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-3.5 px-4 font-mono font-bold text-blue-700">
+                      {prob.ticket_code}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <div className="font-bold text-slate-900 line-clamp-1">{prob.title}</div>
+                      <div className="text-[11px] text-slate-500 font-semibold">{prob.domain || prob.user_category || prob.ai_predicted_category}</div>
+                    </td>
+                    <td className="py-3.5 px-4 text-xs font-semibold text-slate-700 max-w-xs truncate">
+                      {prob.assigned_university}
+                    </td>
+                    <td className="py-3.5 px-4 text-center font-bold text-slate-800">{prob.district || 'Ranchi'}</td>
+                    <td className="py-3.5 px-4 text-center text-xs font-semibold text-slate-700">
+                      {prob.reporter_name || 'Citizen'}
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="px-2.5 py-1 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                        {prob.status || 'Submitted'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
     </div>
