@@ -12,13 +12,13 @@ try {
 }
 
 const DOMAIN_COLORS: Record<string, string> = {
-  "Water Management": "#38bdf8",
-  "Healthcare": "#f43f5e",
-  "Agriculture": "#22c55e",
-  "Education": "#a855f7",
-  "Sanitation": "#f59e0b",
-  "Infrastructure & Energy": "#3b82f6",
-  "Environment & Forests": "#10b981"
+  "Water Management": "#2563eb",
+  "Healthcare": "#e11d48",
+  "Agriculture": "#16a34a",
+  "Education": "#9333ea",
+  "Sanitation": "#d97706",
+  "Infrastructure & Energy": "#0284c7",
+  "Environment & Forests": "#059669"
 };
 
 const HEI_NODES = [
@@ -31,7 +31,7 @@ const HEI_NODES = [
 ];
 
 function createProblemMarker(category: string) {
-  const color = DOMAIN_COLORS[category] || '#3b82f6';
+  const color = DOMAIN_COLORS[category] || '#2563eb';
   const customHtml = `
     <div style="
       background-color: ${color};
@@ -39,7 +39,7 @@ function createProblemMarker(category: string) {
       height: 24px;
       border-radius: 50%;
       border: 2px solid #ffffff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -61,16 +61,16 @@ function createProblemMarker(category: string) {
 function createHeiMarker() {
   const customHtml = `
     <div style="
-      background-color: #0e172e;
+      background-color: #2563eb;
       width: 28px;
       height: 28px;
-      border-radius: 6px;
-      border: 2px solid #38bdf8;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.8);
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #38bdf8;
+      color: #ffffff;
       font-weight: bold;
       font-size: 13px;
     ">
@@ -98,17 +98,17 @@ function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewPr
   const defaultZoom = 8;
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-[#1e2d54] shadow-2xl w-full" style={{ height }}>
+    <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-md w-full" style={{ height }}>
       <MapContainer 
         center={defaultCenter} 
         zoom={defaultZoom} 
         scrollWheelZoom={true}
-        style={{ height: '100%', width: '100%', background: '#080d1a' }}
+        style={{ height: '100%', width: '100%', background: '#f8fafc' }}
       >
-        {/* CartoDB Dark Matter Reliable Tiles */}
+        {/* OpenStreetMap Standard Tiles (No Watermarks, Fast & Clean) */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {/* HEI Nodal Markers */}
@@ -120,11 +120,11 @@ function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewPr
           >
             <Popup>
               <div className="p-1 min-w-[200px] text-xs">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-300 block mb-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block mb-1">
                   HEI Nodal R&D Center
                 </span>
-                <h4 className="font-bold text-sm text-white mb-1">{hei.name}</h4>
-                <span className="text-sky-400 font-semibold">{hei.category}</span>
+                <h4 className="font-bold text-sm text-slate-900 mb-1">{hei.name}</h4>
+                <span className="text-blue-600 font-semibold">{hei.category}</span>
               </div>
             </Popup>
           </Marker>
@@ -148,31 +148,31 @@ function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewPr
               <Popup>
                 <div className="p-1 min-w-[220px]">
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[10px] font-mono font-bold text-slate-300">
+                    <span className="text-[10px] font-mono font-bold text-blue-600">
                       Grievance ID: {prob.ticket_code}
                     </span>
-                    <span className="text-[10px] font-semibold text-slate-300">
+                    <span className="text-[10px] font-semibold text-slate-500">
                       {prob.district}
                     </span>
                   </div>
 
-                  <h4 className="font-bold text-sm text-white mb-1 leading-snug">
+                  <h4 className="font-bold text-sm text-slate-900 mb-1 leading-snug">
                     {prob.title}
                   </h4>
 
-                  <p className="text-xs text-slate-200 line-clamp-2 mb-3">
+                  <p className="text-xs text-slate-600 line-clamp-2 mb-3">
                     {prob.description}
                   </p>
 
-                  <div className="pt-2 border-t border-[#1e2d54] space-y-1.5 text-xs text-slate-200">
+                  <div className="pt-2 border-t border-slate-200 space-y-1.5 text-xs text-slate-700">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-300">AI Domain:</span>
-                      <span className="font-semibold text-sky-400">{domainName}</span>
+                      <span className="text-slate-500">AI Domain:</span>
+                      <span className="font-semibold text-blue-600">{domainName}</span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-300">Routed HEI:</span>
-                      <span className="font-semibold text-slate-100 truncate max-w-[140px]" title={univ}>
+                      <span className="text-slate-500">Routed HEI:</span>
+                      <span className="font-semibold text-slate-800 truncate max-w-[140px]" title={univ}>
                         {univ.split('-')[0]}
                       </span>
                     </div>
@@ -182,7 +182,7 @@ function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewPr
                     <button
                       type="button"
                       onClick={() => onSelectProblem(prob)}
-                      className="w-full mt-3 btn-primary text-xs py-1.5 justify-center bg-blue-600 hover:bg-blue-500"
+                      className="w-full mt-3 btn-primary text-xs py-1.5 justify-center bg-blue-600 hover:bg-blue-700"
                     >
                       <span>View Details</span>
                       <ExternalLink className="w-3 h-3" />
@@ -196,26 +196,26 @@ function MapView({ problems = [], height = "480px", onSelectProblem }: MapViewPr
       </MapContainer>
 
       {/* Map Legend Overlay */}
-      <div className="absolute top-4 right-4 bg-[#080d1a]/95 backdrop-blur-md border border-[#2a3b63] p-4 rounded-xl shadow-2xl z-[1000] text-xs space-y-2.5 max-w-[240px]">
-        <p className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider border-b border-[#1e2d54] pb-1.5">
+      <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md border border-slate-200 p-4 rounded-2xl shadow-xl z-[1000] text-xs space-y-2.5 max-w-[240px]">
+        <p className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider border-b border-slate-100 pb-1.5">
           Spatial Map Legend
         </p>
-        <div className="space-y-2 text-[11px] text-slate-200">
+        <div className="space-y-2 text-[11px] text-slate-700">
           <div className="flex items-center gap-2.5">
-            <span className="w-3 h-3 rounded-full bg-sky-400 inline-block shrink-0 border border-white/40"></span>
-            <span className="font-medium text-slate-200">Water Management</span>
+            <span className="w-3 h-3 rounded-full bg-blue-600 inline-block shrink-0 border border-white"></span>
+            <span className="font-medium text-slate-700">Water Management</span>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="w-3 h-3 rounded-full bg-rose-500 inline-block shrink-0 border border-white/40"></span>
-            <span className="font-medium text-slate-200">Healthcare</span>
+            <span className="w-3 h-3 rounded-full bg-rose-600 inline-block shrink-0 border border-white"></span>
+            <span className="font-medium text-slate-700">Healthcare</span>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block shrink-0 border border-white/40"></span>
-            <span className="font-medium text-slate-200">Agriculture</span>
+            <span className="w-3 h-3 rounded-full bg-emerald-600 inline-block shrink-0 border border-white"></span>
+            <span className="font-medium text-slate-700">Agriculture</span>
           </div>
-          <div className="flex items-center gap-2.5 pt-1 border-t border-[#1e2d54]/60">
-            <span className="w-3.5 h-3.5 rounded bg-[#0e172e] inline-block border border-sky-400 shrink-0 text-[10px] text-center leading-3">🏛️</span>
-            <span className="font-bold text-sky-400">HEI R&D Centers</span>
+          <div className="flex items-center gap-2.5 pt-1 border-t border-slate-100">
+            <span className="w-3.5 h-3.5 rounded bg-blue-600 inline-block border border-white shrink-0 text-[10px] text-center leading-3 text-white">🏛️</span>
+            <span className="font-bold text-blue-700">HEI R&D Centers</span>
           </div>
         </div>
       </div>
