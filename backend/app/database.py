@@ -8,6 +8,8 @@ logger = logging.getLogger("uvicorn.error")
 raw_db_url = os.getenv("DATABASE_URL", "").strip()
 use_sqlite_flag = os.getenv("USE_SQLITE", "false").lower() in ("true", "1", "t")
 
+SQLALCHEMY_DATABASE_URL = raw_db_url if raw_db_url else "sqlite:///./sih_platform.db"
+
 def build_engine():
     # If DATABASE_URL is available and USE_SQLITE is not explicitly forced
     if raw_db_url and not use_sqlite_flag:
