@@ -120,6 +120,8 @@ def seed_demo_users_if_needed(db: Session):
             db.add(user)
     db.commit()
 
+from ..services.persistent_store import save_user_persistently, get_all_persistent_users
+
 @router.post("/login-step1")
 def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
     """
@@ -135,6 +137,17 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
             detail="Incorrect email or password."
         )
 
+    # Persist user login activity safely
+    save_user_persistently({
+        "id": user.id,
+        "email": user.email,
+        "full_name": user.full_name,
+        "role": user.role,
+        "institution": user.institution,
+        "company_name": user.company_name,
+        "created_at": str(user.created_at)
+    })
+
     success, msg, dev_otp = generate_otp(clean_email, force_resend=True)
     if not success:
         raise HTTPException(status_code=status.HTTP_429_TOO_MANY_REQUESTS, detail=msg)
@@ -145,6 +158,93 @@ def login_step1(payload: LoginStep1Request, db: Session = Depends(get_db)):
         "message": "Password verified. 6-digit OTP code dispatched to email/phone.",
         "dev_otp": dev_otp
     }
+
+@router.post("/register", response_model=TokenResponse)
+def register(payload: UserRegister, db: Session = Depends(get_db)):
+    """
+    Registers a new user account and returns a 24-hour access token and 7-day refresh token.
+    """
+    clean_email = validate_email_or_phone_backend(payload.email)
+    existing = db.query(User).filter(User.email == clean_email).first()
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="An account with this email/phone number already exists."
+        )
+
+    user = User(
+        email=clean_email,
+        hashed_password=hash_password(payload.password),
+        full_name=payload.full_name,
+        role=payload.role or "citizen",
+        institution=payload.institution,
+        company_name=payload.company_name
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    save_user_persistently({
+        "id": user.id,
+        "email": user.email,
+        "full_name": user.full_name,
+        "role": user.role,
+        "institution": user.institution,
+        "company_name": user.company_name,
+        "created_at": str(user.created_at)
+    })
+
+    token = create_access_token(
+        user_id=user.id,
+        email=user.email,
+        role=user.role,
+        institution=user.institution,
+        company_name=user.company_name
+    )
+    refresh_token = create_refresh_token(user_id=user.id)
+
+    return {
+        "access_token": token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+        "user": user
+    }
+
+@router.get("/me", response_model=UserResponse)
+def get_me(current_user: User = Depends(get_current_user)):
+    """
+    Returns current authenticated user details from JWT token.
+    """
+    return current_user
+
+@router.get("/users")
+def list_all_users(db: Session = Depends(get_db)):
+    """
+    Returns list of all registered stakeholder user accounts in the database and persistent store.
+    """
+    db_users = [
+        {
+            "id": u.id,
+            "email": u.email,
+            "full_name": u.full_name,
+            "role": u.role,
+            "institution": u.institution,
+            "company_name": u.company_name,
+            "created_at": str(u.created_at)
+        }
+        for u in db.query(User).order_by(User.created_at.desc()).all()
+    ]
+    file_users = get_all_persistent_users()
+
+    combined = file_users + db_users
+    seen_emails = set()
+    unique_users = []
+    for u in combined:
+        if u.get("email") not in seen_emails:
+            seen_emails.add(u.get("email"))
+            unique_users.append(u)
+
+    return unique_users
 
 @router.post("/login-step2", response_model=TokenResponse)
 def login_step2(payload: LoginStep2Request, db: Session = Depends(get_db)):

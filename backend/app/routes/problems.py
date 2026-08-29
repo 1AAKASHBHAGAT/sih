@@ -303,6 +303,28 @@ def submit_problem(
     # Trigger SMS & System Notification Dispatch
     notify_ticket_created(db, ticket, problem.title, ai_category, assigned_university, problem.contact_phone)
     
+    # Save problem to persistent store as well
+    try:
+        from ..services.persistent_store import save_problem_persistently
+        save_problem_persistently({
+            "id": problem.id,
+            "ticket_code": problem.ticket_code,
+            "title": problem.title,
+            "description": problem.description,
+            "user_category": problem.user_category,
+            "ai_predicted_category": problem.ai_predicted_category,
+            "assigned_university": problem.assigned_university,
+            "urgency_score": problem.urgency_score,
+            "district": problem.district,
+            "location": problem.location,
+            "reporter_name": problem.reporter_name,
+            "contact_phone": problem.contact_phone,
+            "status": problem.status,
+            "created_at": str(problem.created_at)
+        })
+    except Exception as pe:
+        pass
+
     return problem
 
 @router.get("", response_model=List[ProblemResponse])
@@ -323,7 +345,24 @@ def get_problems_list(
     if search:
         s = f"%{search}%"
         query = query.filter(or_(Problem.title.ilike(s), Problem.description.ilike(s), Problem.ticket_code.ilike(s)))
-    return query.order_by(Problem.created_at.desc()).all()
+    db_problems = query.order_by(Problem.created_at.desc()).all()
+
+    try:
+        from ..services.persistent_store import get_all_persistent_problems
+        file_problems = get_all_persistent_problems()
+    except Exception:
+        file_problems = []
+
+    combined = list(db_problems) + file_problems
+    seen_tickets = set()
+    unique = []
+    for p in combined:
+        t_code = p.ticket_code if hasattr(p, 'ticket_code') else p.get('ticket_code')
+        if t_code and t_code not in seen_tickets:
+            seen_tickets.add(t_code)
+            unique.append(p)
+
+    return unique
 
 @router.get("/ticket/{ticket_code}", response_model=ProblemResponse)
 def get_problem_by_ticket(ticket_code: str, db: Session = Depends(get_db)):
