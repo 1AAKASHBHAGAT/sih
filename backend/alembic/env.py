@@ -10,7 +10,7 @@ from alembic import context
 # Add backend directory to sys.path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.database import Base, SQLALCHEMY_DATABASE_URL
+from app.database import Base, raw_db_url
 from app.models import User, Problem, Project, Milestone, CSRPledge
 
 # Alembic Config object
@@ -20,7 +20,11 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Set database URL dynamically from app.database
-config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
+db_url = raw_db_url or "sqlite:///./sih_platform.db"
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+config.set_main_option("sqlalchemy.url", db_url)
 
 target_metadata = Base.metadata
 
@@ -48,7 +52,7 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
-            render_as_batch=True if "sqlite" in SQLALCHEMY_DATABASE_URL else False
+            render_as_batch=True if "sqlite" in str(engine.url) else False
         )
 
         with context.begin_transaction():
