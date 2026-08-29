@@ -391,7 +391,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  className="form-input text-xs sm:text-sm pl-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
                   placeholder="user@gmail.com or 9876543210"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -422,7 +422,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="form-input text-xs sm:text-sm pl-10 pr-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-[#080d1a] border-[#2a3b63]/80"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -489,7 +489,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <input
                   type="text"
                   maxLength={6}
-                  className="form-input text-lg pl-10 font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
+                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
                   placeholder="849201"
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value)}
@@ -557,7 +557,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  className="form-input text-xs sm:text-sm pl-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
                   placeholder="user@gmail.com"
                   value={resetEmail}
                   onChange={(e) => setResetEmail(e.target.value)}
@@ -623,7 +623,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <input
                   type="text"
                   maxLength={6}
-                  className="form-input text-lg pl-10 font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
+                  className="form-input form-input-with-icon text-lg font-mono tracking-widest bg-[#080d1a] border-blue-500/60 text-white font-extrabold"
                   placeholder="739102"
                   value={resetOtp}
                   onChange={(e) => setResetOtp(e.target.value)}
@@ -640,7 +640,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showNewPassword ? "text" : "password"}
-                  className="form-input text-xs sm:text-sm pl-10 pr-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm pr-10 bg-[#080d1a] border-[#2a3b63]/80"
                   placeholder="Min 6 characters"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -664,7 +664,7 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type={showNewPassword ? "text" : "password"}
-                  className="form-input text-xs sm:text-sm pl-10 bg-[#080d1a] border-[#2a3b63]/80"
+                  className="form-input form-input-with-icon text-xs sm:text-sm bg-[#080d1a] border-[#2a3b63]/80"
                   placeholder="Re-enter new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

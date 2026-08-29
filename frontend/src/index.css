@@ -74,24 +74,6 @@
   box-shadow: 0 25px 60px -10px rgba(37, 99, 235, 0.25);
 }
 
-/* Glowing Border Effect */
-.glow-border-blue {
-  position: relative;
-}
-.glow-border-blue::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-  border-radius: 21px;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.glow-border-blue:hover::after {
-  opacity: 0.6;
-}
-
 /* Gradient Text Utilities */
 .text-gradient-blue {
   background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #38bdf8 100%);
@@ -127,17 +109,25 @@
   background: #3b82f6;
 }
 
-/* Form Styling */
+/* Form Controls */
 .form-input, .form-select, .form-textarea {
   width: 100%;
   background: rgba(11, 19, 41, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  padding: 13px 18px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-right: 18px;
+  padding-left: 18px;
   color: #f8fafc;
   font-size: 0.92rem;
   outline: none;
   transition: all 0.25s ease;
+}
+
+/* Helper for inputs that contain a left icon */
+.form-input-with-icon {
+  padding-left: 2.8rem !important;
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -187,13 +177,4 @@
   border-color: rgba(59, 130, 246, 0.5);
   color: #ffffff;
   transform: translateY(-1px);
-}
-
-/* Animations */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.02); }
-}
-.animate-pulse-slow {
-  animation: pulse-slow 3s infinite ease-in-out;
 }
