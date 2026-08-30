@@ -144,13 +144,18 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await loginStep1(email.trim(), password);
-      const generatedCode = res.dev_otp || res.otp || '123456';
+      const generatedCode = res.dev_otp || res.otp || '';
       setDispatchedOTP(generatedCode);
-      setOtpCode(generatedCode); // Auto-fill 6-digit OTP for instant 1-click verification!
+      setOtpCode(''); // Require user to manually enter 6-digit OTP for real security
       setStep('otp');
       setCooldown(30);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Sign in failed. Check email/password or network.');
+      const detail = err.response?.data?.detail;
+      if (detail === 'Invalid email or password' || err.response?.status === 401) {
+        setError('No account found or incorrect password. If you are a new user, please click "Register Account" tab above.');
+      } else {
+        setError(detail || 'Sign in failed. Please check your credentials or network connection.');
+      }
     } finally {
       setLoading(false);
     }
@@ -194,9 +199,9 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await forgotPasswordRequest(targetEmail.trim());
-      const generatedCode = res.dev_otp || '123456';
+      const generatedCode = res.dev_otp || '';
       setDispatchedOTP(generatedCode);
-      setResetOtp(generatedCode);
+      setResetOtp(''); // Require user to manually enter OTP for security
       setEmail(targetEmail.trim());
       setStep('forgot_confirm');
       setCooldown(30);
@@ -247,9 +252,9 @@ function LoginModal({ isOpen, onClose, defaultTab = 'login', targetRole = null }
 
     try {
       const res = await resendOTP(email.trim());
-      const generatedCode = res.dev_otp || '123456';
+      const generatedCode = res.dev_otp || '';
       setDispatchedOTP(generatedCode);
-      setOtpCode(generatedCode);
+      setOtpCode('');
       setCooldown(30);
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to resend OTP.');
