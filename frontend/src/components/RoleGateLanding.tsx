@@ -95,8 +95,8 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
     e.preventDefault();
     setError(null);
 
-    if (!regForm.full_name.trim() || !regForm.email.trim() || !regForm.password) {
-      setError('Please fill in all required fields.');
+    if (regForm.password.length < 6) {
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -105,7 +105,12 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
       const userData = await register(regForm);
       onLoginSuccess(userData.role);
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Registration failed.');
+      const detail = err.response?.data?.detail;
+      if (detail && detail.includes('already exists')) {
+        setError('An account with this email/phone number already exists! Please click "Sign in" below.');
+      } else {
+        setError(detail || 'Registration failed. Please check your network connection.');
+      }
     } finally {
       setLoading(false);
     }
