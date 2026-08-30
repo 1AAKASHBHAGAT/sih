@@ -61,8 +61,8 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
       setStep('otp');
     } catch (err: any) {
       const detail = err.response?.data?.detail;
-      if (detail === 'Invalid email or password' || err.response?.status === 401) {
-        setError('No account found for this email or password incorrect. Please click "Sign up" below to register.');
+      if (err.response?.status === 401 || (detail && (detail.toLowerCase().includes('incorrect') || detail.toLowerCase().includes('invalid') || detail.toLowerCase().includes('not found')))) {
+        setError('No account found for this email or password incorrect. Click "Sign up" below to create your account!');
       } else {
         setError(detail || 'Sign in failed. Please check your credentials or network connection.');
       }
@@ -323,7 +323,7 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
               Don't have an account?{' '}
               <button
                 type="button"
-                onClick={() => { setTab('register'); setError(null); }}
+                onClick={() => { setTab('register'); setRegForm(prev => ({ ...prev, email: email.trim() })); setError(null); }}
                 className="font-semibold text-blue-600 hover:text-blue-700 cursor-pointer"
               >
                 Sign up
