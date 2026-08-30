@@ -43,25 +43,7 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
     company_name: ''
   });
 
-  const DEMO_PRESETS = [
-    { role: 'citizen' as UserRole, label: 'Citizen', icon: Users, email: 'citizen@jharkhand.gov.in', color: 'from-blue-600 to-cyan-500' },
-    { role: 'university_admin' as UserRole, label: 'University Lead', icon: Building2, email: 'admin@iitism.ac.in', color: 'from-indigo-600 to-purple-500' },
-    { role: 'government' as UserRole, label: 'Gov Executive', icon: BarChart3, email: 'nodal.officer@jharkhand.gov.in', color: 'from-amber-500 to-orange-500' },
-    { role: 'industry' as UserRole, label: 'CSR Sponsor', icon: Briefcase, email: 'csr@tatasteel.com', color: 'from-emerald-600 to-teal-500' }
-  ];
 
-  const handleQuickDemoLogin = async (demoRole: UserRole, demoEmail: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await loginStep2(demoEmail, 'demo123', '123456');
-      onLoginSuccess(demoRole);
-    } catch (err: any) {
-      setError('Quick sign in failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleStep1Submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -75,10 +57,15 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
     setLoading(true);
     try {
       const res = await loginStep1(email.trim(), password);
-      setDispatchedOtp(res?.dev_otp || '123456');
+      setDispatchedOtp(res?.dev_otp || '');
       setStep('otp');
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Sign in failed.');
+      const detail = err.response?.data?.detail;
+      if (detail === 'Invalid email or password' || err.response?.status === 401) {
+        setError('No account found for this email or password incorrect. Please click "Sign up" below to register.');
+      } else {
+        setError(detail || 'Sign in failed. Please check your credentials or network connection.');
+      }
     } finally {
       setLoading(false);
     }
@@ -351,32 +338,6 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
           )}
         </div>
 
-      </div>
-
-      {/* Quick Demo Evaluation Buttons */}
-      <div className="mt-8 max-w-md w-full bg-slate-100 border border-slate-200 rounded-2xl p-4 space-y-2">
-        <div className="text-[11px] font-semibold text-slate-600 flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-500" /> 1-Click Evaluation Sign In:
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          {DEMO_PRESETS.map((preset) => {
-            const Icon = preset.icon;
-            return (
-              <button
-                key={preset.role}
-                type="button"
-                disabled={loading}
-                onClick={() => handleQuickDemoLogin(preset.role, preset.email)}
-                className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-blue-500 hover:text-blue-600 text-xs font-semibold flex items-center gap-2 transition cursor-pointer shadow-sm text-left"
-              >
-                <Icon className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="truncate">{preset.label}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
     </div>
