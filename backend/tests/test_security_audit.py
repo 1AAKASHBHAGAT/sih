@@ -24,12 +24,15 @@ def test_dpdp_consent_persistence_in_database():
 def test_jwt_session_refresh_token_exchange():
     """Verifies 24-hour access token and 7-day refresh token generation & refresh endpoint exchange."""
     # Step 1
-    client.post("/api/auth/login-step1", json={"email": "gov@jharkhand.gov.in", "password": "gov123"})
+    step1_res = client.post("/api/auth/login-step1", json={"email": "gov@jharkhand.gov.in", "password": "gov123"})
+    assert step1_res.status_code == 200
+    dev_otp = step1_res.json().get("dev_otp")
+
     # Step 2
     step2_res = client.post("/api/auth/login-step2", json={
         "email": "gov@jharkhand.gov.in",
         "password": "gov123",
-        "otp": "123456"
+        "otp": dev_otp
     })
     assert step2_res.status_code == 200
     login_data = step2_res.json()

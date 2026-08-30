@@ -51,9 +51,6 @@ def verify_otp_with_attempts(identifier: str, input_otp: str) -> Tuple[bool, str
     """
     clean_id = identifier.strip().lower()
     if clean_id not in _otp_store:
-        # Dev fallback for presentation tests
-        if input_otp.strip() in ['849201', '123456']:
-            return True, "Authentication verified."
         return False, "No active OTP request found for this account. Please sign in again."
 
     record = _otp_store[clean_id]
@@ -74,7 +71,7 @@ def verify_otp_with_attempts(identifier: str, input_otp: str) -> Tuple[bool, str
     stored_code = record["code"]
     clean_input = input_otp.strip()
 
-    if stored_code == clean_input or clean_input in ['849201', '123456']:
+    if stored_code == clean_input:
         del _otp_store[clean_id]
         return True, "OTP successfully verified."
 

@@ -3,8 +3,14 @@ import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional
 
-SECRET_KEY = "SIH_JHARKHAND_GOVT_SECRET_KEY_26043_SECURE_JWT"
-REFRESH_SECRET_KEY = "SIH_JHARKHAND_GOVT_REFRESH_SECRET_KEY_26043_SECURE_JWT"
+import os
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "c91722e702373dd270e54969eac933d526c4866393613b0a7c2afbd30be832d2")
+REFRESH_SECRET_KEY = os.environ.get("REFRESH_SECRET_KEY", "aff2e76ef4bb323fda047f60634d9571fd5c93c70b02a4cdd01ffd3f6690bc12")
+
+if not SECRET_KEY or not REFRESH_SECRET_KEY:
+    raise RuntimeError("SECRET_KEY and REFRESH_SECRET_KEY must be set as environment variables")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24
 REFRESH_TOKEN_EXPIRE_DAYS = 7
