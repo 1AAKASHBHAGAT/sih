@@ -57,7 +57,9 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
     setLoading(true);
     try {
       const res = await loginStep1(email.trim(), password);
-      setDispatchedOtp(res?.dev_otp || '');
+      const generatedOtp = res?.dev_otp || '';
+      setDispatchedOtp(generatedOtp);
+      setOtpCode(generatedOtp);
       setStep('otp');
     } catch (err: any) {
       const detail = err.response?.data?.detail;
@@ -223,8 +225,9 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
               <div className="font-bold flex items-center gap-1.5 text-xs">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Security Passcode Dispatched
               </div>
-              <div className="text-[11px] font-mono text-emerald-700">
-                Dev OTP: <span className="font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-emerald-300">{dispatchedOtp || '123456'}</span>
+              <div className="text-xs font-mono text-emerald-800 font-bold bg-white p-2.5 rounded-xl border border-emerald-200 flex items-center justify-between">
+                <span>📱 6-DIGIT OTP CODE:</span>
+                <span className="font-extrabold text-slate-900 bg-emerald-100 px-3 py-1 rounded-lg border border-emerald-300 text-sm tracking-widest">{dispatchedOtp}</span>
               </div>
             </div>
 
