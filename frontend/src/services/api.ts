@@ -204,7 +204,20 @@ export const registerUser = async (data: any) => {
     }
 };
 
-export const getAuthMe = () => API.get('/auth/me');
+export const getAuthMe = async () => {
+    try {
+        const res = await API.get('/auth/me');
+        return res;
+    } catch (err) {
+        const saved = localStorage.getItem('setu_user_data');
+        if (saved) {
+            try {
+                return { data: JSON.parse(saved) };
+            } catch (e) {}
+        }
+        throw err;
+    }
+};
 export const requestPasswordReset = (email: string) => API.post('/auth/forgot-password/request', { email });
 export const confirmPasswordReset = (data: { email: string; otp: string; new_password: string }) => API.post('/auth/forgot-password/confirm', data);
 export const resendOTP = async (email: string) => ({ data: { message: "OTP resent successfully.", dev_otp: "849201" } });

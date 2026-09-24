@@ -54,12 +54,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
+    const saved = localStorage.getItem('setu_user_data');
+    if (saved && !user) {
+      try {
+        setUser(JSON.parse(saved));
+      } catch (e) {}
+    }
+
     try {
       const res = await getAuthMe();
-      setUser(res.data);
-      localStorage.setItem('setu_user_data', JSON.stringify(res.data));
+      if (res?.data) {
+        setUser(res.data);
+        localStorage.setItem('setu_user_data', JSON.stringify(res.data));
+      }
     } catch (err) {
-      console.warn('Backend connection unavailable or token expired. Operating in local authenticated mode.');
+      console.warn('Backend profile fetch bypassed. Keeping persistent local user session.');
+      if (saved) {
+        try {
+          setUser(JSON.parse(saved));
+        } catch (e) {}
+      }
     } finally {
       setLoading(false);
     }

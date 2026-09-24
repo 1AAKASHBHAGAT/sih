@@ -78,7 +78,7 @@ function PresenterBar() {
       setStatusMessage(`Step 2: Auto-verifying OTP (${generatedOtp})...`);
       
       // 2. Programmatically execute Step 2 (OTP second factor)
-      await loginStep2(preset.email, preset.password, generatedOtp);
+      await loginStep2(preset.email, preset.password, generatedOtp, preset.role as any);
       
       setStatusMessage(`✅ Authenticated as ${preset.label}!`);
       setTimeout(() => setStatusMessage(''), 3000);
