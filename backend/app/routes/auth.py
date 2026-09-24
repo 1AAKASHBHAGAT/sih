@@ -102,6 +102,14 @@ DEMO_ACCOUNTS = [
         "role": "citizen",
         "institution": None,
         "company_name": None
+    },
+    {
+        "email": "grab10aakashbhagat@gmail.com",
+        "password": "password123",
+        "full_name": "Aakash Bhagat",
+        "role": "citizen",
+        "institution": None,
+        "company_name": None
     }
 ]
 
