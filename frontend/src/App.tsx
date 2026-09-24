@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import TicketLookupModal from './components/TicketLookupModal';
@@ -16,11 +16,30 @@ import { UserRole } from './types';
 
 function AppContent() {
   const { isAuthenticated, role, user } = useAuth();
-  const [activeTab, setActiveTab] = useState<string>('gate');
+  
+  // Default tab based on authentication state & role
+  const getInitialTab = (userRole: UserRole) => {
+    switch (userRole) {
+      case 'citizen': return 'submit';
+      case 'university_admin': return 'university';
+      case 'government': return 'analytics';
+      case 'industry': return 'industry';
+      default: return 'gate';
+    }
+  };
+
+  const [activeTab, setActiveTab] = useState<string>(() => getInitialTab(role));
   const [ticketModalOpen, setTicketModalOpen] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [profileModalOpen, setProfileModalOpen] = useState<boolean>(false);
   const [targetLoginRole, setTargetLoginRole] = useState<string | null>(null);
+
+  // Automatically update active tab whenever user role changes
+  useEffect(() => {
+    if (isAuthenticated && role && role !== 'guest') {
+      setActiveTab(getInitialTab(role));
+    }
+  }, [isAuthenticated, role]);
 
   const handleOpenLogin = (targetRole: string | null = null) => {
     setTargetLoginRole(targetRole);
@@ -28,19 +47,9 @@ function AppContent() {
   };
 
   const handleLoginSuccess = (userRole: UserRole) => {
-    // Role selection successfully authenticated!
+    setActiveTab(getInitialTab(userRole));
   };
 
-  /* STRICT UNAUTHENTICATED GATE: Unauthenticated visitors see ONLY the Sign In / Sign Up interface */
-  if (!isAuthenticated || !user || role === 'guest') {
-    return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center portal-bg text-slate-900 px-4 py-8">
-        <RoleGateLanding onLoginSuccess={handleLoginSuccess} />
-      </div>
-    );
-  }
-
-  /* AUTHENTICATED STAKEHOLDER WORKSPACE: Users see ONLY their assigned category workspace */
   return (
     <div className="min-h-screen w-full flex flex-col portal-bg text-slate-900 overflow-x-hidden">
       
@@ -56,23 +65,27 @@ function AppContent() {
         onOpenProfile={() => setProfileModalOpen(true)}
       />
 
-      {/* Main Content Area: Strictly Scoped by Role */}
-      <main className="flex-1 w-full py-4">
-        {role === 'citizen' && (
+      {/* Main Content Area: Renders active tier workspace */}
+      <main className="flex-1 w-full py-4 max-w-7xl mx-auto px-4">
+        {(!isAuthenticated || activeTab === 'gate') && (
+          <RoleGateLanding onLoginSuccess={handleLoginSuccess} />
+        )}
+
+        {(isAuthenticated || activeTab === 'submit') && activeTab === 'submit' && (
           <CitizenSubmit 
             onOpenTicketLookup={() => setTicketModalOpen(true)}
           />
         )}
 
-        {role === 'university_admin' && (
+        {(isAuthenticated || activeTab === 'university') && activeTab === 'university' && (
           <UniversityQueue />
         )}
 
-        {role === 'government' && (
+        {(isAuthenticated || activeTab === 'analytics') && activeTab === 'analytics' && (
           <AdminDashboard />
         )}
 
-        {role === 'industry' && (
+        {(isAuthenticated || activeTab === 'industry') && activeTab === 'industry' && (
           <IndustryCatalog />
         )}
       </main>

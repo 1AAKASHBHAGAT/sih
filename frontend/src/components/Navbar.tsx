@@ -109,13 +109,52 @@ function Navbar({ activeTab, setActiveTab, onOpenTicketLookup, onOpenLogin, onOp
           </div>
         </div>
 
-        {/* Strictly Scoped Tab indicator (Only visible when signed in) */}
-        {isAuthenticated && currentTabInfo && (
-          <div className="hidden md:flex items-center gap-2.5 px-4 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold shadow-sm">
-            {React.createElement(currentTabInfo.icon, { className: "w-4 h-4 text-blue-600" })}
-            <span>{currentTabInfo.label}</span>
-          </div>
-        )}
+        {/* Universal Tier Navigation Tabs */}
+        <div className="hidden md:flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80 text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => setActiveTab('submit')}
+            className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'submit' ? 'bg-white text-blue-700 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <span>Citizen Portal</span>
+          </button>
+          
+          <button
+            type="button"
+            onClick={() => setActiveTab('university')}
+            className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'university' ? 'bg-white text-blue-700 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Building2 className="w-3.5 h-3.5 text-purple-600" />
+            <span>University R&D</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('analytics')}
+            className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'analytics' ? 'bg-white text-blue-700 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5 text-indigo-600" />
+            <span>Executive GIS</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('industry')}
+            className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'industry' ? 'bg-white text-blue-700 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Briefcase className="w-3.5 h-3.5 text-emerald-600" />
+            <span>CSR Grants</span>
+          </button>
+        </div>
 
         {/* Right Tools & Account Controls */}
         <div className="flex items-center gap-3">
