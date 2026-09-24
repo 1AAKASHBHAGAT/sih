@@ -40,7 +40,14 @@ const DEMO_PRESETS: DemoPreset[] = [
     icon: "💼"
   },
   {
-    label: "Citizen Account",
+    label: "Aakash (Citizen)",
+    email: "grab10aakashbhagat@gmail.com",
+    password: "password123",
+    role: "citizen",
+    icon: "👤"
+  },
+  {
+    label: "Citizen Demo",
     email: "citizen@gmail.com",
     password: "citizen123",
     role: "citizen",

@@ -80,6 +80,14 @@ DEMO_ACCOUNTS = [
         "company_name": None
     },
     {
+        "email": "dhanbad@iitism.ac.in",
+        "password": "dhanbad123",
+        "full_name": "Prof. A. K. Singh (R&D Dean)",
+        "role": "university_admin",
+        "institution": "IIT (ISM) Dhanbad - Water Research Center",
+        "company_name": None
+    },
+    {
         "email": "cuj_admin@cuj.ac.in",
         "password": "password123",
         "full_name": "Dr. Priyadarshini Roy (Health Hub)",
@@ -88,9 +96,33 @@ DEMO_ACCOUNTS = [
         "company_name": None
     },
     {
+        "email": "cuj@cuj.ac.in",
+        "password": "cuj123",
+        "full_name": "Prof. Rajeshwar Roy (Health Tech Lead)",
+        "role": "university_admin",
+        "institution": "Central University of Jharkhand (CUJ) - Health Tech Hub",
+        "company_name": None
+    },
+    {
+        "email": "ranchi@bau.ac.in",
+        "password": "ranchi123",
+        "full_name": "Dr. Sunita Murmu (Agri Innovation Chair)",
+        "role": "university_admin",
+        "institution": "Birsa Agricultural University, Ranchi",
+        "company_name": None
+    },
+    {
         "email": "tatasteel@csr.org",
         "password": "password123",
         "full_name": "Ravi Desai (CSR Vice President)",
+        "role": "industry",
+        "institution": None,
+        "company_name": "Tata Steel CSR Division"
+    },
+    {
+        "email": "csr@tatasteel.com",
+        "password": "tata123",
+        "full_name": "Ravi Desai (CSR Head)",
         "role": "industry",
         "institution": None,
         "company_name": "Tata Steel CSR Division"
