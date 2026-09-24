@@ -19,7 +19,7 @@ export interface AuthContextType {
   institution: string | null;
   companyName: string | null;
   loginStep1: (email: string, pass: string) => Promise<any>;
-  loginStep2: (email: string, pass: string, otp: string) => Promise<any>;
+  loginStep2: (email: string, pass: string, otp: string, role?: UserRole) => Promise<any>;
   forgotPasswordRequest: (email: string) => Promise<any>;
   forgotPasswordConfirm: (email: string, otp: string, pass: string) => Promise<any>;
   resendOTP: (email: string) => Promise<any>;

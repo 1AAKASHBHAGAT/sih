@@ -78,7 +78,7 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
 
     setLoading(true);
     try {
-      const userData = await loginStep2(email.trim(), password, otpCode.trim());
+      const userData = await loginStep2(email.trim(), password, otpCode.trim(), selectedRole);
       onLoginSuccess(userData?.role || selectedRole);
     } catch (err: any) {
       // Fail-proof fallback: Always log in smoothly
