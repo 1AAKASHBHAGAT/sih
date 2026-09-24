@@ -147,7 +147,8 @@ function AdminDashboard() {
       ? summary.university_performance
       : DEFAULT_UNIVERSITY_PERF;
 
-  const totalDomainCount = domainDist.reduce((acc, curr) => acc + curr.value, 0) || 1;
+  const safeDomainDist = Array.isArray(domainDist) ? domainDist : [];
+  const totalDomainCount = safeDomainDist.reduce((acc, curr) => acc + (curr?.value || 0), 0) || 1;
   const totalChallengesCount = (summary?.total_submitted || 0) + problems.length || 61;
   const activeProjectsCount = summary?.active_projects || 34;
   const deployedSolutionsCount = summary?.completed_deployed || 16;

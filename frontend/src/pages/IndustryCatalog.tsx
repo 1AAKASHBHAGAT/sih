@@ -54,11 +54,13 @@ function IndustryCatalog() {
         getProblems(),
         getAllPledges()
       ]);
-      const combined = [...localProblems, ...(probRes.data || [])];
-      setProblems(combined);
-      setPledges(pledgeRes.data || []);
+      const validProblems = Array.isArray(probRes.data) ? probRes.data : [];
+      const validPledges = Array.isArray(pledgeRes.data) ? pledgeRes.data : [];
+      setProblems([...localProblems, ...validProblems]);
+      setPledges(validPledges);
     } catch (err) {
       setProblems(localProblems);
+      setPledges([]);
     } finally {
       setLoading(false);
     }
@@ -84,11 +86,14 @@ function IndustryCatalog() {
     }
   };
 
-  const filteredProblems = selectedDomain === "All"
-    ? problems
-    : problems.filter(p => p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain);
+  const safeProblems = Array.isArray(problems) ? problems : [];
+  const safePledges = Array.isArray(pledges) ? pledges : [];
 
-  const totalCommitted = pledges.reduce((acc, curr) => acc + (curr.pledge_amount || (curr as any).amount || 0), 12500000);
+  const filteredProblems = selectedDomain === "All"
+    ? safeProblems
+    : safeProblems.filter(p => p && (p.domain === selectedDomain || (p as any).ai_predicted_category === selectedDomain || (p as any).user_category === selectedDomain));
+
+  const totalCommitted = safePledges.reduce((acc, curr) => acc + (curr?.pledge_amount || (curr as any)?.amount || 0), 12500000);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8 animate-fade-in">
