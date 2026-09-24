@@ -93,25 +93,61 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
     }
   };
 
+  const validateIdentifier = (input: string) => {
+    const str = input.trim();
+    if (!str) {
+      return { valid: false, message: 'Please enter your email address or 10-digit mobile number.' };
+    }
+
+    if (/^\d+$/.test(str)) {
+      if (!/^[6-9]\d{9}$/.test(str)) {
+        return { valid: false, message: 'Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).' };
+      }
+      return { valid: true };
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(str)) {
+      return { valid: false, message: 'Please enter a valid email address (e.g. user@gmail.com) or 10-digit mobile number.' };
+    }
+
+    return { valid: true };
+  };
+
   const handleRegisterSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    if (regForm.password.length < 6) {
+    if (!regForm.full_name.trim()) {
+      setError('Please enter your full name.');
+      return;
+    }
+
+    const valResult = validateIdentifier(regForm.email);
+    if (!valResult.valid) {
+      setError(valResult.message || 'Invalid email or phone number format.');
+      return;
+    }
+
+    if (!regForm.password || regForm.password.length < 6) {
       setError('Password must be at least 6 characters long.');
       return;
     }
 
     setLoading(true);
     try {
-      const userData = await register(regForm);
-      onLoginSuccess(userData.role);
+      const userData = await register({
+        ...regForm,
+        email: regForm.email.trim(),
+        full_name: regForm.full_name.trim()
+      });
+      onLoginSuccess(userData.role || regForm.role);
     } catch (err: any) {
       const detail = err.response?.data?.detail;
-      if (detail && detail.includes('already exists')) {
-        setError('An account with this email/phone number already exists! Please click "Sign in" below.');
+      if (detail && (detail.includes('already exists') || detail.includes('already registered'))) {
+        setError('An account with this email/phone number already exists! Click "Sign in" below to log in.');
       } else {
-        setError(detail || 'Registration failed. Please check your network connection.');
+        setError(detail || 'Registration failed. Please check your inputs or network connection.');
       }
     } finally {
       setLoading(false);
@@ -357,6 +393,32 @@ function RoleGateLanding({ onLoginSuccess }: RoleGateLandingProps) {
                   <option value="industry">💼 Industry CSR Partner (Project Sponsorship)</option>
                 </select>
               </div>
+
+              {regForm.role === 'university_admin' && (
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">University / Institution Name</label>
+                  <input
+                    type="text"
+                    className="form-input text-xs"
+                    placeholder="e.g. IIT (ISM) Dhanbad"
+                    value={regForm.institution}
+                    onChange={(e) => setRegForm({ ...regForm, institution: e.target.value })}
+                  />
+                </div>
+              )}
+
+              {regForm.role === 'industry' && (
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Company / Organization Name</label>
+                  <input
+                    type="text"
+                    className="form-input text-xs"
+                    placeholder="e.g. Tata Steel CSR Division"
+                    value={regForm.company_name}
+                    onChange={(e) => setRegForm({ ...regForm, company_name: e.target.value })}
+                  />
+                </div>
+              )}
 
               <button
                 type="submit"
