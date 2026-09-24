@@ -185,7 +185,7 @@ function CitizenSubmit({ onNavigateToUniversity, onOpenTicketLookup }: CitizenSu
         location: formData.location || formData.district || "Ranchi",
         district: formData.district || "Ranchi",
         status: "Submitted",
-        urgency_score: estimatedUrgency || 6.5,
+        urgency_score: 6.5,
         reporter_name: formData.reporter_name || "Citizen Reporter"
       };
 

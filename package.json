@@ -1,0 +1,8 @@
+{
+  "name": "setu-jharkhand-monorepo",
+  "private": true,
+  "version": "2.4.0",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build"
+  }
+}
